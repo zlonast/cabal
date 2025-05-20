@@ -2025,6 +2025,13 @@ system-dependent values for these fields.
     Command-line arguments to be passed to the Haskell compiler (as ``-opta``
     flags for GHC) when compiling assembler code. See also :pkg-field:`asm-sources`.
 
+.. pkg-field:: jspp-options: token list
+
+    Command-line arguments for pre-processing Haskell code. Applies to
+    Haskell source and other pre-processed Haskell source like .js.
+    Does not apply to C code, that's what cc-options is for.
+    Flags here will be passed as ``-optJSP`` flags to GHC.
+
 .. pkg-field:: ld-options: token list
 
     Command-line arguments to be passed to the Haskell compiler (as ``-optl``

@@ -726,6 +726,7 @@ getCppOptions :: BuildInfo -> LocalBuildInfo -> [String]
 getCppOptions bi lbi =
   platformDefines lbi
     ++ cppOptions bi
+    ++ jsppOptions bi
     ++ ["-I" ++ getSymbolicPath dir | dir <- PD.includeDirs bi]
     ++ [opt | opt@('-' : c : _) <- PD.ccOptions bi ++ PD.cxxOptions bi, c `elem` "DIU"]
 

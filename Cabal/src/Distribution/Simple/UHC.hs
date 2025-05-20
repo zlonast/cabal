@@ -303,6 +303,8 @@ constructUHCCmdLine user system lbi bi clbi odir verbosity =
     ++ ["-i" ++ u (autogenPackageModulesDir lbi)]
     -- cpp options
     ++ ["--optP=" ++ opt | opt <- cppOptions bi]
+    -- jspp options
+    ++ ["--optJSP=" ++ opt | opt <- jsppOptions bi]
     -- output path
     ++ ["--odir=" ++ u odir]
     -- optimization

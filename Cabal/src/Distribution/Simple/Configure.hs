@@ -2626,6 +2626,7 @@ checkForeignDeps pkg lbi verbosity =
            ]
         ++ ["-I" ++ baseDir]
         ++ collectField cppOptions
+        -- ++ collectField jsppOptions
         ++ collectField ccOptions
         ++ [ "-I" ++ dir
            | dir <-

@@ -505,12 +505,13 @@ componentJsGhcOptions verbosity lbi bi clbi odir filename =
       ghcOptVerbosity = toFlag (min verbosity normal)
     , ghcOptMode = toFlag GhcModeCompile
     , ghcOptInputFiles = toNubListR [filename]
+    , ghcOptJSppOptions = jsppOptions bi
     , ghcOptCppIncludePath = includePaths lbi bi clbi odir
     , ghcOptHideAllPackages = toFlag True
     , ghcOptPackageDBs = withPackageDB lbi
     , ghcOptPackages = toNubListR $ mkGhcOptPackages (promisedPkgs lbi) clbi
     , ghcOptObjDir = toFlag odir
-    , ghcOptExtra = hcOptions GHC bi
+    , ghcOptExtra = jsppOptions bi <> hcOptions GHC bi
     }
 
 componentGhcOptions
@@ -568,6 +569,7 @@ componentGhcOptions verbosity lbi bi clbi odir =
                 ++ [autogenPackageModulesDir lbi]
         , ghcOptCppIncludePath = includePaths lbi bi clbi odir
         , ghcOptCppOptions = cppOptions bi
+        , ghcOptJSppOptions = jsppOptions bi
         , ghcOptCppIncludes =
             toNubListR $
               [coerceSymbolicPath (autogenComponentModulesDir lbi clbi </> makeRelativePathEx cppHeaderName)]
