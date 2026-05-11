@@ -369,12 +369,7 @@ componentCcGhcOptions verbosity lbi bi clbi odir filename =
             NoOptimisation -> []
             _ -> ["-O2"]
         )
-          ++ ( case withDebugInfo lbi of
-                NoDebugInfo -> []
-                MinimalDebugInfo -> ["-g1"]
-                NormalDebugInfo -> ["-g"]
-                MaximalDebugInfo -> ["-g3"]
-             )
+          ++ ["-g" ++ fromDebugInfoLevel (toFlag $ withDebugInfo lbi)]
           ++ ccOptions bi
     , ghcOptCcProgram =
         maybeToFlag $
@@ -408,12 +403,7 @@ componentCxxGhcOptions verbosity lbi bi clbi odir filename =
             NoOptimisation -> []
             _ -> ["-O2"]
         )
-          ++ ( case withDebugInfo lbi of
-                NoDebugInfo -> []
-                MinimalDebugInfo -> ["-g1"]
-                NormalDebugInfo -> ["-g"]
-                MaximalDebugInfo -> ["-g3"]
-             )
+          ++ ["-g" ++ fromDebugInfoLevel (toFlag $ withDebugInfo lbi)]
           ++ cxxOptions bi
     , ghcOptCcProgram =
         maybeToFlag $
@@ -447,12 +437,7 @@ componentAsmGhcOptions verbosity lbi bi clbi odir filename =
             NoOptimisation -> []
             _ -> ["-O2"]
         )
-          ++ ( case withDebugInfo lbi of
-                NoDebugInfo -> []
-                MinimalDebugInfo -> ["-g1"]
-                NormalDebugInfo -> ["-g"]
-                MaximalDebugInfo -> ["-g3"]
-             )
+          ++ ["-g" ++ fromDebugInfoLevel (toFlag $ withDebugInfo lbi)]
           ++ asmOptions bi
     , ghcOptObjDir = toFlag odir
     , ghcOptExtra = hcOptions GHC bi
@@ -555,6 +540,9 @@ componentGhcOptions verbosity lbi bi clbi odir =
         , -- Unsupported extensions have already been checked by configure
           ghcOptExtensions = toNubListR $ usedExtensions bi
         , ghcOptExtensionMap = Map.fromList . compilerExtensions $ (compiler lbi)
+        , ghcOptCcOptions = ccOptions bi ++ ["-g" ++ fromDebugInfoLevel (toFlag $ withDebugInfo lbi)]
+        , ghcOptCxxOptions = cxxOptions bi ++ ["-g" ++ fromDebugInfoLevel (toFlag $ withDebugInfo lbi)]
+        , ghcOptAsmOptions = asmOptions bi ++ ["-g" ++ fromDebugInfoLevel (toFlag $ withDebugInfo lbi)]
         }
   where
     exe_paths =

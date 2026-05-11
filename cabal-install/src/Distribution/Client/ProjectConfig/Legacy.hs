@@ -86,9 +86,9 @@ import Distribution.PackageDescription.Configuration (simplifyWithSysParams)
 import Distribution.Simple.Compiler
   ( Compiler (..)
   , CompilerInfo (..)
-  , DebugInfoLevel (..)
   , OptimisationLevel (..)
   , compilerInfo
+  , fromDebugInfoLevel
   , interpretPackageDB
   )
 import Distribution.Simple.InstallDirs (CopyDest (NoCopyDest))
@@ -1773,26 +1773,13 @@ legacyPackageConfigFieldDescrs =
         let name = "debug-info"
          in FieldDescr
               name
-              ( \f -> case f of
-                  Flag NoDebugInfo -> Disp.text "False"
-                  Flag MinimalDebugInfo -> Disp.text "1"
-                  Flag NormalDebugInfo -> Disp.text "True"
-                  Flag MaximalDebugInfo -> Disp.text "3"
-                  _ -> Disp.empty
+              ( \case
+                  NoFlag -> Disp.empty
+                  flag -> Disp.text $ fromDebugInfoLevel flag
               )
-              ( \line str _ -> case () of
-                  _
-                    | str == "False" -> ParseOk [] (Flag NoDebugInfo)
-                    | str == "True" -> ParseOk [] (Flag NormalDebugInfo)
-                    | str == "0" -> ParseOk [] (Flag NoDebugInfo)
-                    | str == "1" -> ParseOk [] (Flag MinimalDebugInfo)
-                    | str == "2" -> ParseOk [] (Flag NormalDebugInfo)
-                    | str == "3" -> ParseOk [] (Flag MaximalDebugInfo)
-                    | lstr == "false" -> ParseOk [caseWarning name] (Flag NoDebugInfo)
-                    | lstr == "true" -> ParseOk [caseWarning name] (Flag NormalDebugInfo)
-                    | otherwise -> ParseFailed (NoParse name line)
-                    where
-                      lstr = lowercase str
+              ( \line str _ -> case maybe NoFlag Flag (simpleParsec str) of
+                  NoFlag -> ParseFailed (NoParse name line)
+                  flag -> ParseOk [] flag
               )
 
     caseWarning name =

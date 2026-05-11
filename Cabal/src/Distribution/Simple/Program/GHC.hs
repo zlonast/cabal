@@ -785,12 +785,7 @@ renderGhcOptions comp _platform@(Platform _arch os) opts
             Just GhcNormalOptimisation -> ["-O"]
             Just GhcMaximumOptimisation -> ["-O2"]
             Just (GhcSpecialOptimisation s) -> ["-O" ++ s] -- eg -Odph
-        , case flagToMaybe (ghcOptDebugInfo opts) of
-            Nothing -> []
-            Just NoDebugInfo -> []
-            Just MinimalDebugInfo -> ["-g1"]
-            Just NormalDebugInfo -> ["-g2"]
-            Just MaximalDebugInfo -> ["-g3"]
+        , ["-g" ++ fromDebugInfoLevel (ghcOptDebugInfo opts)]
         , ["-prof" | flagBool ghcOptProfilingMode]
         , case flagToMaybe (ghcOptProfilingAuto opts) of
             _

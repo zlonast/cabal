@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE LambdaCase #-}
 
 -----------------------------------------------------------------------------
 
@@ -58,7 +59,8 @@ module Distribution.Simple.Compiler
 
     -- * Support for debug info levels
   , DebugInfoLevel (..)
-  , flagToDebugInfoLevel
+  , toDebugInfoLevel
+  , fromDebugInfoLevel
 
     -- * Support for language extensions
   , CompilerFlag
@@ -112,6 +114,7 @@ import Language.Haskell.Extension
 
 import Data.Bool (bool)
 import qualified Data.Map as Map (lookup)
+import Distribution.Simple.Flag
 import System.Directory (canonicalizePath)
 
 data Compiler = Compiler
@@ -374,21 +377,34 @@ instance Parsec DebugInfoLevel where
   parsec = parsecDebugInfoLevel
 
 parsecDebugInfoLevel :: CabalParsing m => m DebugInfoLevel
-parsecDebugInfoLevel = flagToDebugInfoLevel . pure <$> parsecToken
+parsecDebugInfoLevel = boolParser <|> intParser
+  where
+    boolParser = bool NoDebugInfo NormalDebugInfo <$> parsec
+    intParser = intToDebugInfoLevel <$> integral
 
-flagToDebugInfoLevel :: Maybe String -> DebugInfoLevel
-flagToDebugInfoLevel Nothing = NormalDebugInfo
-flagToDebugInfoLevel (Just s) = case reads s of
-  [(i, "")]
-    | i >= fromEnum (minBound :: DebugInfoLevel)
-        && i <= fromEnum (maxBound :: DebugInfoLevel) ->
-        toEnum i
-    | otherwise ->
-        error $
-          "Bad debug info level: "
-            ++ show i
-            ++ ". Valid values are 0..3"
-  _ -> error $ "Can't parse debug info level " ++ s
+toDebugInfoLevel :: Maybe String -> Flag DebugInfoLevel
+toDebugInfoLevel = \case
+  Nothing -> Flag NormalDebugInfo
+  Just s -> case reads s of
+    [(i, "")] -> Flag $ intToDebugInfoLevel i
+    _ -> NoFlag
+
+fromDebugInfoLevel :: Flag DebugInfoLevel -> String
+fromDebugInfoLevel = \case
+  Flag db -> show $ fromEnum db
+  NoFlag -> "2"
+
+intToDebugInfoLevel :: Int -> DebugInfoLevel
+intToDebugInfoLevel i
+  | i >= minLevel && i <= maxLevel = toEnum i
+  | otherwise =
+      error $
+        "Bad debug info level: "
+          ++ show i
+          ++ ". Valid values are 0..3"
+  where
+    minLevel = fromEnum (minBound :: DebugInfoLevel)
+    maxLevel = fromEnum (maxBound :: DebugInfoLevel)
 
 -- ------------------------------------------------------------
 

@@ -2,6 +2,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE ViewPatterns #-}
@@ -593,13 +594,10 @@ configureOptions showOrParseArgs =
           (\v flags -> flags{configDebugInfo = v})
           [ optArg'
               "n"
-              (Flag . flagToDebugInfoLevel)
-              ( \f -> case f of
-                  Flag NoDebugInfo -> []
-                  Flag MinimalDebugInfo -> [Just "1"]
-                  Flag NormalDebugInfo -> [Nothing]
-                  Flag MaximalDebugInfo -> [Just "3"]
-                  _ -> []
+              toDebugInfoLevel
+              ( \case
+                  NoFlag -> []
+                  flag -> [Just $ fromDebugInfoLevel flag]
               )
               ""
               ["enable-debug-info"]
