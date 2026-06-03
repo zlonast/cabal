@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RankNTypes #-}
 
@@ -24,7 +25,7 @@ data Json
   | JsonNumber !Int -- No support for Floats, Doubles just yet
   | JsonObject [(String, Json)]
   | JsonString !String
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Convert a 'Json' into a 'ByteString'
 renderJson :: Json -> LBS.ByteString

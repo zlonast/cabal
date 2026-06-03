@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 -- |
 -- Module      :  Distribution.PackageDescription.Check.Common
 -- Copyright   :  Francesco Ariis 2022
@@ -37,7 +39,7 @@ data PathKind
   = PathKindFile
   | PathKindDirectory
   | PathKindGlob
-  deriving (Eq)
+  deriving stock (Eq)
 
 -- | .cabal field we are referring to. As now it is just a synonym to help
 -- reading the code, in the future it might take advantage of typification

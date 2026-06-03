@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -52,7 +53,7 @@ data BenchmarkFlags = BenchmarkFlags
   { benchmarkCommonFlags :: !CommonSetupFlags
   , benchmarkOptions :: [PathTemplate]
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 pattern BenchmarkCommonFlags
   :: Flag VerbosityFlags

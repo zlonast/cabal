@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 
 -- |
@@ -779,7 +780,7 @@ isInternalTarget (CETSetup{}) = False
 
 -- Target type for option checking.
 data BITarget = BITLib | BITTestBench | BITOther
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 cet2bit :: CEType -> BITarget
 cet2bit (CETLibrary{}) = BITLib

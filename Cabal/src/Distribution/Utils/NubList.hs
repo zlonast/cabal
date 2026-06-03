@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Distribution.Utils.NubList
@@ -21,7 +23,8 @@ import qualified Text.Read as R
 
 -- | NubList : A de-duplicated list that maintains the original order.
 newtype NubList a = NubList {fromNubList :: [a]}
-  deriving (Eq, Generic)
+  deriving newtype (Eq)
+  deriving stock (Generic)
 
 -- NubList assumes that nub retains the list order while removing duplicate
 -- elements (keeping the first occurrence). Documentation for "Data.List.nub"
@@ -83,7 +86,7 @@ instance NFData a => NFData (NubList a) where
 -- unlike the normal 'NubList', which is left-biased. Built on top of
 -- 'ordNubRight' and 'listUnionRight'.
 newtype NubListR a = NubListR {fromNubListR :: [a]}
-  deriving (Eq)
+  deriving newtype (Eq)
 
 -- | Smart constructor for the NubListR type.
 toNubListR :: Ord a => [a] -> NubListR a

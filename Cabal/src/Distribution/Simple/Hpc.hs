@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RankNTypes #-}
@@ -59,7 +60,7 @@ import System.Directory (createDirectoryIfMissing, doesFileExist)
 -- Haskell Program Coverage
 
 data Way = Vanilla | Prof | Dyn | ProfDyn
-  deriving (Bounded, Enum, Eq, Read, Show)
+  deriving stock (Bounded, Enum, Eq, Read, Show)
 
 hpcDir
   :: SymbolicPath Pkg (Dir Dist)

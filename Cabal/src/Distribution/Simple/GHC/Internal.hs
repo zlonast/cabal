@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE RankNTypes #-}
 
@@ -736,7 +737,7 @@ data GhcEnvironmentFileEntry fp
     GhcEnvFilePackageDb (PackageDBX fp)
   | -- | @clear-package-db@
     GhcEnvFileClearPackageDbStack
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 -- | Make entries for a GHC environment file based on a 'PackageDBStack' and
 -- a bunch of package (unit) ids.

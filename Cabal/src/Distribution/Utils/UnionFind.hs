@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NondecreasingIndentation #-}
 
@@ -22,7 +24,7 @@ import Data.STRef
 -- | A variable which can be unified; alternately, this can be thought
 -- of as an equivalence class with a distinguished representative.
 newtype Point s a = Point (STRef s (Link s a))
-  deriving (Eq)
+  deriving newtype (Eq)
 
 -- | Mutable write to a 'Point'
 writePoint :: Point s a -> Link s a -> ST s ()

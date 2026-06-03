@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE MultiWayIf #-}
@@ -592,7 +593,7 @@ data GhcOptions = GhcOptions
   -- ^ Let GHC know that it is Cabal that's calling it.
   -- Modifies some of the GHC error messages.
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 data GhcMode
   = -- | @ghc -c@
@@ -607,7 +608,7 @@ data GhcMode
     --             | GhcModeDepAnalysis -- ^ @ghc -M@
     --             | GhcModeEvaluate    -- ^ @ghc -e@
     GhcModeAbiHash
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 data GhcOptimisation
   = -- | @-O0@
@@ -627,7 +628,7 @@ data GhcDynLinkMode
     GhcDynamicOnly
   | -- | @-static -dynamic-too@
     GhcStaticAndDynamic
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 data GhcObjectMode
   = -- | -fobject-code
@@ -636,7 +637,7 @@ data GhcObjectMode
     GhcByteCode
   | -- | -fbyte-code-and-object-code
     GhcByteCodeAndObjectCode
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 data GhcProfAuto
   = -- | @-fprof-auto@
@@ -647,7 +648,7 @@ data GhcProfAuto
     GhcProfAutoExported
   | -- | @-fprof-late
     GhcProfLate
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 runGHC
   :: Verbosity

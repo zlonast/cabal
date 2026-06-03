@@ -1,4 +1,6 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE RankNTypes #-}
 
 module Distribution.Simple.GHC.EnvironmentParser (parseGhcEnvironmentFile, readGhcEnvironmentFile, ParseErrorExc (..)) where
@@ -41,7 +43,7 @@ parseEnvironmentFileLine =
     clearDb = P.string "clear-package-db"
 
 newtype ParseErrorExc = ParseErrorExc P.ParseError
-  deriving (Show)
+  deriving newtype (Show)
 
 instance Exception ParseErrorExc
 

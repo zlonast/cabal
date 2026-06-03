@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
@@ -163,7 +164,7 @@ data TargetAnnotation a = TargetAnnotation
     taPackageFlag :: Bool
     -- Whether we are under an off-by-default package flag.
   }
-  deriving (Show, Eq, Ord)
+  deriving stock (Show, Eq, Ord)
 
 -- | A collection os names, shipping tuples around is annoying.
 data PNames = PNames
@@ -200,7 +201,7 @@ newtype CheckM m a
           )
           a
       )
-  deriving (Functor, Applicative, Monad)
+  deriving newtype (Functor, Applicative, Monad)
 
 -- Not autoderiving MonadReader and MonadWriter gives us better
 -- control on the interface of CheckM.

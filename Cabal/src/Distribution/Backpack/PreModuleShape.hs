@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Backpack.PreModuleShape
   ( PreModuleShape (..)
@@ -22,7 +23,7 @@ data PreModuleShape = PreModuleShape
   { preModShapeProvides :: Set ModuleName
   , preModShapeRequires :: Set ModuleName
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 toPreModuleShape :: ModuleShape -> PreModuleShape
 toPreModuleShape (ModuleShape provs reqs) = PreModuleShape (Map.keysSet provs) reqs

@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -57,7 +58,7 @@ import qualified Text.PrettyPrint as Disp
 -- ------------------------------------------------------------
 
 data TestShowDetails = Never | Failures | Always | Streaming | Direct
-  deriving (Eq, Ord, Enum, Bounded, Generic, Show)
+  deriving stock (Eq, Ord, Enum, Bounded, Generic, Show)
 
 instance Binary TestShowDetails
 instance NFData TestShowDetails
@@ -99,7 +100,7 @@ data TestFlags = TestFlags
   , -- TODO: think about if/how options are passed to test exes
     testOptions :: [PathTemplate]
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 pattern TestCommonFlags
   :: Flag VerbosityFlags

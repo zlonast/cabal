@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Backpack.FullUnitId
   ( FullUnitId (..)
@@ -13,7 +14,7 @@ import Distribution.Types.ComponentId
 
 -- Unlike OpenUnitId, which could direct to a UnitId.
 data FullUnitId = FullUnitId ComponentId OpenModuleSubst
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 type FullDb = DefUnitId -> FullUnitId
 

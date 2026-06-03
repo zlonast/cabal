@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -56,7 +57,7 @@ data ReplOptions = ReplOptions
   , replOptionsFlagOutput :: Flag FilePath
   , replWithRepl :: Flag FilePath
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 pattern ReplCommonFlags
   :: Flag VerbosityFlags
@@ -99,7 +100,7 @@ data ReplFlags = ReplFlags
   , replReload :: Flag Bool
   , replReplOptions :: ReplOptions
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 instance Binary ReplFlags
 instance Structured ReplFlags

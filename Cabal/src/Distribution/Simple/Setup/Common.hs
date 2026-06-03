@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -92,7 +93,7 @@ data CommonSetupFlags = CommonSetupFlags
   -- temporary files (including multi unit repl response files) to stay, even
   -- after the @cabal repl@ command exits.
   }
-  deriving (Eq, Show, Read, Generic)
+  deriving stock (Eq, Show, Read, Generic)
 
 instance Binary CommonSetupFlags
 instance Structured CommonSetupFlags

@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE PatternSynonyms #-}
@@ -185,7 +186,7 @@ data BuildingWhat
     BuildHaddock HaddockFlags
   | -- | Build steps for Hscolour.
     BuildHscolour HscolourFlags
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
 
 buildingWhatCommonFlags :: BuildingWhat -> CommonSetupFlags
 buildingWhatCommonFlags = \case

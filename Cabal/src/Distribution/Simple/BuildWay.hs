@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 
 module Distribution.Simple.BuildWay
@@ -7,7 +8,7 @@ module Distribution.Simple.BuildWay
   ) where
 
 data BuildWay = StaticWay | DynWay | ProfWay | ProfDynWay
-  deriving (Eq, Ord, Show, Read, Enum)
+  deriving stock (Eq, Ord, Show, Read, Enum)
 
 -- | Returns the object extension for the given build way (e.g. "dyn_o" for 'DynWay' on ELF)
 buildWayObjectExtension :: String -> BuildWay -> String

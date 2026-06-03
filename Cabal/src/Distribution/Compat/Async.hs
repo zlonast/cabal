@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 -- | 'Async', yet using 'MVar's.
 --
 -- Adopted from @async@ library
@@ -136,10 +138,7 @@ cancel a@(Async t _) = do
 
 -- | The exception thrown by `cancel` to terminate a thread.
 data AsyncCancelled = AsyncCancelled
-  deriving
-    ( Show
-    , Eq
-    )
+  deriving stock (Show, Eq)
 
 instance Exception AsyncCancelled where
   -- wraps in SomeAsyncException

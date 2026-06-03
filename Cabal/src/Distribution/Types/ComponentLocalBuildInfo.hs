@@ -1,4 +1,6 @@
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE TypeFamilies #-}
 
 module Distribution.Types.ComponentLocalBuildInfo
@@ -109,10 +111,8 @@ data ComponentLocalBuildInfo
       , componentExeDeps :: [UnitId]
       , componentInternalDeps :: [UnitId]
       }
-  deriving (Generic, Read, Show)
-
-instance Binary ComponentLocalBuildInfo
-instance Structured ComponentLocalBuildInfo
+  deriving stock (Generic, Read, Show)
+  deriving anyclass (Binary, Structured)
 
 instance IsNode ComponentLocalBuildInfo where
   type Key ComponentLocalBuildInfo = UnitId

@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE StandaloneDeriving #-}
@@ -40,7 +41,7 @@ data SetupHooksException
     CannotApplyComponentDiff CannotApplyComponentDiffReason
   | -- | An error with pre-build rules.
     RulesException RulesException
-  deriving (Show)
+  deriving stock (Show)
 
 -- | AN error involving the @Rules@ in the @SetupHooks@ module of a
 -- package with the Hooks build-type.
@@ -79,13 +80,13 @@ deriving instance Show RulesException
 data CannotApplyComponentDiffReason
   = MismatchedComponentTypes Component Component
   | IllegalComponentDiff Component (NE.NonEmpty IllegalComponentDiffReason)
-  deriving (Show)
+  deriving stock (Show)
 
 data IllegalComponentDiffReason
   = CannotChangeName
   | CannotChangeComponentField String
   | CannotChangeBuildInfoField String
-  deriving (Show)
+  deriving stock (Show)
 
 setupHooksExceptionCode :: SetupHooksException -> Int
 setupHooksExceptionCode = \case

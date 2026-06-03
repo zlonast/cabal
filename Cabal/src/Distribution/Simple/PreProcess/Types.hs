@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE RankNTypes #-}
@@ -113,7 +114,8 @@ type PreProcessCommand =
 -- Mostly used to decide which preprocessor to use, e.g. files with suffix @"y"@
 -- are usually processed by the @"happy"@ build tool.
 newtype Suffix = Suffix String
-  deriving (Eq, Ord, Show, Generic, IsString)
+  deriving stock (Generic)
+  deriving newtype (Eq, Ord, Show, IsString)
 
 instance Pretty Suffix where
   pretty (Suffix s) = Disp.text s

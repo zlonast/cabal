@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 -----------------------------------------------------------------------------
 
@@ -137,7 +138,7 @@ data Compiler = Compiler
   , compilerProperties :: Map String String
   -- ^ A key-value map for properties not covered by the above fields.
   }
-  deriving (Eq, Generic, Show, Read)
+  deriving stock (Eq, Generic, Show, Read)
 
 instance Binary Compiler
 instance NFData Compiler
@@ -214,7 +215,7 @@ data PackageDBX fp
   | UserPackageDB
   | -- | NB: the path might be relative or it might be absolute
     SpecificPackageDB fp
-  deriving (Eq, Generic, Ord, Show, Read, Functor, Foldable, Traversable)
+  deriving stock (Eq, Generic, Ord, Show, Read, Functor, Foldable, Traversable)
 
 instance Binary fp => Binary (PackageDBX fp)
 instance NFData fp => NFData (PackageDBX fp)
@@ -627,7 +628,7 @@ data ProfDetailLevel
   | ProfDetailAllFunctions
   | ProfDetailTopLate
   | ProfDetailOther String
-  deriving (Eq, Generic, Read, Show)
+  deriving stock (Eq, Generic, Read, Show)
 
 instance Binary ProfDetailLevel
 instance NFData ProfDetailLevel

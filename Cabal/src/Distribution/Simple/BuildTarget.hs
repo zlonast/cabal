@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE RankNTypes #-}
@@ -115,7 +116,7 @@ data UserBuildTarget
     -- > cabal build lib:foo:Data/Foo.hs exe:foo:Data/Foo.hs
     -- > cabal build lib:foo:Data.Foo exe:foo:Data.Foo
     UserBuildTargetTriple String String String
-  deriving (Show, Eq, Ord)
+  deriving stock (Show, Eq, Ord)
 
 -- ------------------------------------------------------------
 
@@ -131,7 +132,7 @@ data BuildTarget
     BuildTargetModule ComponentName ModuleName
   | -- | A specific file within a specific component.
     BuildTargetFile ComponentName FilePath
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 -- | @since 3.18
 deriving instance Ord BuildTarget
@@ -247,7 +248,7 @@ readUserBuildTarget targetstr =
 
 data UserBuildTargetProblem
   = UserBuildTargetUnrecognised String
-  deriving (Show)
+  deriving stock (Show)
 
 reportUserBuildTargetProblems :: Verbosity -> [UserBuildTargetProblem] -> IO ()
 reportUserBuildTargetProblems verbosity problems = do
@@ -343,7 +344,7 @@ data BuildTargetProblem
   | -- | [(no such thing,  actually got)]
     BuildTargetNoSuch UserBuildTarget [(String, String)]
   | BuildTargetAmbiguous UserBuildTarget [(UserBuildTarget, BuildTarget)]
-  deriving (Show)
+  deriving stock (Show)
 
 disambiguateBuildTargets
   :: PackageId
@@ -375,7 +376,7 @@ disambiguateBuildTargets pkgid original =
         . map (\t -> (renderBuildTarget ql t pkgid, t))
 
 data QualLevel = QL1 | QL2 | QL3
-  deriving (Enum, Show)
+  deriving stock (Enum, Show)
 
 renderBuildTarget :: QualLevel -> BuildTarget -> PackageId -> UserBuildTarget
 renderBuildTarget ql target pkgid =
@@ -570,7 +571,7 @@ ex_cs =
 --
 
 data ComponentKind = LibKind | FLibKind | ExeKind | TestKind | BenchKind
-  deriving (Eq, Ord, Show, Enum, Bounded)
+  deriving stock (Eq, Ord, Show, Enum, Bounded)
 
 componentKind :: ComponentName -> ComponentKind
 componentKind (CLibName _) = LibKind
@@ -850,14 +851,14 @@ data Match a
   = NoMatch Confidence [MatchError]
   | ExactMatch Confidence [a]
   | InexactMatch Confidence [a]
-  deriving (Show)
+  deriving stock (Show)
 
 type Confidence = Int
 
 data MatchError
   = MatchErrorExpected String String
   | MatchErrorNoSuch String String
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 -- | @since 3.18
 deriving instance Ord MatchError
@@ -989,7 +990,7 @@ findMatch match =
       xs' -> Ambiguous xs'
 
 data MaybeAmbiguous a = None [MatchError] | Unambiguous a | Ambiguous [a]
-  deriving (Show)
+  deriving stock (Show)
 
 ------------------------------
 -- Basic matchers

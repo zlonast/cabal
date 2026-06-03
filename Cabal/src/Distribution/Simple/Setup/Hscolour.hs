@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -54,7 +55,7 @@ data HscolourFlags = HscolourFlags
   , hscolourBenchmarks :: Flag Bool
   , hscolourForeignLibs :: Flag Bool
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 pattern HscolourCommonFlags
   :: Flag VerbosityFlags

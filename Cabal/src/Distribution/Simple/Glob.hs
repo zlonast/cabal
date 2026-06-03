@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE RankNTypes #-}
 
@@ -274,7 +275,7 @@ data GlobSyntaxError
   | LiteralFileNameGlobStar
   | VersionDoesNotSupportGlobStar
   | VersionDoesNotSupportGlob
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 explainGlobSyntaxError :: FilePath -> GlobSyntaxError -> String
 explainGlobSyntaxError filepath StarInDirectory =
@@ -342,7 +343,7 @@ data GlobResult a
     --
     -- @since 3.12.0.0
     GlobMatchesDirectory a
-  deriving (Show, Eq, Ord, Functor)
+  deriving stock (Show, Eq, Ord, Functor)
 
 -- | Match files against a pre-parsed glob, starting in a directory.
 --

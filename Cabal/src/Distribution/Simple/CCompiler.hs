@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 -----------------------------------------------------------------------------
 
 {-
@@ -61,7 +63,7 @@ data CDialect
   | ObjectiveC
   | CPlusPlus
   | ObjectiveCPlusPlus
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 instance Monoid CDialect where
   mempty = C

@@ -1,5 +1,6 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GADTs #-}
@@ -461,7 +462,7 @@ die' verbosity msg = withFrozenCallStack $ do
 
 -- Type which will be a wrapper for cabal -exceptions and cabal-install exceptions
 data VerboseException a = VerboseException CallStack POSIXTime VerbosityFlags a
-  deriving (Show)
+  deriving stock (Show)
 
 -- Function which will replace the existing die' call sites
 dieWithException :: (HasCallStack, Exception (VerboseException a1)) => Verbosity -> a1 -> IO a
@@ -845,7 +846,7 @@ data TraceWhen
   = AlwaysTrace
   | VerboseTrace
   | FlagTrace
-  deriving (Eq)
+  deriving stock (Eq)
 
 -- | Determine if we should emit a call stack.
 -- If we trace, it also emits any prefix we should append.

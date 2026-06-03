@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE PatternSynonyms #-}
@@ -59,7 +60,7 @@ data InstallFlags = InstallFlags
   , installUseWrapper :: Flag Bool
   , installInPlace :: Flag Bool
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 pattern InstallCommonFlags
   :: Flag VerbosityFlags

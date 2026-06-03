@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -72,7 +73,8 @@ import qualified Text.PrettyPrint as Disp
 --    from documentation tarballs, and we might also want to use different
 --    flags than for development builds, so in this case we store the generated
 --    documentation in @<dist>/doc/html/<package id>-docs@.
-data HaddockTarget = ForHackage | ForDevelopment deriving (Eq, Show, Generic)
+data HaddockTarget = ForHackage | ForDevelopment
+  deriving stock (Eq, Show, Generic)
 
 instance Binary HaddockTarget
 instance NFData HaddockTarget
@@ -113,7 +115,7 @@ data HaddockFlags = HaddockFlags
   , haddockOutputDir :: Flag FilePath
   , haddockUseUnicode :: Flag Bool
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 pattern HaddockCommonFlags
   :: Flag VerbosityFlags
@@ -398,7 +400,7 @@ instance Semigroup HaddockFlags where
 -- functionality to the user, but simply use 'Visible' for only local packages.
 -- Visibility of modules is available since @haddock-2.26.1@.
 data Visibility = Visible | Hidden
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 data HaddockProjectFlags = HaddockProjectFlags
   { haddockProjectCommonFlags :: !CommonSetupFlags
@@ -439,7 +441,7 @@ data HaddockProjectFlags = HaddockProjectFlags
     haddockProjectResourcesDir :: Flag String
   , haddockProjectUseUnicode :: Flag Bool
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 defaultHaddockProjectFlags :: HaddockProjectFlags
 defaultHaddockProjectFlags =

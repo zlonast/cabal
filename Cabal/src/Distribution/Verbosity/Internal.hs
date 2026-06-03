@@ -1,4 +1,6 @@
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Verbosity.Internal
   ( VerbosityLevel (..)
@@ -9,11 +11,8 @@ import Distribution.Compat.Prelude
 import Prelude ()
 
 data VerbosityLevel = Silent | Normal | Verbose | Deafening
-  deriving (Generic, Show, Read, Eq, Ord, Enum, Bounded)
-
-instance Binary VerbosityLevel
-instance NFData VerbosityLevel
-instance Structured VerbosityLevel
+  deriving stock (Generic, Show, Read, Eq, Ord, Enum, Bounded)
+  deriving anyclass (Binary, NFData, Structured)
 
 data VerbosityFlag
   = VCallStack
@@ -24,8 +23,5 @@ data VerbosityFlag
   | -- | @since 3.4.0.0
     VStderr
   | VNoWarn
-  deriving (Generic, Show, Read, Eq, Ord, Enum, Bounded)
-
-instance Binary VerbosityFlag
-instance NFData VerbosityFlag
-instance Structured VerbosityFlag
+  deriving stock (Generic, Show, Read, Eq, Ord, Enum, Bounded)
+  deriving anyclass (Binary, NFData, Structured)

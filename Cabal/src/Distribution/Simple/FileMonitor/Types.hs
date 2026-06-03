@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 -- |
 -- Module: Distribution.Simple.FileMonitor.Types
@@ -54,7 +55,7 @@ data RootedGlob
       -- ^ what the glob is relative to
       Glob
       -- ^ the glob
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary RootedGlob
 instance Structured RootedGlob
@@ -64,7 +65,7 @@ data FilePathRoot
   | -- | e.g. @"/"@, @"c:\"@ or result of 'takeDrive'
     FilePathRoot FilePath
   | FilePathHomeDir
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary FilePathRoot
 instance Structured FilePathRoot
@@ -88,20 +89,20 @@ data MonitorFilePath
       , monitorKindDir :: !MonitorKindDir
       , monitorPathGlob :: !RootedGlob
       }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 data MonitorKindFile
   = FileExists
   | FileModTime
   | FileHashed
   | FileNotExists
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 data MonitorKindDir
   = DirExists
   | DirModTime
   | DirNotExists
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary MonitorFilePath
 instance Binary MonitorKindFile

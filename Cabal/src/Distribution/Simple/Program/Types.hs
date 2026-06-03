@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE RankNTypes #-}
 
@@ -106,7 +107,7 @@ data ProgramSearchPathEntry
     ProgramSearchPathDir FilePath
   | -- | The system default
     ProgramSearchPathDefault
-  deriving (Show, Eq, Generic)
+  deriving stock (Show, Eq, Generic)
 
 instance Binary ProgramSearchPathEntry
 instance Structured ProgramSearchPathEntry
@@ -146,7 +147,7 @@ data ConfiguredProgram = ConfiguredProgram
   -- monitor to detect when the re-configuring the program might give a
   -- different result (e.g. found in a different location).
   }
-  deriving (Eq, Generic, Read, Show)
+  deriving stock (Eq, Generic, Read, Show)
 
 instance Binary ConfiguredProgram
 instance Structured ConfiguredProgram
@@ -159,7 +160,7 @@ data ProgramLocation
     UserSpecified {locationPath :: FilePath}
   | -- | The program was found automatically.
     FoundOnSystem {locationPath :: FilePath}
-  deriving (Eq, Generic, Read, Show)
+  deriving stock (Eq, Generic, Read, Show)
 
 instance Binary ProgramLocation
 instance Structured ProgramLocation

@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
@@ -85,7 +86,7 @@ data PackageCheck
     -- quite legitimately refuse to publicly distribute packages with these
     -- problems.
     PackageDistInexcusable {explanation :: CheckExplanation}
-  deriving (Eq, Ord)
+  deriving stock (Eq, Ord)
 
 -- | Pretty printing 'PackageCheck'.
 ppPackageCheck :: PackageCheck -> String
@@ -284,7 +285,7 @@ data CheckExplanation
   | MissingSourceControl
   | MissingExpectedDocFiles Bool [FilePath]
   | WrongFieldForExpectedDocFiles Bool String [FilePath]
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 -- TODO Some checks have a constructor in list form
 --      (e.g. `SomeWarn [n]`), CheckM m () correctly catches warnings in
@@ -452,7 +453,7 @@ data CheckExplanationID
   | CIMissingSourceControl
   | CIMissingExpectedDocFiles
   | CIWrongFieldForExpectedDocFiles
-  deriving (Eq, Ord, Show, Enum, Bounded)
+  deriving stock (Eq, Ord, Show, Enum, Bounded)
 
 checkExplanationId :: CheckExplanation -> CheckExplanationID
 checkExplanationId (ParseWarning{}) = CIParseWarning
@@ -771,7 +772,7 @@ data CEType
   | CETTest UnqualComponentName
   | CETBenchmark UnqualComponentName
   | CETSetup
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 -- | Pretty printing `CEType`.
 ppCET :: CEType -> String
@@ -788,7 +789,7 @@ ppCET cet = case cet of
 
 -- | Which language are we referring to in our warning message?
 data WarnLang = LangC | LangCPlusPlus
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 -- | Pretty printing `WarnLang`.
 ppWarnLang :: WarnLang -> String

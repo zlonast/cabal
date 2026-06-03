@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE RankNTypes #-}
 
@@ -54,7 +55,7 @@ data OptionDescr = OptionDescr
   , optionType :: OptionType
   , optionDefault :: Maybe String
   }
-  deriving (Eq, Read, Show)
+  deriving stock (Eq, Read, Show)
 
 data OptionType
   = OptionFile
@@ -73,7 +74,7 @@ data OptionType
   | OptionEnum [String]
   | OptionSet [String]
   | OptionRngSeed
-  deriving (Eq, Read, Show)
+  deriving stock (Eq, Read, Show)
 
 data Test
   = Test TestInstance
@@ -101,7 +102,7 @@ data Result
   = Pass
   | Fail String
   | Error String
-  deriving (Eq, Read, Show)
+  deriving stock (Eq, Read, Show)
 
 -- | Create a named group of tests, which are assumed to be safe to run in
 -- parallel.

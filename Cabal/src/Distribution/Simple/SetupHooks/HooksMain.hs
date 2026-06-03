@@ -144,8 +144,7 @@ data CabalABI = CabalABI
   { cabalLocalBuildInfo :: LocalBuildInfo
   }
   deriving stock (Generic)
-
-deriving anyclass instance Structured CabalABI
+  deriving anyclass (Structured)
 
 -- | Tracks the parts of the Hooks API relevant to its binary interface.
 data HooksABI = HooksABI
@@ -162,8 +161,7 @@ data HooksABI = HooksABI
   , installHooks :: InstallComponentInputs
   }
   deriving stock (Generic)
-
-deriving anyclass instance Structured HooksABI
+  deriving anyclass (Structured)
 
 --------------------------------------------------------------------------------
 -- Error types (internal)
@@ -178,7 +176,7 @@ data SetupHooksExeException
       String
       -- ^ hook name
       BadHooksExecutableArgs
-  deriving (Show)
+  deriving stock (Show)
 
 -- | An error describing an invalid argument passed to a hooks executable.
 data BadHooksExecutableArgs
@@ -195,7 +193,7 @@ data BadHooksExecutableArgs
       -- ^ decoding error message
   | -- | The rule does not have a dynamic dependency computation.
     NoDynDepsCmd RuleId
-  deriving (Show)
+  deriving stock (Show)
 
 setupHooksExeExceptionCode :: SetupHooksExeException -> Int
 setupHooksExeExceptionCode = \case

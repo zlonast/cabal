@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -53,7 +54,7 @@ data SDistFlags = SDistFlags
   , sDistDirectory :: Flag FilePath
   , sDistListSources :: Flag FilePath
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 pattern SDistCommonFlags
   :: Flag VerbosityFlags

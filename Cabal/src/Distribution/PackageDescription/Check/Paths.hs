@@ -342,7 +342,7 @@ isGoodRelativeDirectoryPath = state0
 -- import Kleene.ERE (ERE (..), intersections)
 --
 -- data C = CDot | CSlash | CChar
---   deriving (Eq, Ord, Enum, Bounded, Show)
+--   deriving stock (Eq, Ord, Enum, Bounded, Show)
 --
 -- reservedR :: ERE C
 -- reservedR = notChar CSlash

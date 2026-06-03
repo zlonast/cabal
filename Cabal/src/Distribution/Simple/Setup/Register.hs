@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -58,7 +59,7 @@ data RegisterFlags = RegisterFlags
   , regInPlace :: Flag Bool
   , regPrintId :: Flag Bool
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 pattern RegisterCommonFlags
   :: Flag VerbosityFlags

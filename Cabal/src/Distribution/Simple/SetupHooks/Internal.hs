@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DuplicateRecordFields #-}
@@ -215,7 +216,8 @@ data PreConfPackageInputs = PreConfPackageInputs
   , compiler :: Compiler
   , platform :: Platform
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
+  deriving anyclass (Binary, Structured)
 
 -- | Outputs of the package-wide pre-configure step.
 --
@@ -226,7 +228,8 @@ data PreConfPackageOutputs = PreConfPackageOutputs
   { buildOptions :: BuildOptions
   , extraConfiguredProgs :: ConfiguredProgs
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
+  deriving anyclass (Binary, Structured)
 
 -- | Use this smart constructor to declare an empty set of changes
 -- by the package-wide pre-configure hook, and override the fields you
@@ -252,7 +255,8 @@ data PostConfPackageInputs = PostConfPackageInputs
   { localBuildConfig :: LocalBuildConfig
   , packageBuildDescr :: PackageBuildDescr
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
+  deriving anyclass (Binary, Structured)
 
 -- | Per-component pre-configure step.
 --
@@ -267,7 +271,8 @@ data PreConfComponentInputs = PreConfComponentInputs
   , packageBuildDescr :: PackageBuildDescr
   , component :: Component
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
+  deriving anyclass (Binary, Structured)
 
 -- | Outputs of the per-component pre-configure step.
 --
@@ -277,7 +282,8 @@ data PreConfComponentInputs = PreConfComponentInputs
 data PreConfComponentOutputs = PreConfComponentOutputs
   { componentDiff :: ComponentDiff
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
+  deriving anyclass (Binary, Structured)
 
 -- | Use this smart constructor to declare an empty set of changes
 -- by a per-component pre-configure hook, and override the fields you
@@ -425,7 +431,8 @@ data PreBuildComponentInputs = PreBuildComponentInputs
   , targetInfo :: TargetInfo
   -- ^ information about an individual component
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
+  deriving anyclass (Binary, Structured)
 
 type PreBuildComponentRules = Rules PreBuildComponentInputs
 
@@ -434,7 +441,8 @@ data PostBuildComponentInputs = PostBuildComponentInputs
   , localBuildInfo :: LocalBuildInfo
   , targetInfo :: TargetInfo
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
+  deriving anyclass (Binary, Structured)
 
 type PostBuildComponentHook = PostBuildComponentInputs -> IO ()
 
@@ -490,7 +498,8 @@ data InstallComponentInputs = InstallComponentInputs
   , localBuildInfo :: LocalBuildInfo
   , targetInfo :: TargetInfo
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
+  deriving anyclass (Binary, Structured)
 
 -- | A per-component install hook,
 -- which can only perform side effects (e.g. copying files).
@@ -536,7 +545,7 @@ type BuildInfoDiff = BuildInfo
 -- | A diff to a Cabal 'Component', that gets combined monoidally into
 -- an existing 'Component'.
 newtype ComponentDiff = ComponentDiff {componentDiff :: Component}
-  deriving (Semigroup, Show)
+  deriving newtype (Semigroup, Show, Binary, Structured)
 
 emptyComponentDiff :: ComponentName -> ComponentDiff
 emptyComponentDiff name = ComponentDiff $
@@ -1267,33 +1276,3 @@ buildInfoLibraryDiff bi = emptyLibrary{libBuildInfo = bi}
 
 buildInfoExecutableDiff :: BuildInfo -> ExecutableDiff
 buildInfoExecutableDiff bi = emptyExecutable{buildInfo = bi}
-
---------------------------------------------------------------------------------
--- Instances for serialisation
-
-deriving newtype instance Binary ComponentDiff
-deriving newtype instance Structured ComponentDiff
-
-instance Binary PreConfPackageInputs
-instance Structured PreConfPackageInputs
-instance Binary PreConfPackageOutputs
-instance Structured PreConfPackageOutputs
-
-instance Binary PostConfPackageInputs
-instance Structured PostConfPackageInputs
-
-instance Binary PreConfComponentInputs
-instance Structured PreConfComponentInputs
-instance Binary PreConfComponentOutputs
-instance Structured PreConfComponentOutputs
-
-instance Binary PreBuildComponentInputs
-instance Structured PreBuildComponentInputs
-
-instance Binary PostBuildComponentInputs
-instance Structured PostBuildComponentInputs
-
-instance Binary InstallComponentInputs
-instance Structured InstallComponentInputs
-
---------------------------------------------------------------------------------

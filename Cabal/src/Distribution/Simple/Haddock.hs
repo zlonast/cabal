@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE LambdaCase #-}
@@ -155,10 +156,11 @@ data HaddockArgs = HaddockArgs
   , argUseUnicode :: Flag Bool
   -- ^ haddock's `--use-unicode` flag
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 -- | The FilePath of a directory, it's a monoid under '(</>)'.
-newtype Directory = Dir {unDir' :: FilePath} deriving (Read, Show, Eq, Ord)
+newtype Directory = Dir {unDir' :: FilePath}
+  deriving stock (Read, Show, Eq, Ord)
 
 -- NB: only correct at the top-level, after we have combined monoidally
 -- the top-level output directory with the component subdir.
@@ -168,7 +170,7 @@ unDir = makeSymbolicPath . normalise . unDir'
 type Template = String
 
 data Output = Html | Hoogle
-  deriving (Eq)
+  deriving stock (Eq)
 
 -- ------------------------------------------------------------------------------
 -- Haddock support

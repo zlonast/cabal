@@ -1,5 +1,6 @@
 {- FOURMOLU_DISABLE -}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 module Distribution.Simple.Build.PathsModule.Z (render, Z(..)) where
 import Distribution.ZinzaPrelude
 data Z
@@ -20,7 +21,7 @@ data Z
          zSysconfdir :: FilePath,
          zNot :: (Bool -> Bool),
          zManglePkgName :: (PackageName -> String)}
-    deriving Generic
+    deriving stock Generic
 render :: Z -> String
 render z_root = execWriter $ do
   tell "{-# LANGUAGE CPP #-}\n"

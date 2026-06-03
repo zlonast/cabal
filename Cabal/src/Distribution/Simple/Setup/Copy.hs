@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE PatternSynonyms #-}
@@ -55,7 +56,7 @@ data CopyFlags = CopyFlags
   { copyCommonFlags :: !CommonSetupFlags
   , copyDest :: Flag CopyDest
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 pattern CopyCommonFlags
   :: Flag VerbosityFlags

@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.AnnotatedId
   ( AnnotatedId (..)
@@ -21,7 +22,7 @@ data AnnotatedId id = AnnotatedId
   , ann_cname :: ComponentName
   , ann_id :: id
   }
-  deriving (Show, Functor)
+  deriving stock (Show, Functor)
 
 instance Eq id => Eq (AnnotatedId id) where
   x == y = ann_id x == ann_id y

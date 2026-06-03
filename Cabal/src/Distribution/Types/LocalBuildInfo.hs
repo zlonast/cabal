@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NamedFieldPuns #-}
@@ -144,7 +145,7 @@ data LocalBuildInfo = NewLocalBuildInfo
   -- ^ Information about a package configuration
   -- that can be modified by the user at configuration time.
   }
-  deriving (Generic, Read, Show)
+  deriving stock (Generic, Read, Show)
 
 {-# COMPLETE LocalBuildInfo #-}
 

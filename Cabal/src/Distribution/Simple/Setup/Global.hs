@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE RankNTypes #-}
 
@@ -48,7 +49,7 @@ data GlobalFlags = GlobalFlags
   , globalNumericVersion :: Flag Bool
   , globalWorkingDir :: Flag (SymbolicPath CWD (Dir Pkg))
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 defaultGlobalFlags :: GlobalFlags
 defaultGlobalFlags =

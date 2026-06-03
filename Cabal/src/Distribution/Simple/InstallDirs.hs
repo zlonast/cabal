@@ -2,6 +2,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RankNTypes #-}
@@ -108,7 +109,7 @@ data InstallDirs dir = InstallDirs
   , haddockdir :: dir
   , sysconfdir :: dir
   }
-  deriving (Eq, Read, Show, Functor, Generic)
+  deriving stock (Eq, Read, Show, Functor, Generic)
 
 instance Binary dir => Binary (InstallDirs dir)
 instance NFData dir => NFData (InstallDirs dir)
@@ -354,7 +355,7 @@ data CopyDest
     --   adjust the paths to be relative to the provided package
     --   database when copying / installing.
     CopyToDb FilePath
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 -- TODO: are these paths absolute or relative? Relative to what?
 
@@ -401,7 +402,7 @@ prefixRelativeInstallDirs pkgId libname compilerId platform dirs =
 -- | An abstract path, possibly containing variables that need to be
 -- substituted for to get a real 'FilePath'.
 newtype PathTemplate = PathTemplate [PathComponent]
-  deriving (Eq, Ord, Generic)
+  deriving stock (Eq, Ord, Generic)
 
 instance Binary PathTemplate
 instance NFData PathTemplate

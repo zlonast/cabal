@@ -393,6 +393,8 @@ library
     DeriveFunctor
     DeriveGeneric
     DeriveTraversable
+    DerivingStrategies
+    DeriveAnyClass
     ExistentialQuantification
     FlexibleContexts
     FlexibleInstances

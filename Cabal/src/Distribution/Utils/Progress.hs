@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 -- Note: This module was copied from cabal-install.
 
@@ -28,7 +29,7 @@ data Progress step fail done
   = Step step (Progress step fail done)
   | Fail fail
   | Done done
-  deriving (Functor)
+  deriving stock (Functor)
 
 -- | Emit a step and then continue.
 stepProgress :: step -> Progress step fail ()

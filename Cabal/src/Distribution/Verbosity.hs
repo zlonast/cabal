@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE TypeApplications #-}
 
 -----------------------------------------------------------------------------
@@ -108,7 +109,7 @@ data Verbosity = Verbosity
   { verbosityFlags :: VerbosityFlags
   , verbosityHandles :: VerbosityHandles
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 -- | Handles to use for logging (e.g. log to stdout, or log to a file).
 data VerbosityHandles = VerbosityHandles
@@ -129,7 +130,7 @@ data VerbosityFlags = VerbosityFlags
   , vFlags :: Set VerbosityFlag
   , vQuiet :: Bool
   }
-  deriving (Generic, Show, Read, Eq)
+  deriving stock (Generic, Show, Read, Eq)
 
 verbosityLevel :: Verbosity -> VerbosityLevel
 verbosityLevel = vLevel . verbosityFlags

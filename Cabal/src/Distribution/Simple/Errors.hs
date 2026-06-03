@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 -----------------------------------------------------------------------------
 
 -- Module      :  Distribution.Simple.Errors
@@ -38,7 +40,7 @@ data FailedDependency
   = DependencyNotExists PackageName
   | DependencyMissingInternal PackageName LibraryName
   | DependencyNoVersion Dependency
-  deriving (Show)
+  deriving stock (Show)
 
 -- Types representing exceptions thrown by functions in all the modules of Cabal Package
 data CabalException
@@ -170,7 +172,7 @@ data CabalException
   | SetupHooksException SetupHooksException
   | MultiReplDoesNotSupportComplexReexportedModules PackageName ComponentName
   | StandaloneBytecodeNotSupportedYet
-  deriving (Show)
+  deriving stock (Show)
 
 exceptionCode :: CabalException -> Int
 exceptionCode e = case e of

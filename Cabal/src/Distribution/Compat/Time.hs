@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Distribution.Compat.Time
@@ -20,7 +21,8 @@ import Data.Time.Clock.POSIX (POSIXTime, getPOSIXTime, posixDayLength, utcTimeTo
 -- | File's modification time, represented
 -- internally as a 64-bit unsigned integer in the Windows UTC format.
 newtype ModTime = ModTime Word64
-  deriving (Binary, Generic, Bounded, Eq, Ord)
+  deriving stock (Generic)
+  deriving newtype (Binary, Bounded, Eq, Ord)
 
 instance Structured ModTime
 

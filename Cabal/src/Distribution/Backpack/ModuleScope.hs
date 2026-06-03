@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 -- | See <https://github.com/ezyang/ghc-proposals/blob/backpack/proposals/0000-backpack.rst>
 module Distribution.Backpack.ModuleScope
@@ -121,7 +122,7 @@ dispComponent pn cn =
 
 -- | An 'OpenModule', annotated with where it came from in a Cabal file.
 data WithSource a = WithSource ModuleSource a
-  deriving (Functor, Foldable, Traversable)
+  deriving stock (Functor, Foldable, Traversable)
 
 unWithSource :: WithSource a -> a
 unWithSource (WithSource _ x) = x

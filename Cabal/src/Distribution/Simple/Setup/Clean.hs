@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -50,7 +51,7 @@ data CleanFlags = CleanFlags
   { cleanCommonFlags :: !CommonSetupFlags
   , cleanSaveConf :: Flag Bool
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 pattern CleanCommonFlags
   :: Flag VerbosityFlags

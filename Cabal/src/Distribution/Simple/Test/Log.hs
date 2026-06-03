@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE RankNTypes #-}
 
@@ -43,7 +44,7 @@ data PackageLog = PackageLog
   , platform :: Platform
   , testSuites :: [TestSuiteLog]
   }
-  deriving (Read, Show, Eq)
+  deriving stock (Read, Show, Eq)
 
 -- | A 'PackageLog' with package and platform information specified.
 localPackageLog :: PD.PackageDescription -> LBI.LocalBuildInfo -> PackageLog
@@ -61,7 +62,7 @@ data TestSuiteLog = TestSuiteLog
   , testLogs :: TestLogs
   , logFile :: FilePath -- path to human-readable log file
   }
-  deriving (Read, Show, Eq)
+  deriving stock (Read, Show, Eq)
 
 data TestLogs
   = TestLog
@@ -70,7 +71,7 @@ data TestLogs
       , testResult :: Result
       }
   | GroupLogs String [TestLogs]
-  deriving (Read, Show, Eq)
+  deriving stock (Read, Show, Eq)
 
 -- | Count the number of pass, fail, and error test results in a 'TestLogs'
 -- tree.

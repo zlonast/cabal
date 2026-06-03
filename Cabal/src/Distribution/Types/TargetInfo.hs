@@ -1,4 +1,6 @@
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE TypeFamilies #-}
 
 module Distribution.Types.TargetInfo
@@ -28,10 +30,8 @@ data TargetInfo = TargetInfo
   -- generalization.  Figure it out later.
   -- targetSub       :: Maybe (Either ModuleName FilePath)
   }
-  deriving (Generic, Show)
-
-instance Binary TargetInfo
-instance Structured TargetInfo
+  deriving stock (Generic, Show)
+  deriving anyclass (Binary, Structured)
 
 instance IsNode TargetInfo where
   type Key TargetInfo = UnitId

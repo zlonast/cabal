@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Types.ParStrat where
 
 import Distribution.Compat.Prelude
@@ -10,7 +12,7 @@ data ParStratX sem
     UseSem sem
   | -- | No parallelism (neither `-jN` nor `--semaphore`, but could be `-j1`).
     Serial
-  deriving (Show)
+  deriving stock (Show)
 
 instance NFData sem => NFData (ParStratX sem) where
   rnf (NumJobs m) = rnf m

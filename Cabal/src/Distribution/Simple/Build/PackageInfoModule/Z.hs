@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Simple.Build.PackageInfoModule.Z (render, Z (..)) where
 
@@ -11,7 +12,7 @@ data Z = Z
   , zCopyright :: String
   , zHomepage :: String
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 render :: Z -> String
 render z_root = execWriter $ do

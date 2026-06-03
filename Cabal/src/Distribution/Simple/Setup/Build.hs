@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -58,7 +59,7 @@ data BuildFlags = BuildFlags
   , buildNumJobs :: Flag (Maybe Int)
   , buildUseSemaphore :: Flag String
   }
-  deriving (Read, Show, Generic)
+  deriving stock (Read, Show, Generic)
 
 pattern BuildCommonFlags
   :: Flag VerbosityFlags
