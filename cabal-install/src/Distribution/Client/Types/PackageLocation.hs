@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.Types.PackageLocation
   ( PackageLocation (..)
@@ -38,7 +39,7 @@ data PackageLocation local
     RepoTarballPackage Repo PackageId local
   | -- | A package available from a version control system source repository
     RemoteSourceRepoPackage SourceRepoMaybe local
-  deriving (Show, Functor, Eq, Ord, Generic)
+  deriving stock (Show, Functor, Eq, Ord, Generic)
 
 instance Pretty (PackageLocation local) where
   pretty (LocalUnpackedPackage fp) = showFilePath fp

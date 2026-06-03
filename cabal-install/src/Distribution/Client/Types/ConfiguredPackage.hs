@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE TypeFamilies #-}
 
 module Distribution.Client.Types.ConfiguredPackage
@@ -46,7 +47,7 @@ data ConfiguredPackage loc = ConfiguredPackage
   -- in the 'PackageDescription' that you'd get by
   -- applying the flag assignment and optional stanzas.
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 -- | 'HasConfiguredId' indicates data types which have a 'ConfiguredId'.
 -- This type class is mostly used to conveniently finesse between

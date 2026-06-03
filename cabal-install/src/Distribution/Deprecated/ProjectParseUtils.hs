@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# OPTIONS_HADDOCK hide #-}
 
 module Distribution.Deprecated.ProjectParseUtils
@@ -21,12 +22,12 @@ data ProjectParseError = ProjectParseError
   , projectParseSource :: Maybe ProjectConfigPath
   , projectParseError :: Pkg.PError
   }
-  deriving (Show)
+  deriving stock (Show)
 
 data ProjectParseResult a
   = ProjectParseFailed ProjectParseError
   | ProjectParseOk [ProjectParseWarning] a
-  deriving (Show)
+  deriving stock (Show)
 
 projectParse :: Maybe String -> ProjectConfigPath -> Pkg.ParseResult a -> ProjectParseResult a
 projectParse s path (Pkg.ParseFailed err) = ProjectParseFailed $ ProjectParseError s (Just path) err

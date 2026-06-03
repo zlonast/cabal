@@ -1,5 +1,6 @@
 {-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PatternSynonyms #-}
 
@@ -51,7 +52,7 @@ data ClientInstallFlags = ClientInstallFlags
   , cinstInstallMethod :: Flag InstallMethod
   , cinstInstalldir :: Flag FilePath
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Monoid ClientInstallFlags where
   mempty = gmempty

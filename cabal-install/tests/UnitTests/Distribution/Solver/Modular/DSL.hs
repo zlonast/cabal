@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DisambiguateRecordFields #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -159,7 +160,7 @@ data Dependencies = Dependencies
   , depsIsBuildable :: Bool
   , depsExampleDependencies :: [ExampleDependency]
   }
-  deriving (Show)
+  deriving stock (Show)
 
 instance Semigroup Dependencies where
   deps1 <> deps2 =
@@ -215,7 +216,7 @@ data ExampleDependency
     ExLang Language
   | -- | Dependency on a pkg-config package
     ExPkg (ExamplePkgName, ExamplePkgVersion)
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Simplified version of D.Types.GenericPackageDescription.Flag for use in
 -- example source packages.
@@ -224,7 +225,7 @@ data ExFlag = ExFlag
   , exFlagDefault :: Bool
   , exFlagType :: FlagType
   }
-  deriving (Show)
+  deriving stock (Show)
 
 data ExSubLib = ExSubLib ExampleSubLibName Dependencies
 
@@ -252,12 +253,12 @@ data ExConstraint
   = ExVersionConstraint ConstraintScope ExampleVersionRange
   | ExFlagConstraint ConstraintScope ExampleFlagName Bool
   | ExStanzaConstraint ConstraintScope [OptionalStanza]
-  deriving (Show)
+  deriving stock (Show)
 
 data ExPreference
   = ExPkgPref ExamplePkgName ExampleVersionRange
   | ExStanzaPref ExamplePkgName [OptionalStanza]
-  deriving (Show)
+  deriving stock (Show)
 
 data ExampleAvailable = ExAv
   { exAvName :: ExamplePkgName
@@ -267,7 +268,7 @@ data ExampleAvailable = ExAv
     -- the fields in C.Flag.
     exAvFlags :: [ExFlag]
   }
-  deriving (Show)
+  deriving stock (Show)
 
 data ExampleVar
   = P ExampleQualifier ExamplePkgName
@@ -287,7 +288,7 @@ data ExampleQualifier
 
 -- | Whether to enable tests in all packages in a test case.
 newtype EnableAllTests = EnableAllTests Bool
-  deriving (BooleanFlag)
+  deriving newtype (BooleanFlag)
 
 -- | Constructs an 'ExampleAvailable' package for the 'ExampleDb',
 -- given:
@@ -372,7 +373,7 @@ data ExampleInstalled = ExInst
   , exInstHash :: ExamplePkgHash
   , exInstBuildAgainst :: [ExamplePkgHash]
   }
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Constructs an example installed package given:
 --

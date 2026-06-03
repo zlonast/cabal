@@ -1,4 +1,5 @@
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -82,7 +83,7 @@ import System.FilePath
 -- input files and values they depend on change. The crucial operations are
 -- 'rerunIfChanged' and 'monitorFiles'.
 newtype Rebuild a = Rebuild (ReaderT FilePath (StateT [MonitorFilePath] IO) a)
-  deriving (Functor, Applicative, Monad, MonadIO)
+  deriving newtype (Functor, Applicative, Monad, MonadIO)
 
 -- | Use this within the body action of 'rerunIfChanged' to declare that the
 -- action depends on the given files. This can be based on what the action

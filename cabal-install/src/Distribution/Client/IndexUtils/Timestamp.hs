@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -33,7 +34,8 @@ import qualified Text.PrettyPrint as Disp
 
 -- | UNIX timestamp (expressed in seconds since unix epoch, i.e. 1970).
 data Timestamp = NoTimestamp | TS Int64 -- Tar.EpochTime
-  deriving (Eq, Ord, NFData, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
+  deriving anyclass (NFData)
 
 epochTimeToTimestamp :: Tar.EpochTime -> Timestamp
 epochTimeToTimestamp = TS

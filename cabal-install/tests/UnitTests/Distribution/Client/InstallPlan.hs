@@ -1,4 +1,5 @@
 {-# LANGUAGE ConstraintKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE NoMonoLocalBinds #-}
@@ -168,7 +169,7 @@ instance Show TestInstallPlan where
   show (TestInstallPlan plan _ _ _) = InstallPlan.showInstallPlan plan
 
 data TestPkg = TestPkg PackageId UnitId [UnitId]
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 instance IsNode TestPkg where
   type Key TestPkg = UnitId

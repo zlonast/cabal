@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -59,7 +60,7 @@ data SourceFileEntry = SourceFileEntry
   , imports :: [ModuleName]
   , extensions :: [Extension]
   }
-  deriving (Show)
+  deriving stock (Show)
 
 -- Unfortunately we cannot use the version exported by Distribution.Simple.Program
 knownSuffixHandlers :: CabalSpecVersion -> String -> String

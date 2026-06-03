@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Distribution.Client.Types.AllowNewer
   ( AllowNewer (..)
@@ -32,11 +34,13 @@ import qualified Text.PrettyPrint as Disp
 
 -- | 'RelaxDeps' in the context of upper bounds (i.e. for @--allow-newer@ flag)
 newtype AllowNewer = AllowNewer {unAllowNewer :: RelaxDeps}
-  deriving (Eq, Read, Show, Generic)
+  deriving newtype (Eq, Read, Show)
+  deriving stock (Generic)
 
 -- | 'RelaxDeps' in the context of lower bounds (i.e. for @--allow-older@ flag)
 newtype AllowOlder = AllowOlder {unAllowOlder :: RelaxDeps}
-  deriving (Eq, Read, Show, Generic)
+  deriving newtype (Eq, Read, Show)
+  deriving stock (Generic)
 
 -- | Generic data type for policy when relaxing bounds in dependencies.
 -- Don't use this directly: use 'AllowOlder' or 'AllowNewer' depending
@@ -56,12 +60,12 @@ data RelaxDeps
     --
     -- (TODO: consider normalising 'RelaxDeps' and/or 'RelaxedDep')
     RelaxDepsAll
-  deriving (Eq, Read, Show, Generic)
+  deriving stock (Eq, Read, Show, Generic)
 
 -- | Dependencies can be relaxed either for all packages in the install plan, or
 -- only for some packages.
 data RelaxedDep = RelaxedDep !RelaxDepScope !RelaxDepMod !RelaxDepSubject
-  deriving (Eq, Read, Show, Generic)
+  deriving stock (Eq, Read, Show, Generic)
 
 -- | Specify the scope of a relaxation, i.e. limit which depending
 -- packages are allowed to have their version constraints relaxed.
@@ -72,7 +76,7 @@ data RelaxDepScope
     RelaxDepScopePackage !PackageName
   | -- | Apply relaxation to a specific version of a package only
     RelaxDepScopePackageId !PackageId
-  deriving (Eq, Read, Show, Generic)
+  deriving stock (Eq, Read, Show, Generic)
 
 -- | Modifier for dependency relaxation
 data RelaxDepMod
@@ -80,13 +84,13 @@ data RelaxDepMod
     RelaxDepModNone
   | -- | Apply relaxation only to @^>=@ constraints
     RelaxDepModCaret
-  deriving (Eq, Read, Show, Generic)
+  deriving stock (Eq, Read, Show, Generic)
 
 -- | Express whether to relax bounds /on/ @all@ packages, or a single package
 data RelaxDepSubject
   = RelaxDepSubjectAll
   | RelaxDepSubjectPkg !PackageName
-  deriving (Eq, Ord, Read, Show, Generic)
+  deriving stock (Eq, Ord, Read, Show, Generic)
 
 instance Pretty RelaxedDep where
   pretty (RelaxedDep scope rdmod subj) = case scope of

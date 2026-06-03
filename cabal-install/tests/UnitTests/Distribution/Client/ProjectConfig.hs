@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TupleSections #-}
@@ -458,7 +459,7 @@ instance Arbitrary ProjectConfig where
       ]
 
 newtype PackageLocationString = PackageLocationString {getPackageLocationString :: String}
-  deriving (Show)
+  deriving stock (Show)
 
 instance Arbitrary PackageLocationString where
   arbitrary =

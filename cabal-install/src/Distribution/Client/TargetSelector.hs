@@ -1,5 +1,7 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RecordWildCards #-}
@@ -207,17 +209,17 @@ data TargetSelector
       PackageName
       (Either UnqualComponentName ComponentName)
       SubComponentTarget
-  deriving (Eq, Ord, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
 
 -- | Does this 'TargetPackage' selector arise from syntax referring to a
 -- package in the current directory (e.g. @tests@ or no giving no explicit
 -- target at all) or does it come from syntax referring to a package name
 -- or location.
 data TargetImplicitCwd = TargetImplicitCwd | TargetExplicitNamed
-  deriving (Eq, Ord, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
 
 data ComponentKind = LibKind | FLibKind | ExeKind | TestKind | BenchKind
-  deriving (Eq, Ord, Enum, Show)
+  deriving stock (Eq, Ord, Enum, Show)
 
 type ComponentKindFilter = ComponentKind
 
@@ -231,10 +233,8 @@ data SubComponentTarget
   | -- | A specific file within a component. Note that this does not carry the
     -- file extension.
     FileTarget FilePath
-  deriving (Eq, Ord, Show, Generic)
-
-instance Binary SubComponentTarget
-instance Structured SubComponentTarget
+  deriving stock (Eq, Ord, Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 -- ------------------------------------------------------------
 
@@ -314,7 +314,7 @@ data TargetString
   | TargetString4 String String String String
   | TargetString5 String String String String String
   | TargetString7 String String String String String String String
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 -- | Parse a bunch of 'TargetString's (purely without throwing exceptions).
 parseTargetStrings :: [String] -> ([String], [TargetString])
@@ -443,13 +443,13 @@ data TargetStringFileStatus
   | TargetStringFileStatus4 String String String String
   | TargetStringFileStatus5 String String String String String
   | TargetStringFileStatus7 String String String String String String String
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 data FileStatus
   = FileStatusExistsFile FilePath -- the canonicalised filepath
   | FileStatusExistsDir FilePath -- the canonicalised filepath
   | FileStatusNotExists Bool -- does the parent dir exist even?
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 noFileStatus :: FileStatus
 noFileStatus = FileStatusNotExists False
@@ -676,7 +676,7 @@ data TargetSelectorProblem
     TargetSelectorNoTargetsInCwd Bool
   | TargetSelectorNoTargetsInProject
   | TargetSelectorNoScript TargetString
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 -- | Qualification levels.
 -- Given the filepath src/F, executable component A, and package foo:
@@ -689,7 +689,7 @@ data QualLevel
     QL3
   | -- | @pkg:foo:exe:A:file:src/F@
     QLFull
-  deriving (Eq, Enum, Show)
+  deriving stock (Eq, Enum, Show)
 
 disambiguateTargetSelectors
   :: (TargetStringFileStatus -> Match TargetSelector)
@@ -1795,7 +1795,7 @@ data KnownTargets = KnownTargets
   , knownComponentsPrimary :: [KnownComponent]
   , knownComponentsOther :: [KnownComponent]
   }
-  deriving (Show)
+  deriving stock (Show)
 
 data KnownPackage
   = KnownPackage
@@ -1807,7 +1807,7 @@ data KnownPackage
   | KnownPackageName
       { pinfoName :: PackageName
       }
-  deriving (Show)
+  deriving stock (Show)
 
 data KnownComponent = KnownComponent
   { cinfoName :: ComponentName
@@ -1819,7 +1819,7 @@ data KnownComponent = KnownComponent
   , cinfoCFiles :: [FilePath]
   , cinfoJsFiles :: [FilePath]
   }
-  deriving (Show)
+  deriving stock (Show)
 
 type ComponentStringName = String
 
@@ -2329,7 +2329,7 @@ matchDirectoryPrefix dirs filepath =
 data Match a
   = NoMatch !Confidence [MatchError]
   | Match !MatchClass !Confidence [a]
-  deriving (Show)
+  deriving stock (Show)
 
 -- | The kind of match, inexact or exact. We keep track of this so we can
 -- prefer exact over inexact matches. The 'Ord' here is important: we try
@@ -2344,7 +2344,7 @@ data MatchClass
   | -- | Exactly matches a known thing,
     --   e.g. matches a known package case sensitively
     Exact
-  deriving (Show, Eq, Ord)
+  deriving stock (Show, Eq, Ord)
 
 type Confidence = Int
 
@@ -2352,7 +2352,7 @@ data MatchError
   = MatchErrorExpected String String -- thing got
   | MatchErrorNoSuch String String [String] -- thing got alts
   | MatchErrorIn String String MatchError -- kind  thing
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 instance Functor Match where
   fmap _ (NoMatch d ms) = NoMatch d ms
@@ -2489,7 +2489,7 @@ data MaybeAmbiguous a
   = None [MatchError]
   | Unambiguous a
   | Ambiguous MatchClass [a]
-  deriving (Show)
+  deriving stock (Show)
 
 ------------------------------
 -- Basic matchers

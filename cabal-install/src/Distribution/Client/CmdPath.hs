@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE PatternSynonyms #-}
 
@@ -132,14 +133,14 @@ pathCommand =
 data PathOutputFormat
   = JSON
   | KeyValue
-  deriving (Eq, Ord, Show, Read, Enum, Bounded)
+  deriving stock (Eq, Ord, Show, Read, Enum, Bounded)
 
 data PathFlags = PathFlags
   { pathCompiler :: Flag Bool
   , pathOutputFormat :: Flag PathOutputFormat
   , pathDirectories :: Flag [ConfigPath]
   }
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 defaultPathFlags :: PathFlags
 defaultPathFlags =
@@ -209,7 +210,7 @@ data ConfigPath
   | ConfigPathStoreDir
   | ConfigPathConfigFile
   | ConfigPathInstallDir
-  deriving (Eq, Ord, Show, Enum, Bounded)
+  deriving stock (Eq, Ord, Show, Enum, Bounded)
 
 -- | The configuration name for this path.
 pathName :: ConfigPath -> String
@@ -320,7 +321,7 @@ data PathOutputs = PathOutputs
   { pathOutputsCompilerInfo :: Maybe PathCompilerInfo
   , pathOutputsConfigPaths :: [(String, FilePath)]
   }
-  deriving (Show, Eq, Ord)
+  deriving stock (Show, Eq, Ord)
 
 data PathCompilerInfo = PathCompilerInfo
   { pathCompilerInfoFlavour :: CompilerFlavor
@@ -329,7 +330,7 @@ data PathCompilerInfo = PathCompilerInfo
   , pathCompilerInfoPath :: FilePath
   , pathCompilerInfoStorePath :: FilePath
   }
-  deriving (Show, Eq, Ord)
+  deriving stock (Show, Eq, Ord)
 
 mkCompilerInfo :: ConfiguredProgram -> Compiler -> StoreDirLayout -> PathCompilerInfo
 mkCompilerInfo compilerProgram compiler storeLayout =

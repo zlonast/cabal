@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.Types.BuildResults
   ( BuildOutcome
@@ -32,7 +33,7 @@ data BuildFailure
   | BuildFailed SomeException
   | TestsFailed SomeException
   | InstallFailed SomeException
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 instance Exception BuildFailure
 
@@ -45,12 +46,12 @@ data BuildResult
       DocsResult
       TestsResult
       (Maybe InstalledPackageInfo)
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 data DocsResult = DocsNotTried | DocsFailed | DocsOk
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 data TestsResult = TestsNotTried | TestsOk
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 instance Binary BuildFailure
 instance Binary BuildResult

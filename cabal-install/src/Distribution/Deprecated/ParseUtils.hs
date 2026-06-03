@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE Rank2Types #-}
 -----------------------------------------------------------------------------
 -- This module is meant to be local-only to Distribution...
@@ -94,12 +95,12 @@ data PError
   | TabsError LineNo
   | FieldShouldBeStanza String LineNo
   | FromString String (Maybe LineNo)
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 data PWarning
   = PWarning String
   | UTFWarning LineNo String
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 showPWarning :: FilePath -> PWarning -> String
 showPWarning fpath (PWarning msg) =
@@ -113,7 +114,7 @@ showPWarning fpath (UTFWarning line fname) =
     ++ "' field."
 
 data ParseResult a = ParseFailed PError | ParseOk [PWarning] a
-  deriving (Show)
+  deriving stock (Show)
 
 instance Functor ParseResult where
   fmap _ (ParseFailed err) = ParseFailed err

@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE PatternSynonyms #-}
@@ -685,7 +686,7 @@ data BadProjectRoot
   | BadProjectRootAbsoluteFileNotFound FilePath
   | BadProjectRootDirFileNotFound FilePath FilePath
   | BadProjectRootFileBroken FilePath
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 instance Exception BadProjectRoot where
   displayException = renderBadProjectRoot
@@ -711,7 +712,7 @@ data ProjectRootUsability
     ProjectRootUsabilityPresentAndUnusable
   | -- | The file is not present
     ProjectRootUsabilityNotPresent
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 withGlobalConfig
   :: Verbosity
@@ -1080,12 +1081,12 @@ data ProjectPackageLocation
   | ProjectPackageRemoteTarball URI
   | ProjectPackageRemoteRepo SourceRepoList
   | ProjectPackageNamed PackageVersionConstraint
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Exception thrown by 'findProjectPackages'.
 data BadPackageLocations
   = BadPackageLocations (Set ProjectConfigProvenance) [BadPackageLocation]
-  deriving (Show)
+  deriving stock (Show)
 
 instance Exception BadPackageLocations where
   displayException = renderBadPackageLocations
@@ -1099,14 +1100,14 @@ data BadPackageLocation
   | BadLocUnexpectedUriScheme String
   | BadLocUnrecognisedUri String
   | BadLocUnrecognised String
-  deriving (Show)
+  deriving stock (Show)
 
 data BadPackageLocationMatch
   = BadLocUnexpectedFile String
   | BadLocNonexistentFile String
   | BadLocDirNoCabalFile String
   | BadLocDirManyCabalFiles String
-  deriving (Show)
+  deriving stock (Show)
 
 renderBadPackageLocations :: BadPackageLocations -> String
 renderBadPackageLocations (BadPackageLocations provenance bpls)
@@ -1788,7 +1789,7 @@ readSourcePackageCabalFile' logWarnings pkgfilename content =
 data CabalFileSearchFailure
   = NoCabalFileFound FilePath
   | MultipleCabalFilesFound FilePath
-  deriving (Show)
+  deriving stock (Show)
 
 instance Exception CabalFileSearchFailure
 
@@ -1898,7 +1899,7 @@ truncateString n s
 
 data BadPerPackageCompilerPaths
   = BadPerPackageCompilerPaths [(PackageName, String)]
-  deriving (Show)
+  deriving stock (Show)
 
 instance Exception BadPerPackageCompilerPaths where
   displayException = renderBadPerPackageCompilerPaths

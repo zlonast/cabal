@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Client.SavedFlags
   ( readCommandFlags
   , writeCommandFlags

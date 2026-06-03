@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 -- | cabal-install CLI command: bench
 module Distribution.Client.CmdBench
   ( -- * The @bench@ CLI and action
@@ -221,7 +223,7 @@ data BenchProblem
     TargetProblemComponentNotBenchmark PackageId ComponentName
   | -- | Asking to benchmark an individual file or module is not supported
     TargetProblemIsSubComponent PackageId ComponentName SubComponentTarget
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 type BenchTargetProblem = TargetProblem BenchProblem
 

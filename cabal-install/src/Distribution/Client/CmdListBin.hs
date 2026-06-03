@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Distribution.Client.CmdListBin
@@ -322,7 +323,7 @@ data ListBinProblem
     TargetProblemComponentNotRightKind PackageId ComponentName
   | -- | Asking to run an individual file or module is not supported
     TargetProblemIsSubComponent PackageId ComponentName SubComponentTarget
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 type ListBinTargetProblem = TargetProblem ListBinProblem
 

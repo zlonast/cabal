@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GADTs #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE TupleSections #-}
@@ -80,7 +82,8 @@ fetchImport parser cacheDir httpTransport verbosity projectDir normLocPath =
 
 -- | Not just any file path. The project itself.
 newtype ProjectFilePath = ProjectFilePath FilePath
-  deriving (Eq, Generic)
+  deriving newtype (Eq)
+  deriving stock (Generic)
 
 -- | Isomorphic with 'ProjectConfigPath' but with separate constructors for the
 -- root, imported file and imported URI.
@@ -279,7 +282,7 @@ data Dupes a = Dupes
   , dupesImports :: [ProjectNode a]
   -- ^ All the imports of this file.
   }
-  deriving (Eq)
+  deriving stock (Eq)
 
 instance Ord (Dupes a) where
   compare x y =

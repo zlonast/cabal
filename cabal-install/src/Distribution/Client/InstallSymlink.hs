@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -375,7 +376,7 @@ data SymlinkStatus
     -- symlinks (either because it is not a symlink or because
     -- it points somewhere other than our managed space).
     NotOurFile
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Take two canonical paths and produce a relative path to get from the first
 -- to the second, even if it means adding @..@ path components.

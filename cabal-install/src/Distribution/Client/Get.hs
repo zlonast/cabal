@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE PatternSynonyms #-}
 
 -- |
@@ -273,7 +274,7 @@ data ClonePackageException
   | ClonePackageNoRepoLocation PackageId PD.SourceRepo
   | ClonePackageDestinationExists PackageId FilePath Bool
   | ClonePackageFailedWithExitCode PackageId SourceRepoProxy String ExitCode
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 instance Exception ClonePackageException where
   displayException (ClonePackageNoSourceRepos pkgid) =

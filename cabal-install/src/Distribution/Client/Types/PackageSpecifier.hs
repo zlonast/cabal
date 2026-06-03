@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.Types.PackageSpecifier
   ( PackageSpecifier (..)
@@ -28,7 +29,7 @@ data PackageSpecifier pkg
     NamedPackage PackageName [PackageProperty]
   | -- | A fully specified source package.
     SpecificSourcePackage pkg
-  deriving (Eq, Show, Functor, Generic)
+  deriving stock (Eq, Show, Functor, Generic)
 
 instance Binary pkg => Binary (PackageSpecifier pkg)
 instance Structured pkg => Structured (PackageSpecifier pkg)

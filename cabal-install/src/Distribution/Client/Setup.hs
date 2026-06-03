@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -916,7 +917,7 @@ data ConfigExFlags = ConfigExFlags
   , configWriteGhcEnvironmentFilesPolicy
       :: Flag WriteGhcEnvironmentFilesPolicy
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 defaultConfigExFlags :: ConfigExFlags
 defaultConfigExFlags = mempty{configSolver = Flag defaultSolver}
@@ -1674,7 +1675,7 @@ data CheckFlags = CheckFlags
   { checkVerbosity :: Flag VerbosityFlags
   , checkIgnore :: [CheckExplanationIDString]
   }
-  deriving (Show)
+  deriving stock (Show)
 
 defaultCheckFlags :: CheckFlags
 defaultCheckFlags =
@@ -1726,7 +1727,7 @@ data UpdateFlags = UpdateFlags
   { updateVerbosity :: Flag VerbosityFlags
   , updateIndexState :: Flag TotalIndexState
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 defaultUpdateFlags :: UpdateFlags
 defaultUpdateFlags =
@@ -1821,7 +1822,7 @@ data ReportFlags = ReportFlags
   , reportVerbosity :: Flag VerbosityFlags
   , reportRepoName :: Flag RepoName
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 defaultReportFlags :: ReportFlags
 defaultReportFlags =
@@ -1912,7 +1913,7 @@ data GetFlags = GetFlags
   , getVerbosity :: Flag VerbosityFlags
   , getRepoName :: Flag RepoName
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 defaultGetFlags :: GetFlags
 defaultGetFlags =
@@ -2076,7 +2077,7 @@ data ListFlags = ListFlags
   , listPackageDBs :: [Maybe PackageDB]
   , listHcPath :: Flag FilePath
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 defaultListFlags :: ListFlags
 defaultListFlags =
@@ -2185,7 +2186,7 @@ data InfoFlags = InfoFlags
   { infoVerbosity :: Flag VerbosityFlags
   , infoPackageDBs :: [Maybe PackageDB]
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 defaultInfoFlags :: InfoFlags
 defaultInfoFlags =
@@ -2277,7 +2278,7 @@ data InstallFlags = InstallFlags
   , installRunTests :: Flag Bool
   , installOfflineMode :: Flag Bool
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary InstallFlags
 
@@ -2879,7 +2880,7 @@ instance Semigroup InstallFlags where
 
 -- | Is this a candidate package or a package to be published?
 data IsCandidate = IsCandidate | IsPublished
-  deriving (Eq)
+  deriving stock (Eq)
 
 data UploadFlags = UploadFlags
   { uploadCandidate :: Flag IsCandidate
@@ -2891,7 +2892,7 @@ data UploadFlags = UploadFlags
   , uploadVerbosity :: Flag VerbosityFlags
   , uploadRepoName :: Flag RepoName
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 defaultUploadFlags :: UploadFlags
 defaultUploadFlags =
@@ -3448,7 +3449,7 @@ filterCopyFlags flags cabalLibVersion =
 data ActAsSetupFlags = ActAsSetupFlags
   { actAsSetupBuildType :: Flag BuildType
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 defaultActAsSetupFlags :: ActAsSetupFlags
 defaultActAsSetupFlags =
@@ -3502,7 +3503,7 @@ data UserConfigFlags = UserConfigFlags
   , userConfigForce :: Flag Bool
   , userConfigAppendLines :: Flag [String]
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 instance Monoid UserConfigFlags where
   mempty =

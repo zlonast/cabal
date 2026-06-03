@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.ManpageFlags
   ( ManpageFlags (..)
@@ -16,7 +17,7 @@ data ManpageFlags = ManpageFlags
   { manpageVerbosity :: Flag VerbosityFlags
   , manpageRaw :: Flag Bool
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Monoid ManpageFlags where
   mempty = gmempty

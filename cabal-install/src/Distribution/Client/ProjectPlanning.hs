@@ -1,5 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RankNTypes #-}
@@ -3125,7 +3126,7 @@ data AvailableTarget k = AvailableTarget
   , availableTargetStatus :: AvailableTargetStatus k
   , availableTargetLocalToProject :: Bool
   }
-  deriving (Eq, Show, Functor)
+  deriving stock (Eq, Show, Functor)
 
 -- | The status of a an 'AvailableTarget' component. This tells us whether
 -- it's actually possible to select this component to be built, and if not
@@ -3141,7 +3142,7 @@ data AvailableTargetStatus k
     TargetNotLocal
   | -- | The target can or should be built
     TargetBuildable k TargetRequested
-  deriving (Eq, Ord, Show, Functor)
+  deriving stock (Eq, Ord, Show, Functor)
 
 -- | This tells us whether a target ought to be built by default, or only if
 -- specifically requested. The policy is that components like libraries and
@@ -3152,7 +3153,7 @@ data TargetRequested
     TargetRequestedByDefault
   | -- | Not to be built by default
     TargetNotRequestedByDefault
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 -- | Given the install plan, produce the set of 'AvailableTarget's for each
 -- package-component pair.
@@ -3928,7 +3929,7 @@ newtype CannotPruneDependencies
         , [ElaboratedPlanPackage]
         )
       ]
-  deriving (Show)
+  deriving stock (Show)
 
 -- The other aspects of our Setup.hs policy lives here where we decide on
 -- the 'SetupScriptOptions'.

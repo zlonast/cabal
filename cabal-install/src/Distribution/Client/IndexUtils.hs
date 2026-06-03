@@ -1,6 +1,9 @@
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GADTs #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
@@ -593,10 +596,8 @@ data PackageEntry
 
 -- | A build tree reference is either a link or a snapshot.
 data BuildTreeRefType = SnapshotRef | LinkRef
-  deriving (Eq, Show, Generic)
-
-instance Binary BuildTreeRefType
-instance Structured BuildTreeRefType
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 refTypeFromTypeCode :: Tar.TypeCode -> BuildTreeRefType
 refTypeFromTypeCode t
@@ -738,7 +739,7 @@ data PreferredVersionsParseError = PreferredVersionsParseError
   , preferredVersionsOriginalDependency :: String
   -- ^ Original input that produced the parser error.
   }
-  deriving (Generic, Read, Show, Eq, Ord)
+  deriving stock (Generic, Read, Show, Eq, Ord)
 
 -- | Parse `preferred-versions` file, collecting parse errors that can be shown
 -- in error messages.
@@ -1341,7 +1342,7 @@ data Cache = Cache
   -- 'cacheEntries'
   , cacheEntries :: [IndexCacheEntry]
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 instance NFData Cache where
   rnf = rnf . cacheEntries
@@ -1350,7 +1351,8 @@ instance NFData Cache where
 newtype NoIndexCache = NoIndexCache
   { noIndexCacheEntries :: [NoIndexCacheEntry]
   }
-  deriving (Show, Generic)
+  deriving newtype (Show)
+  deriving stock (Generic)
 
 instance NFData NoIndexCache where
   rnf = rnf . noIndexCacheEntries
@@ -1364,12 +1366,12 @@ data IndexCacheEntry
   | CachePreference Dependency !BlockNo !Timestamp
   | CacheBuildTreeRef !BuildTreeRefType !BlockNo
   -- NB: CacheBuildTreeRef is irrelevant for 01-index & v2-build
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 data NoIndexCacheEntry
   = CacheGPD GenericPackageDescription !BSS.ByteString
   | NoIndexCachePreference [Dependency]
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance NFData IndexCacheEntry where
   rnf (CachePackageId pkgid _ _) = rnf pkgid

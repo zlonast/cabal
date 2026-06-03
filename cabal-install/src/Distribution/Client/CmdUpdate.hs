@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TupleSections #-}
@@ -137,7 +138,7 @@ data UpdateRequest = UpdateRequest
   { _updateRequestRepoName :: RepoName
   , _updateRequestRepoState :: RepoIndexState
   }
-  deriving (Show)
+  deriving stock (Show)
 
 instance Pretty UpdateRequest where
   pretty (UpdateRequest n s) = pretty n <<>> Disp.comma <<>> pretty s

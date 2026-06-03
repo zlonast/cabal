@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 -----------------------------------------------------------------------------
@@ -37,7 +38,7 @@ import qualified Text.PrettyPrint as Disp
 
 -- | Index state of multiple repositories
 data TotalIndexState = TIS RepoIndexState (Map RepoName RepoIndexState)
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary TotalIndexState
 instance Structured TotalIndexState
@@ -128,7 +129,7 @@ data RepoIndexState
     IndexStateHead
   | -- | Use all entries that existed at the specified time
     IndexStateTime !Timestamp
-  deriving (Eq, Generic, Show)
+  deriving stock (Eq, Generic, Show)
 
 instance Binary RepoIndexState
 instance Structured RepoIndexState

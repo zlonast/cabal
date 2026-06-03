@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -101,7 +102,7 @@ data CleanFlags = CleanFlags
   , cleanVerbosity :: Flag VerbosityFlags
   , cleanDistDir :: Flag (SymbolicPath Pkg (Dir Dist))
   }
-  deriving (Eq)
+  deriving stock (Eq)
 
 defaultCleanFlags :: CleanFlags
 defaultCleanFlags =

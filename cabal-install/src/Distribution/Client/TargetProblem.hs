@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.TargetProblem
   ( TargetProblem (..)
@@ -48,7 +49,7 @@ data TargetProblem a
   | TargetProblemNoSuchComponent PackageId ComponentName
   | -- | A custom target problem
     CustomTargetProblem a
-  deriving (Eq, Show, Functor)
+  deriving stock (Eq, Show, Functor)
 
 -- | Type alias for a 'TargetProblem' with no user-defined problems/errors.
 --

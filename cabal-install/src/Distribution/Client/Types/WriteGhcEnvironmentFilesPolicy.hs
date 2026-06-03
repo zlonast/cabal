@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.Types.WriteGhcEnvironmentFilesPolicy
   ( WriteGhcEnvironmentFilesPolicy (..)
@@ -17,7 +18,7 @@ data WriteGhcEnvironmentFilesPolicy
   = AlwaysWriteGhcEnvironmentFiles
   | NeverWriteGhcEnvironmentFiles
   | WriteGhcEnvironmentFilesOnlyForGhc844AndNewer
-  deriving (Eq, Enum, Bounded, Generic, Show)
+  deriving stock (Eq, Enum, Bounded, Generic, Show)
 
 instance Binary WriteGhcEnvironmentFilesPolicy
 instance NFData WriteGhcEnvironmentFilesPolicy

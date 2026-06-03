@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Distribution.Client.Types.RepoName
   ( RepoName (..)
@@ -17,7 +19,8 @@ import qualified Text.PrettyPrint as Disp
 --
 -- May be used as path segment.
 newtype RepoName = RepoName {unRepoName :: String}
-  deriving (Show, Eq, Ord, Generic)
+  deriving newtype (Show, Eq, Ord)
+  deriving stock (Generic)
 
 instance Binary RepoName
 instance Structured RepoName

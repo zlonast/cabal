@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE StandaloneDeriving #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
 
@@ -280,7 +282,7 @@ solve enableBj fineGrainedConflicts reorder countConflicts indep prefOldest goal
 
 -- | How to modify the order of the input targets.
 data TargetOrder = SameOrder | ReverseOrder
-  deriving (Show)
+  deriving stock (Show)
 
 instance Arbitrary TargetOrder where
   arbitrary = elements [SameOrder, ReverseOrder]
@@ -294,20 +296,20 @@ data Result = Result
   }
 
 data Failure = BackjumpLimitReached | OtherFailure
-  deriving (Eq, Generic, Show)
+  deriving stock (Eq, Generic, Show)
 
 instance NFData Failure
 
 -- | Package name.
 newtype PN = PN {unPN :: String}
-  deriving (Eq, Ord, Show)
+  deriving newtype (Eq, Ord, Show)
 
 instance Arbitrary PN where
   arbitrary = PN <$> elements ("base" : [[pn] | pn <- ['A' .. 'G']])
 
 -- | Package version.
 newtype PV = PV {unPV :: Int}
-  deriving (Eq, Ord, Show)
+  deriving newtype (Eq, Ord, Show)
 
 instance Arbitrary PV where
   arbitrary = PV <$> elements [1 .. 10]
@@ -365,7 +367,7 @@ instance Arbitrary SolverTest where
 
 -- | Collection of source and installed packages.
 newtype TestDb = TestDb {unTestDb :: ExampleDb}
-  deriving (Show)
+  deriving stock (Show)
 
 instance Arbitrary TestDb where
   arbitrary = do

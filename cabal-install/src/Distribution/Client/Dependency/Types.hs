@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.Dependency.Types
   ( PreSolver (..)
@@ -15,11 +16,11 @@ import qualified Distribution.Compat.CharParsing as P
 
 -- | All the solvers that can be selected.
 data PreSolver = AlwaysModular
-  deriving (Eq, Ord, Show, Bounded, Enum, Generic)
+  deriving stock (Eq, Ord, Show, Bounded, Enum, Generic)
 
 -- | All the solvers that can be used.
 data Solver = Modular
-  deriving (Eq, Ord, Show, Bounded, Enum, Generic)
+  deriving stock (Eq, Ord, Show, Bounded, Enum, Generic)
 
 instance Binary PreSolver
 instance Binary Solver
@@ -61,4 +62,4 @@ data PackagesPreferenceDefault
     --
     -- * This is the standard policy for install.
     PreferLatestForSelected
-  deriving (Show)
+  deriving stock (Show)

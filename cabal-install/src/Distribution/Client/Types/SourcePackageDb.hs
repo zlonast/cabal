@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.Types.SourcePackageDb
   ( SourcePackageDb (..)
@@ -24,7 +25,7 @@ data SourcePackageDb = SourcePackageDb
   { packageIndex :: PackageIndex UnresolvedSourcePackage
   , packagePreferences :: Map PackageName VersionRange
   }
-  deriving (Eq, Generic)
+  deriving stock (Eq, Generic)
 
 instance Binary SourcePackageDb
 

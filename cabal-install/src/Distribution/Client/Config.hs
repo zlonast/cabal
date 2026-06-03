@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE PatternSynonyms #-}
 
 -----------------------------------------------------------------------------
@@ -276,7 +277,7 @@ data SavedConfig = SavedConfig
   , savedProjectFlags :: ProjectFlags
   , savedReplMulti :: Flag Bool
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 instance Monoid SavedConfig where
   mempty = gmempty

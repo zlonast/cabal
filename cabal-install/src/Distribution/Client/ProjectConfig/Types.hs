@@ -1,5 +1,7 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 -- | Handling project configuration, types.
@@ -111,6 +113,9 @@ import Distribution.Verbosity (VerbosityFlags)
 -- an imported file contributing to the project config.
 newtype ProjectConfigToParse = ProjectConfigToParse BS.ByteString
 
+instance NFData ProjectConfigToParse where
+  rnf (ProjectConfigToParse bs) = rnf bs
+
 -- | This type corresponds directly to what can be written in the
 -- @cabal.project@ file. Other sources of configuration can also be injected
 -- into this type, such as the user-wide config file and the
@@ -155,7 +160,8 @@ data ProjectConfig = ProjectConfig
   -- any packages which are explicitly named in `cabal.project`.
   , projectConfigSpecificPackage :: MapMappend PackageName PackageConfig
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 -- | That part of the project configuration that only affects /how/ we build
 -- and not the /value/ of the things we build. This means this information
@@ -183,7 +189,8 @@ data ProjectConfigBuildOnly = ProjectConfigBuildOnly
   , projectConfigLogsDir :: Flag FilePath
   , projectConfigClientInstallFlags :: ClientInstallFlags
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 -- | Project configuration that is shared between all packages in the project.
 -- In particular this includes configuration that affects the solver.
@@ -241,16 +248,16 @@ data ProjectConfigShared = ProjectConfigShared
   -- projectConfigOverrideReinstall :: Flag Bool,
   -- projectConfigUpgradeDeps       :: Flag Bool
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 data ProjectFileParser
   = LegacyParser
   | ParsecParser
   | FallbackParser
   | CompareParser
-  deriving (Eq, Show, Generic)
-
-instance NFData ProjectFileParser
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 defaultProjectFileParser :: ProjectFileParser
 #ifdef LEGACY_COMPARISON
@@ -269,7 +276,12 @@ data ProjectConfigProvenance
   | -- | The path the project configuration was explicitly read from.
     -- | The configuration was explicitly read from the specified 'ProjectConfigPath'.
     Explicit ProjectConfigPath
-  deriving (Eq, Ord, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
+  deriving anyclass (Binary, Structured)
+
+instance NFData ProjectConfigProvenance where
+  rnf Implicit = ()
+  rnf (Explicit path) = rnf path
 
 -- | Project configuration that is specific to each package, that is where we
 -- can in principle have different values for different packages in the same
@@ -343,39 +355,14 @@ data PackageConfig = PackageConfig
   , -- Benchmark options
     packageConfigBenchmarkOptions :: [PathTemplate]
   }
-  deriving (Eq, Show, Generic)
-
-instance Binary ProjectConfig
-instance Binary ProjectConfigBuildOnly
-instance Binary ProjectConfigShared
-instance Binary ProjectConfigProvenance
-instance Binary PackageConfig
-instance Binary ProjectFileParser
-
-instance Structured ProjectConfig
-instance Structured ProjectConfigBuildOnly
-instance Structured ProjectConfigShared
-instance Structured ProjectConfigProvenance
-instance Structured PackageConfig
-instance Structured ProjectFileParser
-
-instance NFData ProjectConfigToParse where
-  rnf (ProjectConfigToParse bs) = rnf bs
-
-instance NFData ProjectConfig
-instance NFData ProjectConfigBuildOnly
-instance NFData ProjectConfigShared
-
-instance NFData ProjectConfigProvenance where
-  rnf Implicit = ()
-  rnf (Explicit path) = rnf path
-
-instance NFData PackageConfig
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 -- | Newtype wrapper for 'Map' that provides a 'Monoid' instance that takes
 -- the last value rather than the first value for overlapping keys.
 newtype MapLast k v = MapLast {getMapLast :: Map k v}
-  deriving (Eq, Show, Functor, Generic, Binary)
+  deriving newtype (Eq, Show, Functor, Binary)
+  deriving stock (Generic)
 
 instance (Structured k, Structured v) => Structured (MapLast k v)
 
@@ -393,7 +380,8 @@ instance Ord k => Semigroup (MapLast k v) where
 -- | Newtype wrapper for 'Map' that provides a 'Monoid' instance that
 -- 'mappend's values of overlapping keys rather than taking the first.
 newtype MapMappend k v = MapMappend {getMapMappend :: Map k v}
-  deriving (Eq, Show, Functor, Generic, Binary)
+  deriving newtype (Eq, Show, Functor, Binary)
+  deriving stock (Generic)
 
 instance (Structured k, Structured v) => Structured (MapMappend k v)
 
@@ -480,11 +468,8 @@ data SolverSettings = SolverSettings
   -- solverSettingOverrideReinstall :: Bool,
   -- solverSettingUpgradeDeps       :: Bool
   }
-  deriving (Eq, Show, Generic)
-
-instance Binary SolverSettings
-instance NFData SolverSettings
-instance Structured SolverSettings
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 -- | Resolved configuration for things that affect how we build and not the
 -- value of the things we build. The idea is that this is easier to use than
@@ -523,6 +508,5 @@ data BuildTimeSettings = BuildTimeSettings
   , buildSettingProgPathExtra :: [FilePath]
   , buildSettingHaddockOpen :: Bool
   }
-  deriving (Generic)
-
-instance NFData BuildTimeSettings
+  deriving stock (Generic)
+  deriving anyclass (NFData)

@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Client.CmdInstall.ClientInstallTargetSelector
   ( WithoutProjectTargetSelector (..)
   , parseWithoutProjectTargetSelector
@@ -23,7 +25,7 @@ data WithoutProjectTargetSelector
   = WoPackageId PackageId
   | WoPackageComponent PackageId ComponentName
   | WoURI URI
-  deriving (Show)
+  deriving stock (Show)
 
 parseWithoutProjectTargetSelector :: Verbosity -> String -> IO WithoutProjectTargetSelector
 parseWithoutProjectTargetSelector verbosity input =

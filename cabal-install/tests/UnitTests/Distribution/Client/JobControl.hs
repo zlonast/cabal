@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module UnitTests.Distribution.Client.JobControl (tests) where
 
 import Distribution.Client.JobControl
@@ -176,7 +178,7 @@ prop_cancel_parallel (Positive (Small maxJobLimit)) xs ys = do
     return $ Set.fromList (xs' ++ ys') `Set.isSubsetOf` Set.fromList (xs ++ ys)
 
 data TestException = TestException Int
-  deriving (Show)
+  deriving stock (Show)
 
 instance Exception TestException
 

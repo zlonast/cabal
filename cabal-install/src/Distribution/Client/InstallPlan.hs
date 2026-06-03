@@ -1,6 +1,7 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -183,7 +184,7 @@ data GenericPlanPackage ipkg srcpkg
   | -- | An installed package that is also available as a source package meaning
     -- that it could be re-installed if required.
     Installed srcpkg
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 displayGenericPlanPackage :: (IsUnit ipkg, IsUnit srcpkg) => GenericPlanPackage ipkg srcpkg -> String
 displayGenericPlanPackage (PreExisting pkg) = "PreExisting " ++ prettyShow (nodeKey pkg)

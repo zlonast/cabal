@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TupleSections #-}
@@ -31,7 +33,8 @@ import qualified Text.PrettyPrint as Disp
 
 -- | Ordered list of active repositories.
 newtype ActiveRepos = ActiveRepos [ActiveRepoEntry]
-  deriving (Eq, Show, Generic)
+  deriving newtype (Eq, Show)
+  deriving stock (Generic)
 
 defaultActiveRepos :: ActiveRepos
 defaultActiveRepos = ActiveRepos [ActiveRepoRest CombineStrategyMerge]
@@ -85,7 +88,7 @@ data ActiveRepoEntry
     ActiveRepoRest CombineStrategy
   | -- | explicit repository name
     ActiveRepo RepoName CombineStrategy
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary ActiveRepoEntry
 instance Structured ActiveRepoEntry
@@ -123,7 +126,7 @@ data CombineStrategy
   | -- | if later repository specifies a package,
     --   all package versions are replaced
     CombineStrategyOverride
-  deriving (Eq, Show, Enum, Bounded, Generic)
+  deriving stock (Eq, Show, Enum, Bounded, Generic)
 
 instance Binary CombineStrategy
 instance Structured CombineStrategy

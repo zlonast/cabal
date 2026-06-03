@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 -----------------------------------------------------------------------------
@@ -270,7 +271,8 @@ writeReadme opts pkgDesc
 -- -------------------------------------------------------------------- --
 -- Utilities
 
-data WriteAction = Overwrite | Fresh | Existing deriving (Eq)
+data WriteAction = Overwrite | Fresh | Existing
+  deriving stock (Eq)
 
 instance Show WriteAction where
   show Overwrite = "Overwriting"

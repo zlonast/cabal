@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Distribution.Client.Errors.Parser where
@@ -87,7 +88,8 @@ renderProjectConfigParseError (ProjectConfigParseError errors warnings) =
     displayProjectFileSource (ProjectFileSource (path, contents)) =
       renderParseErrorFile "project" (currentProjectConfigPath path) (if isTopLevelConfigPath path then Nothing else Just $ render (docProjectImportedBy path)) contents
 
-data ProjectFileSource = ProjectFileSource (ProjectConfigPath, BS8.ByteString) deriving (Show, Generic)
+data ProjectFileSource = ProjectFileSource (ProjectConfigPath, BS8.ByteString)
+  deriving stock (Show, Generic)
 
 instance Eq ProjectFileSource where
   (ProjectFileSource (path1, _)) == (ProjectFileSource (path2, _)) = path1 == path2

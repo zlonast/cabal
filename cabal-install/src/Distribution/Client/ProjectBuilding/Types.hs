@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 -- | Types for the "Distribution.Client.ProjectBuilding"
 --
 -- Moved out to avoid module cycles.
@@ -147,14 +149,14 @@ data BuildResult = BuildResult
   , buildResultTests :: TestsResult
   , buildResultLogFile :: Maybe FilePath
   }
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Information arising from the failure to build a single package.
 data BuildFailure = BuildFailure
   { buildFailureLogFile :: Maybe FilePath
   , buildFailureReason :: BuildFailureReason
   }
-  deriving (Show)
+  deriving stock (Show)
 
 instance Exception BuildFailure
 
@@ -171,4 +173,4 @@ data BuildFailureReason
   | TestsFailed SomeException
   | BenchFailed SomeException
   | InstallFailed SomeException
-  deriving (Show)
+  deriving stock (Show)

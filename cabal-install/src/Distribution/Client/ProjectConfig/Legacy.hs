@@ -1,5 +1,6 @@
 {-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE PatternSynonyms #-}
@@ -393,7 +394,7 @@ data LegacyProjectConfig = LegacyProjectConfig
   , legacyLocalConfig :: LegacyPackageConfig
   , legacySpecificConfig :: MapMappend PackageName LegacyPackageConfig
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 instance Monoid LegacyProjectConfig where
   mempty = gmempty
@@ -409,7 +410,7 @@ data LegacyPackageConfig = LegacyPackageConfig
   , legacyTestFlags :: TestFlags
   , legacyBenchmarkFlags :: BenchmarkFlags
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 instance Monoid LegacyPackageConfig where
   mempty = gmempty
@@ -427,7 +428,7 @@ data LegacySharedConfig = LegacySharedConfig
   , legacyProjectFlags :: ProjectFlags
   , legacyMultiRepl :: Flag Bool
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 instance Monoid LegacySharedConfig where
   mempty = gmempty

@@ -1,4 +1,6 @@
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE TypeFamilies #-}
 
 -----------------------------------------------------------------------------
@@ -92,10 +94,8 @@ data SolverInstallPlan = SolverInstallPlan
   { planIndex :: !SolverPlanIndex
   , planIndepGoals :: !IndependentGoals
   }
-  deriving (Generic)
-
-instance Binary SolverInstallPlan
-instance Structured SolverInstallPlan
+  deriving stock (Generic)
+  deriving anyclass (Binary, Structured)
 
 showPlanIndex :: [SolverPlanPackage] -> String
 showPlanIndex = intercalate "\n" . map showPlanPackage

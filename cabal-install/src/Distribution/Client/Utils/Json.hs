@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 -- | Minimal JSON / RFC 7159 support
@@ -34,7 +35,7 @@ data Value
   | Number !Double
   | Bool !Bool
   | Null
-  deriving (Eq, Read, Show)
+  deriving stock (Eq, Read, Show)
 
 -- | A key\/value pair for an 'Object'
 type Pair = (String, Value)

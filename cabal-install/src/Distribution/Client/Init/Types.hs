@@ -1,6 +1,7 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE TypeApplications #-}
@@ -133,7 +134,7 @@ data InitFlags = InitFlags
   , initVerbosity :: Flag VerbosityFlags
   , overwrite :: Flag Bool
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Monoid InitFlags where
   mempty = gmempty
@@ -161,7 +162,7 @@ data PkgDescription = PkgDescription
   , _pkgExtraSrcFiles :: Set String
   , _pkgExtraDocFiles :: Maybe (Set String)
   }
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 -- | 'LibTarget' represents the relevant options set by the
 -- user when building a library package during the init command
@@ -175,7 +176,7 @@ data LibTarget = LibTarget
   , _libDependencies :: [P.Dependency]
   , _libBuildTools :: [P.Dependency]
   }
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 -- | 'ExeTarget' represents the relevant options set by the
 -- user when building an executable package.
@@ -188,7 +189,7 @@ data ExeTarget = ExeTarget
   , _exeDependencies :: [P.Dependency]
   , _exeBuildTools :: [P.Dependency]
   }
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 -- | 'TestTarget' represents the relevant options set by the
 -- user when building a library package.
@@ -201,7 +202,7 @@ data TestTarget = TestTarget
   , _testDependencies :: [P.Dependency]
   , _testBuildTools :: [P.Dependency]
   }
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 -- -------------------------------------------------------------------- --
 -- File creator options
@@ -216,7 +217,7 @@ data WriteOpts = WriteOpts
   , _optPkgName :: P.PackageName
   , _optCabalSpec :: CabalSpecVersion
   }
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 data ProjectSettings = ProjectSettings
   { _pkgOpts :: WriteOpts
@@ -225,7 +226,7 @@ data ProjectSettings = ProjectSettings
   , _pkgExeTarget :: Maybe ExeTarget
   , _pkgTestTarget :: Maybe TestTarget
   }
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- -------------------------------------------------------------------- --
 -- Other types
@@ -233,19 +234,19 @@ data ProjectSettings = ProjectSettings
 -- | Enum to denote whether the user wants to build a library target,
 -- executable target, library and executable targets, or a standalone test suite.
 data PackageType = Library | Executable | LibraryAndExecutable | TestSuite
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 data HsFileType
   = Literate
   | Standard
   | InvalidHsPath
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 data HsFilePath = HsFilePath
   { _hsFilePath :: FilePath
   , _hsFileType :: HsFileType
   }
-  deriving (Eq)
+  deriving stock (Eq)
 
 instance Show HsFilePath where
   show (HsFilePath fp ty) = case ty of
@@ -293,7 +294,7 @@ mkLiterate _ hs = hs
 -- Interactive prompt monad
 
 newtype PromptIO a = PromptIO (ReaderT (Data.IORef.IORef SessionState) IO a)
-  deriving (Functor, Applicative, Monad, MonadIO)
+  deriving newtype (Functor, Applicative, Monad, MonadIO)
 
 sessionState :: PromptIO (Data.IORef.IORef SessionState)
 sessionState = PromptIO ask
@@ -309,7 +310,7 @@ newtype PurePrompt a = PurePrompt
       :: (Inputs, SessionState)
       -> Either BreakException (a, (Inputs, SessionState))
   }
-  deriving (Functor)
+  deriving stock (Functor)
 
 runPrompt :: PurePrompt a -> Inputs -> Either BreakException (a, Inputs)
 runPrompt act args =
@@ -508,12 +509,14 @@ checkInvalidPath path act =
 --
 -- For example, in order to break on parse errors, or user-driven
 -- continuations that do not make sense to test.
-newtype BreakException = BreakException String deriving (Eq, Show)
+newtype BreakException = BreakException String
+  deriving newtype (Eq, Show)
 
 instance Exception BreakException
 
 -- | Used to inform the intent of prompted messages.
-data Severity = Info | Warning | Error deriving (Eq)
+data Severity = Info | Warning | Error
+  deriving stock (Eq)
 
 displaySeverity :: Severity -> String
 displaySeverity severity = case severity of
@@ -533,7 +536,7 @@ data DefaultPrompt t
   = DefaultPrompt t
   | OptionalPrompt
   | MandatoryPrompt
-  deriving (Eq, Functor)
+  deriving stock (Eq, Functor)
 
 -- -------------------------------------------------------------------- --
 -- Field annotation for pretty formatters

@@ -1,5 +1,7 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE GADTs #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE LambdaCase #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
 
@@ -144,7 +146,7 @@ shortListOf1 bound gen =
     vectorOf k gen
 
 newtype ShortToken = ShortToken {getShortToken :: String}
-  deriving (Show)
+  deriving newtype (Show)
 
 instance Arbitrary ShortToken where
   arbitrary =
@@ -165,14 +167,14 @@ arbitraryShortToken :: Gen String
 arbitraryShortToken = getShortToken <$> arbitrary
 
 newtype NonMEmpty a = NonMEmpty {getNonMEmpty :: a}
-  deriving (Eq, Ord, Show)
+  deriving newtype (Eq, Ord, Show)
 
 instance (Arbitrary a, Monoid a, Eq a) => Arbitrary (NonMEmpty a) where
   arbitrary = NonMEmpty <$> (arbitrary `suchThat` (/= mempty))
   shrink (NonMEmpty x) = [NonMEmpty x' | x' <- shrink x, x' /= mempty]
 
 newtype NoShrink a = NoShrink {getNoShrink :: a}
-  deriving (Eq, Ord, Show)
+  deriving newtype (Eq, Ord, Show)
 
 instance Arbitrary a => Arbitrary (NoShrink a) where
   arbitrary = NoShrink <$> arbitrary
@@ -407,7 +409,7 @@ instance Arbitrary Glob where
       : [GlobFile (getGlobPieces glob') | glob' <- shrink (GlobPieces glob)]
 
 newtype GlobPieces = GlobPieces {getGlobPieces :: [GlobPiece]}
-  deriving (Eq)
+  deriving stock (Eq)
 
 instance Arbitrary GlobPieces where
   arbitrary = GlobPieces . mergeLiterals <$> shortListOf1 5 arbitrary

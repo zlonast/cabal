@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.Types.Repo
   ( -- * Remote repository
@@ -71,7 +72,7 @@ data RemoteRepo = RemoteRepo
   -- This field is not currently stored in the config file, but is filled
   -- in automagically for known repos.
   }
-  deriving (Show, Eq, Ord, Generic)
+  deriving stock (Show, Eq, Ord, Generic)
 
 instance Binary RemoteRepo
 instance NFData RemoteRepo
@@ -132,7 +133,7 @@ data LocalRepo = LocalRepo
   , localRepoPath :: FilePath
   , localRepoSharedCache :: Bool
   }
-  deriving (Show, Eq, Ord, Generic)
+  deriving stock (Show, Eq, Ord, Generic)
 
 instance Binary LocalRepo
 instance NFData LocalRepo
@@ -201,7 +202,7 @@ data Repo
       { repoRemote :: RemoteRepo
       , repoLocalDir :: FilePath
       }
-  deriving (Show, Eq, Ord, Generic)
+  deriving stock (Show, Eq, Ord, Generic)
 
 instance Binary Repo
 instance NFData Repo

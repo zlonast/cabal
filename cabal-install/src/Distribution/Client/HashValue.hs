@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Distribution.Client.HashValue
   ( HashValue
@@ -36,7 +38,8 @@ import System.IO (IOMode (..), withBinaryFile)
 -- package ids.
 
 newtype HashValue = HashValue BS.ByteString
-  deriving (Eq, Generic, Show)
+  deriving newtype (Eq, Show)
+  deriving stock (Generic)
 
 -- Cannot do any sensible validation here. Although we use SHA256
 -- for stuff we hash ourselves, we can also get hashes from TUF

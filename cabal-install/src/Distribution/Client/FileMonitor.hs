@@ -1,6 +1,8 @@
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
@@ -78,10 +80,8 @@ data MonitorStateFileSet
   -- there is also no particular gain either. That said, we do preserve the
   -- order of the lists just to reduce confusion (and have predictable I/O
   -- patterns).
-  deriving (Show, Generic)
-
-instance Binary MonitorStateFileSet
-instance Structured MonitorStateFileSet
+  deriving stock (Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 -- | The state necessary to determine whether a monitored file has changed.
 --
@@ -98,7 +98,8 @@ data MonitorStateFile
       !MonitorKindDir
       !FilePath
       !MonitorStateFileStatus
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 data MonitorStateFileStatus
   = MonitorStateFileExists
@@ -111,12 +112,8 @@ data MonitorStateFileStatus
     MonitorStateDirModTime !ModTime
   | MonitorStateNonExistent
   | MonitorStateAlreadyChanged
-  deriving (Show, Generic)
-
-instance Binary MonitorStateFile
-instance Binary MonitorStateFileStatus
-instance Structured MonitorStateFile
-instance Structured MonitorStateFileStatus
+  deriving stock (Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 -- | The state necessary to determine whether the files matched by a globbing
 -- match have changed.
@@ -126,7 +123,8 @@ data MonitorStateGlob
       !MonitorKindDir
       !FilePathRoot
       !MonitorStateGlobRel
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 -- | Monitoring state for a 'Glob'. Constructors mirror those of Glob
 data MonitorStateGlobRel
@@ -169,13 +167,8 @@ data MonitorStateGlobRel
   | -- | Monitoring state for 'GlobDirTrailing'
     -- (Trivial, because there is no data in 'GlobDirTrailing')
     MonitorStateGlobDirTrailing
-  deriving (Show, Generic)
-
-instance Binary MonitorStateGlob
-instance Binary MonitorStateGlobRel
-
-instance Structured MonitorStateGlob
-instance Structured MonitorStateGlobRel
+  deriving stock (Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 -- | We can build a 'MonitorStateFileSet' from a set of 'MonitorFilePath' by
 -- inspecting the state of the file system, and we can go in the reverse
@@ -282,7 +275,7 @@ data MonitorChanged a b
     MonitorUnchanged b [MonitorFilePath]
   | -- | The monitor found that something changed. The reason is given.
     MonitorChanged (MonitorChangedReason a)
-  deriving (Show)
+  deriving stock (Show)
 
 -- | What kind of change 'checkFileMonitorChanged' detected.
 data MonitorChangedReason a
@@ -306,7 +299,7 @@ data MonitorChangedReason a
     -- that we cannot decode the values. This is completely benign as we can
     -- treat is just as if there were no cache file and re-run.
     MonitorCorruptCache
-  deriving (Eq, Show, Functor)
+  deriving stock (Eq, Show, Functor)
 
 -- | Test if the input value or files monitored by the 'FileMonitor' have
 -- changed. If not, return the cached value.
@@ -494,7 +487,7 @@ probeFileSystem root (MonitorStateFileSet singlePaths globPaths) =
 -- we can avoid rewriting the state file.
 
 newtype ChangedM a = ChangedM (StateT CacheChanged (ExceptT FilePath IO) a)
-  deriving (Functor, Applicative, Monad, MonadIO)
+  deriving newtype (Functor, Applicative, Monad, MonadIO)
 
 runChangedM :: ChangedM a -> IO (Either FilePath (a, CacheChanged))
 runChangedM (ChangedM action) =

@@ -1,5 +1,7 @@
+{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 -- |
@@ -155,7 +157,7 @@ data UserTarget
     --
     -- > cabal install http://code.haskell.org/~user/foo/foo-0.9.tar.gz
     UserTargetRemoteTarball URI
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 -- ------------------------------------------------------------
 
@@ -175,7 +177,7 @@ data UserTargetProblem
   | UserTargetUnexpectedUriScheme String
   | UserTargetUnrecognisedUri String
   | UserTargetUnrecognised String
-  deriving (Show)
+  deriving stock (Show)
 
 readUserTarget :: String -> IO (Either UserTargetProblem UserTarget)
 readUserTarget targetstr =
@@ -314,7 +316,7 @@ data PackageTarget pkg
     -- to be resolved to the right case-sensitive name.
     PackageTargetNamedFuzzy PackageName [PackageProperty] UserTarget
   | PackageTargetLocation pkg
-  deriving (Show, Functor, Foldable, Traversable)
+  deriving stock (Show, Functor, Foldable, Traversable)
 
 -- ------------------------------------------------------------
 
@@ -473,7 +475,7 @@ readPackageTarget verbosity = traverse modifyLocation
 data PackageTargetProblem
   = PackageNameUnknown PackageName UserTarget
   | PackageNameAmbiguous PackageName [PackageName] UserTarget
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Users are allowed to give package names case-insensitively, so we must
 -- disambiguate named package references.
@@ -604,11 +606,8 @@ data UserQualifier
     UserQualSetup PackageName
   | -- | Executable dependency.
     UserQualExe PackageName PackageName
-  deriving (Eq, Show, Generic)
-
-instance Binary UserQualifier
-instance NFData UserQualifier
-instance Structured UserQualifier
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 -- | Version of 'ConstraintScope' that a user may specify on the
 -- command line.
@@ -619,11 +618,8 @@ data UserConstraintScope
     UserAnySetupQualifier PackageName
   | -- | Scope that applies to the package when it has any qualifier.
     UserAnyQualifier PackageName
-  deriving (Eq, Show, Generic)
-
-instance Binary UserConstraintScope
-instance NFData UserConstraintScope
-instance Structured UserConstraintScope
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 fromUserQualifier :: UserQualifier -> Qualifier
 fromUserQualifier UserQualToplevel = QualToplevel
@@ -640,11 +636,8 @@ fromUserConstraintScope (UserAnyQualifier pn) = ScopeAnyQualifier pn
 -- the command line.
 data UserConstraint
   = UserConstraint UserConstraintScope PackageProperty
-  deriving (Eq, Show, Generic)
-
-instance Binary UserConstraint
-instance NFData UserConstraint
-instance Structured UserConstraint
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 userConstraintPackageName :: UserConstraint -> PackageName
 userConstraintPackageName (UserConstraint scope _) = scopePN scope

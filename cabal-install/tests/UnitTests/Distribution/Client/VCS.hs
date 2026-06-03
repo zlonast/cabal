@@ -1,5 +1,6 @@
 {-# LANGUAGE AllowAmbiguousTypes #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RecordWildCards #-}
@@ -324,9 +325,9 @@ prop_cloneRepo vcs mkVCSTestDriver repoRecipe =
 
 -- ------------------------------------------------------------
 
-newtype RepoDirSet = RepoDirSet Int deriving (Show)
-newtype SyncTargetIterations = SyncTargetIterations Int deriving (Show)
-newtype PrngSeed = PrngSeed Int deriving (Show)
+newtype RepoDirSet = RepoDirSet Int deriving stock (Show)
+newtype SyncTargetIterations = SyncTargetIterations Int deriving stock (Show)
+newtype PrngSeed = PrngSeed Int deriving stock (Show)
 
 prop_syncRepos
   :: VCS Program
@@ -478,7 +479,7 @@ instance Arbitrary PrngSeed where
 -- VCS commands to make a repository on-disk.
 
 data SubmodulesSupport = SubmodulesSupported | SubmodulesNotSupported
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 class KnownSubmodulesSupport (a :: SubmodulesSupport) where
   submoduleSupport :: SubmodulesSupport
@@ -490,25 +491,25 @@ instance KnownSubmodulesSupport 'SubmodulesNotSupported where
   submoduleSupport = SubmodulesNotSupported
 
 data FileUpdate = FileUpdate FilePath String
-  deriving (Show)
+  deriving stock (Show)
 data SubmoduleAdd = SubmoduleAdd
   { submodulePath :: FilePath
   , submoduleSource :: FilePath
   , submoduleCommit :: Commit 'SubmodulesSupported
   }
-  deriving (Show)
+  deriving stock (Show)
 
 newtype Commit (submodules :: SubmodulesSupport)
   = Commit [Either FileUpdate SubmoduleAdd]
-  deriving (Show)
+  deriving stock (Show)
 
 data TaggedCommits (submodules :: SubmodulesSupport)
   = TaggedCommits TagName [Commit submodules]
-  deriving (Show)
+  deriving stock (Show)
 
 data BranchCommits (submodules :: SubmodulesSupport)
   = BranchCommits BranchName [Commit submodules]
-  deriving (Show)
+  deriving stock (Show)
 
 type BranchName = String
 type TagName = String
@@ -517,18 +518,18 @@ type TagName = String
 -- support branches (e.g. darcs).
 newtype NonBranchingRepoRecipe submodules
   = NonBranchingRepoRecipe [TaggedCommits submodules]
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Instructions to make a repository with branches, for VCSs that do
 -- support branches (e.g. git).
 newtype BranchingRepoRecipe submodules
   = BranchingRepoRecipe [Either (TaggedCommits submodules) (BranchCommits submodules)]
-  deriving (Show)
+  deriving stock (Show)
 
 data RepoRecipe submodules
   = WithBranchingSupport (BranchingRepoRecipe submodules)
   | WithoutBranchingSupport (NonBranchingRepoRecipe submodules)
-  deriving (Show)
+  deriving stock (Show)
 
 -- ---------------------------------------------------------------------------
 -- Arbitrary instances for them
@@ -644,7 +645,7 @@ data RepoState = RepoState
   , allTags :: Map TagOrCommitId RepoWorkingState
   , allBranches :: Map BranchName RepoWorkingState
   }
-  deriving (Show)
+  deriving stock (Show)
 
 type RepoWorkingState = Map FilePath String
 type CommitId = String
@@ -714,7 +715,7 @@ data WorkingStateMismatch
   = WorkingStateMismatch
       RepoWorkingState -- expected
       RepoWorkingState -- actual
-  deriving (Show)
+  deriving stock (Show)
 
 instance Exception WorkingStateMismatch
 

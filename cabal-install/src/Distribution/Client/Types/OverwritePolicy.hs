@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.Types.OverwritePolicy where
 
@@ -12,7 +13,7 @@ data OverwritePolicy
   = NeverOverwrite
   | AlwaysOverwrite
   | PromptOverwrite
-  deriving (Show, Eq, Generic, Bounded, Enum)
+  deriving stock (Show, Eq, Generic, Bounded, Enum)
 
 instance Binary OverwritePolicy
 instance NFData OverwritePolicy

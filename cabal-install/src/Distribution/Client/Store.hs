@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -149,7 +150,7 @@ getStoreEntries StoreDirLayout{storeDirectory} compiler = do
 data NewStoreEntryOutcome
   = UseNewStoreEntry
   | UseExistingStoreEntry
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | Place a new entry into the store. See the concurrency strategy description
 -- for full details.

@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -259,7 +260,7 @@ data AcceptNoTargets
     RejectNoTargets
   | -- | return a default 'TargetSelector'
     AcceptNoTargets
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | Information about the context in which we found the 'TargetSelector's.
 data TargetContext
@@ -270,7 +271,7 @@ data TargetContext
   | -- | The target selectors refer to a script. Contains the path to the script and
     -- the executable metadata parsed from the script
     ScriptContext FilePath Executable
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | An action working with selected targets within a context.
 type TargetsAction targets a = TargetContext -> ProjectBaseContext -> targets -> IO a

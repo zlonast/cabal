@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE LambdaCase #-}
@@ -194,7 +195,7 @@ data ElaboratedSharedConfig = ElaboratedSharedConfig
   -- only the 'configuredPrograms' are used.
   , pkgConfigReplOptions :: ReplOptions
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 -- TODO: [code cleanup] no Eq instance
 
@@ -342,7 +343,7 @@ data ElaboratedConfiguredPackage = ElaboratedConfiguredPackage
     elabPkgOrComp :: ElaboratedPackageOrComponent
   -- ^ Component/package specific information
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 normaliseConfiguredPackage
   :: ElaboratedSharedConfig
@@ -507,7 +508,7 @@ instance Structured ElaboratedConfiguredPackage
 data ElaboratedPackageOrComponent
   = ElabPackage ElaboratedPackage
   | ElabComponent ElaboratedComponent
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary ElaboratedPackageOrComponent
 instance Structured ElaboratedPackageOrComponent
@@ -703,7 +704,7 @@ data ElaboratedComponent = ElaboratedComponent
   -- UnitId indicates that we must typecheck that indefinite package
   -- before we can build this one.
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary ElaboratedComponent
 instance Structured ElaboratedComponent
@@ -744,7 +745,7 @@ data ElaboratedPackage = ElaboratedPackage
   , pkgWhyNotPerComponent :: NE.NonEmpty NotPerComponentReason
   -- ^ Why is this not a per-component build?
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary ElaboratedPackage
 instance Structured ElaboratedPackage
@@ -761,13 +762,13 @@ data NotPerComponentReason
     CuzNoBuildableComponents
   | -- | The user passed @--disable-per-component@.
     CuzDisablePerComponent
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 data NotPerComponentBuildType
   = CuzConfigureBuildType
   | CuzCustomBuildType
   | CuzHooksBuildType
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary NotPerComponentBuildType
 instance Structured NotPerComponentBuildType
@@ -821,13 +822,13 @@ data BuildStyle
     -- We use single constructor 'BuildInplaceOnly' as for most cases
     -- inplace packages are handled similarly.
     BuildInplaceOnly MemoryOrDisk
-  deriving (Eq, Ord, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
 
 -- | How 'BuildInplaceOnly' component is built.
 data MemoryOrDisk
   = OnDisk
   | InMemory
-  deriving (Eq, Ord, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
 
 -- Note: order of 'BuildStyle' and 'MemoryOrDisk' matters for 'Semigroup' / 'Monoid' instances
 
@@ -859,7 +860,7 @@ type ElaboratedReadyPackage = GenericReadyPackage ElaboratedConfiguredPackage
 -- | Specific targets within a package or component to act on e.g. to build,
 -- haddock or open a repl.
 data ComponentTarget = ComponentTarget ComponentName SubComponentTarget
-  deriving (Eq, Ord, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
 
 instance Binary ComponentTarget
 instance Structured ComponentTarget
@@ -939,7 +940,7 @@ data SetupScriptStyle
   | SetupCustomImplicitDeps
   | SetupNonCustomExternalLib
   | SetupNonCustomInternalLib
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Binary SetupScriptStyle
 instance Structured SetupScriptStyle

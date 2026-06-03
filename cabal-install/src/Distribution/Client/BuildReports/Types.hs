@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 -----------------------------------------------------------------------------
 
@@ -36,7 +37,7 @@ import Distribution.Types.PackageId (PackageIdentifier)
 -------------------------------------------------------------------------------
 
 data ReportLevel = NoReports | AnonymousReports | DetailedReports
-  deriving (Eq, Ord, Enum, Bounded, Show, Generic)
+  deriving stock (Eq, Ord, Enum, Bounded, Show, Generic)
 
 instance Binary ReportLevel
 instance NFData ReportLevel
@@ -90,7 +91,7 @@ data BuildReport = BuildReport
   , testsOutcome :: Outcome
   -- ^ Configure outcome, did configure work ok?
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 -------------------------------------------------------------------------------
 -- InstallOutcome
@@ -107,7 +108,7 @@ data InstallOutcome
   | TestsFailed
   | InstallFailed
   | InstallOk
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
 
 instance Pretty InstallOutcome where
   pretty PlanningFailed = Disp.text "PlanningFailed"
@@ -142,7 +143,7 @@ instance Parsec InstallOutcome where
 -------------------------------------------------------------------------------
 
 data Outcome = NotTried | Failed | Ok
-  deriving (Eq, Show, Enum, Bounded, Generic)
+  deriving stock (Eq, Show, Enum, Bounded, Generic)
 
 instance Pretty Outcome where
   pretty NotTried = Disp.text "NotTried"

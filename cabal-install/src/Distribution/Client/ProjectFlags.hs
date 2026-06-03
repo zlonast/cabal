@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PatternSynonyms #-}
 
@@ -51,7 +52,7 @@ data ProjectFlags = ProjectFlags
   , flagProjectFileParser :: Flag ProjectFileParser
   -- ^ The parser to use for the project file.
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 defaultProjectFlags :: ProjectFlags
 defaultProjectFlags =

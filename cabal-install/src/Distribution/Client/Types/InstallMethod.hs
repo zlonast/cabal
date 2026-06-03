@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.Types.InstallMethod where
 
@@ -11,7 +12,7 @@ import qualified Text.PrettyPrint as PP
 data InstallMethod
   = InstallMethodCopy
   | InstallMethodSymlink
-  deriving (Eq, Show, Generic, Bounded, Enum)
+  deriving stock (Eq, Show, Generic, Bounded, Enum)
 
 instance Binary InstallMethod
 instance NFData InstallMethod

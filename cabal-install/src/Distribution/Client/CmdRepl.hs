@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PatternSynonyms #-}
@@ -267,7 +268,7 @@ data MultiReplDecision = MultiReplDecision
   { compilerVersion :: Maybe Version
   , enabledByFlag :: Bool
   }
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 useMultiRepl :: MultiReplDecision -> Bool
 useMultiRepl MultiReplDecision{compilerVersion, enabledByFlag} =
@@ -705,7 +706,7 @@ data OriginalComponentInfo = OriginalComponentInfo
   { ociUnitId :: UnitId
   , ociOriginalDeps :: [UnitId]
   }
-  deriving (Show)
+  deriving stock (Show)
 
 addDepsToProjectTarget
   :: [Dependency]
@@ -895,7 +896,7 @@ data ReplProblem
   = TargetProblemMatchesMultiple MultiReplDecision TargetSelector [AvailableTarget ()]
   | -- | Multiple 'TargetSelector's match multiple targets
     TargetProblemMultipleTargets MultiReplDecision TargetsMap
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | The various error conditions that can occur when matching a
 -- 'TargetSelector' against 'AvailableTarget's for the @repl@ command.

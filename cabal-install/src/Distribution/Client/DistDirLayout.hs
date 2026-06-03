@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE RecordWildCards #-}
 
 -- |
@@ -157,7 +158,7 @@ data ProjectRoot
   | -- | An explicit, absolute project root dir and an explicit, absolute
     -- @cabal.project@ file.
     ProjectRootExplicitAbsolute FilePath FilePath
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 defaultProjectFile :: FilePath
 defaultProjectFile = "cabal.project"

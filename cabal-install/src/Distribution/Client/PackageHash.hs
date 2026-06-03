@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -243,7 +244,7 @@ data PackageHashConfigInputs = PackageHashConfigInputs
   --     TODO: [required eventually] pkgHashToolsVersions     ?
   --     TODO: [required eventually] pkgHashToolsExtraOptions ?
   }
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Calculate the overall hash to be used for an 'InstalledPackageId'.
 hashPackageHashInputs :: PackageHashInputs -> HashValue

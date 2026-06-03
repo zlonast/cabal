@@ -1,4 +1,5 @@
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE TupleSections #-}
 
 -- | Separate module for HTTP actions, using a proxy server if one exists.
@@ -132,7 +133,7 @@ import qualified Distribution.Compat.CharParsing as P
 data DownloadResult
   = FileAlreadyInCache
   | FileDownloaded FilePath
-  deriving (Eq)
+  deriving stock (Eq)
 
 data DownloadCheck
   = -- | already downloaded and sha256 matches
@@ -141,7 +142,7 @@ data DownloadCheck
     CheckETag String
   | -- | needs download with optional hash check
     NeedsDownload (Maybe BS.ByteString)
-  deriving (Eq)
+  deriving stock (Eq)
 
 downloadURI
   :: HttpTransport

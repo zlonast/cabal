@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TupleSections #-}
 
@@ -551,7 +552,7 @@ data RunProblem
     TargetProblemComponentNotExe PackageId ComponentName
   | -- | Asking to run an individual file or module is not supported
     TargetProblemIsSubComponent PackageId ComponentName SubComponentTarget
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 type RunTargetProblem = TargetProblem RunProblem
 

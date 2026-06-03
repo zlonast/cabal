@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE RankNTypes #-}
@@ -145,7 +146,7 @@ data SourceRepoProblem
   = SourceRepoRepoTypeUnspecified
   | SourceRepoRepoTypeUnsupported (SourceRepositoryPackage Proxy) RepoType
   | SourceRepoLocationUnspecified
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Validates that the 'SourceRepo' specifies a location URI and a repository
 -- type that is supported by a VCS driver.

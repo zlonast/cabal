@@ -1,5 +1,6 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -203,7 +204,7 @@ import qualified System.Win32 as Win32
 data AllowInLibrary
   = AllowInLibrary
   | Don'tAllowInLibrary
-  deriving Eq
+  deriving stock Eq
 
 data SetupKind
   = InLibrary

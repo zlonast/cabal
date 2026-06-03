@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# OPTIONS_GHC -funbox-strict-fields #-}
 
 module Distribution.Client.Compat.Semaphore
@@ -26,7 +27,7 @@ import qualified Data.List.NonEmpty as NE
 -- and released in units of one. It provides guaranteed FIFO ordering
 -- for satisfying blocked `waitQSem` calls.
 data QSem = QSem !(TVar Int) !(TVar [TVar Bool]) !(TVar [TVar Bool])
-  deriving (Eq)
+  deriving stock (Eq)
 
 newQSem :: Int -> IO QSem
 newQSem i = atomically $ do

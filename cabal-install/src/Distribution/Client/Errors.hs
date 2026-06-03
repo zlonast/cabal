@@ -1,4 +1,5 @@
 {-# LANGUAGE ConstraintKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE InstanceSigs #-}
 
@@ -192,7 +193,7 @@ data CabalInstallException
   | CabalFileParseFailure CabalFileParseError
   | ProjectConfigParseFailure ProjectConfigParseError
   | ProjectConfigNoPackages FilePath
-  deriving (Show)
+  deriving stock (Show)
 
 exceptionCodeCabalInstall :: CabalInstallException -> Int
 exceptionCodeCabalInstall e = case e of

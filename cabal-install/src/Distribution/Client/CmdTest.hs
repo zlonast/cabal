@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -237,7 +238,7 @@ data TestProblem
     TargetProblemComponentNotTest PackageId ComponentName
   | -- | Asking to test an individual file or module is not supported
     TargetProblemIsSubComponent PackageId ComponentName SubComponentTarget
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 type TestTargetProblem = TargetProblem TestProblem
 

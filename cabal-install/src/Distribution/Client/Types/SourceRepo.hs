@@ -1,6 +1,7 @@
 {-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RankNTypes #-}
@@ -34,7 +35,7 @@ data SourceRepositoryPackage f = SourceRepositoryPackage
   , srpSubdir :: !(f FilePath)
   , srpCommand :: ![String]
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 deriving instance Eq (f FilePath) => Eq (SourceRepositoryPackage f)
 deriving instance Ord (f FilePath) => Ord (SourceRepositoryPackage f)

@@ -1,5 +1,6 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
@@ -98,7 +99,7 @@ data GlobalFlags = GlobalFlags
   , globalProgPathExtra :: NubList FilePath
   -- ^ Extra program path used for packagedb lookups in a global context (i.e. for http transports)
   }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 defaultGlobalFlags :: GlobalFlags
 defaultGlobalFlags =

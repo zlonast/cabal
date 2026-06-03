@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE TupleSections #-}
 
 -----------------------------------------------------------------------------
@@ -80,7 +81,7 @@ import qualified Text.PrettyPrint as Disp
 data PackageEnvironment = PackageEnvironment
   { pkgEnvSavedConfig :: SavedConfig
   }
-  deriving (Generic)
+  deriving stock (Generic)
 
 instance Monoid PackageEnvironment where
   mempty = gmempty

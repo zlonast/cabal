@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Deprecated.ViewAsFieldDescr
   ( viewAsFieldDescr
   ) where

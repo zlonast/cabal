@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE MultiWayIf #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PatternSynonyms #-}
@@ -324,7 +325,7 @@ sdistAction (pf@ProjectFlags{..}, SdistFlags{..}) targetStrings globalFlags = do
 data OutputFormat
   = SourceList Char
   | TarGzArchive
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 packageToSdist :: Verbosity -> FilePath -> OutputFormat -> FilePath -> UnresolvedSourcePackage -> IO ()
 packageToSdist verbosity projectRootDir format outputFile pkg = do

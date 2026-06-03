@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.Types.ConfiguredId
   ( InstalledPackageId
@@ -50,7 +51,7 @@ data ConfiguredId = ConfiguredId
   , confCompName :: Maybe ComponentName
   , confInstId :: ComponentId
   }
-  deriving (Eq, Ord, Generic)
+  deriving stock (Eq, Ord, Generic)
 
 annotatedIdToConfiguredId :: AnnotatedId ComponentId -> ConfiguredId
 annotatedIdToConfiguredId aid =
