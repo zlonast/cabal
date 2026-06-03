@@ -41,7 +41,7 @@ data PPArgs
   , dstPath :: FilePath
   }
   deriving stock (Show, Generic)
-  deriving anyclass (Binary)
+  deriving anyclass Binary
 
 -- Register a pre-build rule that uses a recursive glob.
 preBuildRules :: PreBuildComponentInputs -> RulesM ()

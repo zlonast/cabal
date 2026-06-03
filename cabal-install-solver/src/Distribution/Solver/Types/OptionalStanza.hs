@@ -1,4 +1,8 @@
 {-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
 module Distribution.Solver.Types.OptionalStanza (
     -- * OptionalStanza
     OptionalStanza(..),
@@ -37,7 +41,8 @@ import Distribution.Utils.Structured (Structured (..), nominalStructure)
 data OptionalStanza
     = TestStanzas
     | BenchStanzas
-  deriving (Eq, Ord, Enum, Bounded, Show, Generic)
+  deriving stock (Eq, Ord, Enum, Bounded, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 -- | String representation of an OptionalStanza.
 showStanza :: OptionalStanza -> String
@@ -56,16 +61,12 @@ enableStanzas optionalStanzas = ComponentRequestedSpec
     , benchmarksRequested = optStanzaSetMember BenchStanzas optionalStanzas
     }
 
-instance Binary OptionalStanza
-instance NFData OptionalStanza
-instance Structured OptionalStanza
-
 -------------------------------------------------------------------------------
 -- OptionalStanzaSet
 -------------------------------------------------------------------------------
 
 newtype OptionalStanzaSet = OptionalStanzaSet Word
-  deriving (Eq, Ord, Show)
+  deriving newtype (Eq, Ord, Show)
 
 instance Binary OptionalStanzaSet where
     put (OptionalStanzaSet w) = put w
@@ -117,10 +118,8 @@ instance Monoid OptionalStanzaSet where
 
 -- | Note: this is total map.
 data OptionalStanzaMap a = OptionalStanzaMap a a
-  deriving (Eq, Ord, Show, Generic)
-
-instance Binary a => Binary (OptionalStanzaMap a)
-instance Structured a => Structured (OptionalStanzaMap a)
+  deriving stock (Eq, Ord, Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 optStanzaTabulate :: (OptionalStanza -> a) -> OptionalStanzaMap a
 optStanzaTabulate f = OptionalStanzaMap (f TestStanzas) (f BenchStanzas)

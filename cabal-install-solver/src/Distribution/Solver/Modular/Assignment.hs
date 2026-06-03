@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Solver.Modular.Assignment
     ( Assignment(..)
     , PAssignment
@@ -38,7 +40,7 @@ type SAssignment    = Map QSN Bool
 
 -- | A (partial) assignment of variables.
 data Assignment = A PAssignment FAssignment SAssignment
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 -- | Delivers an ordered list of fully configured packages.
 --

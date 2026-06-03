@@ -2,6 +2,7 @@
 {-# LANGUAGE GADTs               #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TemplateHaskell     #-}
+{-# LANGUAGE DerivingStrategies  #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
 module Main (main) where
 
@@ -43,7 +44,7 @@ $(capture "decls" [d|
         , zNot                        :: Bool -> Bool
         , zManglePkgName              :: PackageName -> String
         }
-      deriving (Generic)
+      deriving stock Generic
     |])
 
 -------------------------------------------------------------------------------

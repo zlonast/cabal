@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 -- | The test monad
@@ -889,7 +890,7 @@ data TestEnv = TestEnv
   , testMaybeStoreDir :: Maybe FilePath
   -- ^ Path to the storedir used by the test, if not the default
   }
-  deriving (Show)
+  deriving stock (Show)
 
 testVerbosity :: TestEnv -> Verbosity
 testVerbosity = mkVerbosity defaultVerbosityHandles . testVerbosityFlags
@@ -898,7 +899,7 @@ testRecordMode :: TestEnv -> RecordMode
 testRecordMode env = fromMaybe (testRecordDefaultMode env) (testRecordUserMode env)
 
 data RecordMode = DoNotRecord | RecordMarked | RecordAll
-  deriving (Show, Eq, Ord)
+  deriving stock (Show, Eq, Ord)
 
 getTestEnv :: TestM TestEnv
 getTestEnv = ask

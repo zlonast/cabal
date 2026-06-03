@@ -3,6 +3,7 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE DerivingStrategies #-}
 import qualified GHC.Generics as GHC
 import Data.Char (toLower)
 import Data.List (stripPrefix)
@@ -29,7 +30,7 @@ data Foobar = Foobar
     , fooXyzzy :: [FilePath]
     , fooQuux  :: Bool
     }
-  deriving (GHC.Generic)
+  deriving stock (GHC.Generic)
 
 genericLenses
     :: forall a xs proxy. (GDatatypeInfo a, GCode a ~ '[xs], All Typeable xs)

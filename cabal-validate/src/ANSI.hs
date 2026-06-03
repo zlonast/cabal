@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 -- | ANSI escape sequences.
 --
 -- This is a stripped-down version of the parts of the @ansi-terminal@ package
@@ -58,7 +60,7 @@ data SGR
   | OnBrightMagenta
   | OnBrightCyan
   | OnBrightWhite
-  deriving (Show)
+  deriving stock (Show)
 
 -- Render a single `SGR` sequence.
 renderSGR :: SGR -> String

@@ -62,7 +62,7 @@ data Z = Z
     , zClient          :: Bool
     , zArgs            :: String
     }
-  deriving (Generic)
+  deriving stock Generic
 
 instance Z.Zinza Z where
     toType    = Z.genericToTypeSFP

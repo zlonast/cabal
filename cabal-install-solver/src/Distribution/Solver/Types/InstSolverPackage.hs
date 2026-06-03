@@ -1,4 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
 module Distribution.Solver.Types.InstSolverPackage
     ( InstSolverPackage(..)
     ) where
@@ -21,10 +24,8 @@ data InstSolverPackage = InstSolverPackage {
       instSolverPkgLibDeps :: ComponentDeps [SolverId],
       instSolverPkgExeDeps :: ComponentDeps [SolverId]
     }
-  deriving (Eq, Show, Generic)
-
-instance Binary InstSolverPackage
-instance Structured InstSolverPackage
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 instance Package InstSolverPackage where
     packageId i =

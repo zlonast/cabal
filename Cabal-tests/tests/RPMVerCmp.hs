@@ -1,5 +1,6 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE OverloadedStrings        #-}
+{-# LANGUAGE DerivingStrategies       #-}
 module Main where
 
 import Foreign.C.String (CString)
@@ -85,7 +86,7 @@ main = defaultMain $ testGroup "rpmvercmp"
 -------------------------------------------------------------------------------
 
 newtype V = V Version
-  deriving (Show, Eq, Ord)
+  deriving stock (Show, Eq, Ord)
 
 unV :: V -> Version
 unV (V x) = x

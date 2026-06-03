@@ -1,6 +1,8 @@
 {- FOURMOLU_DISABLE -}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.SPDX.LicenseExceptionId (
     LicenseExceptionId (..),
     licenseExceptionId,
@@ -32,7 +34,7 @@ import qualified Text.PrettyPrint as Disp
 -- | SPDX License Exceptions identifiers list v3.26
 data LicenseExceptionId
 {{ licenseIds }}
-  deriving (Eq, Ord, Enum, Bounded, Show, Read, Data, Generic)
+  deriving stock (Eq, Ord, Enum, Bounded, Show, Read, Data, Generic)
 
 instance Binary LicenseExceptionId where
     put = Binary.putWord8 . fromIntegral . fromEnum

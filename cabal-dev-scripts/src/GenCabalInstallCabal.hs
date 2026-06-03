@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveGeneric       #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE DerivingStrategies #-}
+
 module Main (main) where
 
 import Control.Exception  (SomeException (..), catch, displayException)
@@ -41,7 +43,7 @@ data Z = Z
     { zDev    :: Bool
     , zUnused :: ()
     }
-  deriving (Generic)
+  deriving stock Generic
 
 instance Z.Zinza Z where
     toType    = Z.genericToTypeSFP

@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Solver.Modular.Tree
     ( POption(..)
     , Tree(..)
@@ -97,7 +99,7 @@ data Tree d c =
 --
 -- See <http://www.well-typed.com/blog/2015/03/qualified-goals/> for details.
 data POption = POption I (Maybe PackagePath)
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 data FailReason = UnsupportedExtension Extension
                 | UnsupportedLanguage Language
@@ -130,11 +132,11 @@ data FailReason = UnsupportedExtension Extension
                 | DependenciesNotLinked String
                 | CyclicDependencies
                 | UnsupportedSpecVer Ver
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | Information about a dependency involved in a conflict, for error messages.
 data ConflictingDep = ConflictingDep (DependencyReason QPN) (PkgComponent QPN) CI
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | Functor for the tree type. 'a' is the type of nodes' children. 'd' and 'c'
 -- have the same meaning as in 'Tree'.
@@ -145,7 +147,7 @@ data TreeF d c a =
   | GoalChoiceF     RevDepMap                               (PSQ (Goal QPN) a)
   | DoneF           RevDepMap d
   | FailF       ConflictSet FailReason
-  deriving (Functor, Foldable, Traversable)
+  deriving stock (Functor, Foldable, Traversable)
 
 out :: Tree d c -> TreeF d c (Tree d c)
 out (PChoice    p s i       ts) = PChoiceF    p s i       ts

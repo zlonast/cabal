@@ -1,4 +1,5 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings  #-}
+{-# LANGUAGE DerivingStrategies #-}
 module Main (main) where
 
 import Control.Lens     (imap)
@@ -111,10 +112,10 @@ data License = License
     , licenseFsfLibre    :: !Bool
     , licenseDeprecated  :: !Bool
     }
-  deriving (Show)
+  deriving stock Show
 
 newtype LicenseList = LL { unLL :: [License] }
-  deriving (Show)
+  deriving newtype Show
 
 instance FromJSON License where
     parseJSON = withObject "License" $ \obj -> License

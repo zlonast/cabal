@@ -1,3 +1,6 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE DerivingStrategies #-}
+
 -- | Conflict sets
 --
 -- Intended for double import
@@ -47,7 +50,7 @@ newtype ConflictSet = CS {
     -- | The set of variables involved in the conflict
     conflictSetToMap :: Map (Var QPN) (Set Conflict)
   }
-  deriving (Eq, Show)
+  deriving newtype (Eq, Show)
 
 -- | More detailed information about how a conflict set variable caused a
 -- conflict. This information can be used to determine whether a second value
@@ -76,11 +79,11 @@ data Conflict =
 
     -- | Any other conflict.
   | OtherConflict
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 -- | Version range with an 'Ord' instance.
 newtype OrderedVersionRange = OrderedVersionRange VR
-  deriving (Eq, Show)
+  deriving newtype (Eq, Show)
 
 -- TODO: Avoid converting the version ranges to strings.
 instance Ord OrderedVersionRange where

@@ -60,20 +60,23 @@ data CDynamicChar
 data DCElement = DCElement
     { alphabetSizeElem :: CSize
     , characterElement :: Ptr CBufferUnit
-    } deriving (Show)
+    } deriving stock Show
 
 
 -- |
 -- A closed type wrapping a void pointer in C to the C++ memoized TCM.
-data ForeignVoid deriving (Generic)
+data ForeignVoid
+  deriving stock Generic
 
 
 -- |
 -- A type-safe wrapper for the mutable, memoized TCm.
 newtype MemoizedCostMatrix
-      = MemoizedCostMatrix
-      { costMatrix :: StablePtr ForeignVoid
-      } deriving (Eq, Generic)
+  = MemoizedCostMatrix
+  { costMatrix :: StablePtr ForeignVoid
+  }
+  deriving newtype Eq
+  deriving stock Generic
 
 
 {-

@@ -102,7 +102,7 @@ data C2HsDepsInput
   , modNm :: ModuleName
   , ruleIds :: Map.Map ModuleName RuleId
   }
-  deriving stock ( Show, Generic )
+  deriving stock (Show, Generic)
   deriving anyclass Binary
 
 -- | Input to C2Hs command
@@ -114,7 +114,7 @@ data C2HsInput
   , hsDir :: SymbolicPath Pkg (Dir Source)
   , chiDir :: SymbolicPath Pkg (Dir Build)
   }
-  deriving stock ( Show, Generic )
+  deriving stock (Show, Generic)
   deriving anyclass Binary
 
 modName :: ModuleName -> String

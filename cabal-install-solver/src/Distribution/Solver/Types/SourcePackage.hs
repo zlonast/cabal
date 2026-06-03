@@ -1,4 +1,6 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveAnyClass #-}
 module Distribution.Solver.Types.SourcePackage
     ( PackageDescriptionOverride
     , SourcePackage(..)
@@ -24,12 +26,11 @@ data SourcePackage loc = SourcePackage
   , srcpkgSource        :: loc
   , srcpkgDescrOverride :: PackageDescriptionOverride
   }
-  deriving (Eq, Show, Generic)
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, Structured)
 
-instance Binary loc => Binary (SourcePackage loc)
-instance Structured loc => Structured (SourcePackage loc)
-
-instance Package (SourcePackage a) where packageId = srcpkgPackageId
+instance Package (SourcePackage a) where
+  packageId = srcpkgPackageId
 
 -- | We sometimes need to override the .cabal file in the tarball with
 -- the newer one from the package index.

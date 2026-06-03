@@ -1,5 +1,8 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE DeriveAnyClass #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Distribution.Solver.Types.PackageIndex
@@ -79,8 +82,9 @@ newtype PackageIndex pkg = PackageIndex
   -- Most queries are a map lookup followed by a linear scan of the bucket.
   --
   (Map PackageName [pkg])
-
-  deriving (Eq, Show, Read, Functor, Generic)
+  deriving newtype (Eq, Show, Read)
+  deriving stock (Functor, Generic)
+  deriving anyclass Binary
 --FIXME: the Functor instance here relies on no package id changes
 
 instance Package pkg => Semigroup (PackageIndex pkg) where
@@ -92,8 +96,6 @@ instance Package pkg => Monoid (PackageIndex pkg) where
   --save one mappend with empty in the common case:
   mconcat [] = mempty
   mconcat xs = Prelude.foldr1 mappend xs
-
-instance Binary pkg => Binary (PackageIndex pkg)
 
 invariant :: Package pkg => PackageIndex pkg -> Bool
 invariant (PackageIndex m) = all (uncurry goodBucket) (Map.toList m)
@@ -184,7 +186,7 @@ override i1@(PackageIndex m1) i2@(PackageIndex m2) =
     mkPackageIndex (Map.unionWith (\_l r -> r) m1 m2)
 
 data OverrideOrMerge = Override | Merge
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | Combined override-or-merge of two indexes.
 --

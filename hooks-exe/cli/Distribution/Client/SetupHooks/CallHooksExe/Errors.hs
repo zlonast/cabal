@@ -1,6 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Client.SetupHooks.CallHooksExe.Errors
   ( HookInput(..)
@@ -40,7 +41,7 @@ data SetupHooksCallExeException
         -- ^ hook name
       HookFailedReason
         -- ^ why did the hook fail?
-  deriving Show
+  deriving stock Show
 
 data HookFailedReason
   -- | The hooks executable terminated with non-zero exit code.
@@ -54,7 +55,7 @@ data HookFailedReason
           -- ^ byte offset at which the decoding error took place
         String
           -- ^ info about the decoding error
-  deriving Show
+  deriving stock Show
 
 setupHooksCallExeExceptionCode :: SetupHooksCallExeException -> Int
 setupHooksCallExeExceptionCode = \case

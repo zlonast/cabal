@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 -- | The steps that can be run by @cabal-validate@.
 module Step
   ( Step (..)
@@ -21,7 +23,7 @@ data Step
   | SolverTests
   | SolverBenchmarksTests
   | SolverBenchmarksRun
-  deriving (Eq, Enum, Bounded, Show)
+  deriving stock (Eq, Enum, Bounded, Show)
 
 -- | Get the display identifier for a given `Step`.
 --

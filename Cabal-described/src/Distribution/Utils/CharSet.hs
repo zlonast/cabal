@@ -1,4 +1,6 @@
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 -- | Sets of characters.
 --
 -- Using this is more efficient than 'RE.Type.Alt':ng individual characters.
@@ -42,7 +44,7 @@ import qualified Data.IntMap.Strict as IM
 --
 -- We use range set, which works great with 'Char'.
 newtype CharSet = CS { unCS :: IM.IntMap Int }
-  deriving (Eq, Ord)
+  deriving newtype (Eq, Ord)
 
 instance IsString CharSet where
     fromString = fromList

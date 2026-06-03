@@ -1,3 +1,6 @@
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
 {-# OPTIONS_GHC -Wno-incomplete-patterns
                 -Wno-deprecations
                 -Wno-unused-binds #-} --FIXME
@@ -87,7 +90,7 @@ versionTests =
 -------------------------------------------------------------------------------
 
 newtype VersionArb = VersionArb [Int]
-                   deriving (Eq,Ord,Show)
+  deriving newtype (Eq, Ord, Show)
 
 -- | 'Version' instance as used by QC 2.9
 instance Arbitrary VersionArb where

@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module Distribution.Solver.Modular.PSQ
     ( PSQ(..)  -- Unit test needs constructor access
     , casePSQ
@@ -45,7 +47,8 @@ import Data.Traversable
 import Prelude hiding (foldr, length, lookup, filter, null, map)
 
 newtype PSQ k v = PSQ [(k, v)]
-  deriving (Eq, Show, Functor, F.Foldable, Traversable) -- Qualified Foldable to avoid issues with FTP
+  deriving newtype (Eq, Show) -- Qualified Foldable to avoid issues with FTP
+  deriving stock (Functor, F.Foldable, Traversable)
 
 keys :: PSQ k v -> [k]
 keys (PSQ xs) = fmap fst xs

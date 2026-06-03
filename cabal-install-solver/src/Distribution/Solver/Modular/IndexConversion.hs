@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Solver.Modular.IndexConversion
     ( convPIs
     ) where
@@ -363,7 +365,7 @@ convCondTree flags dr pkg os arch cinfo pn fds comp getInfo solveExes@(SolveExec
 
 data SimpleFlaggedDepKey qpn =
     SimpleFlaggedDepKey (PkgComponent qpn) Component
-  deriving (Eq, Ord)
+  deriving stock (Eq, Ord)
 
 data SimpleFlaggedDepValue qpn = SimpleFlaggedDepValue (DependencyReason qpn) VR
 

@@ -2,6 +2,7 @@
 {-# LANGUAGE StandaloneDeriving  #-}
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE DerivingStrategies  #-}
 
 module HackageBenchmark (
     hackageBenchmarkMain
@@ -72,7 +73,7 @@ data CabalResult
   | PkgNotFound
   | Timeout
   | Unknown
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | @since 3.18
 deriving instance Ord CabalResult

@@ -1,4 +1,6 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveAnyClass #-}
 
 -- | Per-package constraints. Package constraints must be respected by the
 -- solver. Multiple constraints for each package can be given, though obviously
@@ -52,7 +54,7 @@ data ConstraintScope
      -- | The package with the specified name regardless of
      -- qualifier.
    | ScopeAnyQualifier PackageName
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | Constructor for a common use case: the constraint applies to
 -- the package with the specified name when that package is a
@@ -94,11 +96,8 @@ data PackageProperty
    | PackagePropertySource
    | PackagePropertyFlags     FlagAssignment
    | PackagePropertyStanzas   [OptionalStanza]
-  deriving (Eq, Show, Generic)
-
-instance Binary PackageProperty
-instance NFData PackageProperty
-instance Structured PackageProperty
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 instance Pretty PackageProperty where
   pretty (PackagePropertyVersion verrange) = pretty verrange
@@ -112,7 +111,7 @@ instance Pretty PackageProperty where
 -- | A package constraint consists of a scope plus a property
 -- that must hold for all packages within that scope.
 data PackageConstraint = PackageConstraint ConstraintScope PackageProperty
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 instance Pretty PackageConstraint where
   pretty (PackageConstraint scope prop) =

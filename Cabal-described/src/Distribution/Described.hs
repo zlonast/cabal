@@ -1,6 +1,9 @@
-{-# LANGUAGE FlexibleInstances   #-}
-{-# LANGUAGE OverloadedStrings   #-}
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE FlexibleInstances          #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE ScopedTypeVariables        #-}
+{-# LANGUAGE DerivingStrategies         #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
 module Distribution.Described (
     Described (..),
     describeDoc,
@@ -321,7 +324,7 @@ testDescribed _ = testGroup name
         res = eitherParsec str
 
 newtype Ex a = Example String
-  deriving (Show)
+  deriving newtype Show
 
 instance Described a => Arbitrary (Ex a) where
     arbitrary

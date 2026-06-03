@@ -2,6 +2,7 @@
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE Rank2Types          #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE DerivingStrategies  #-}
 {-# OPTIONS_GHC -Wno-unused-pattern-binds #-} -- pattern match to assert field count
 
 module Main where
@@ -189,7 +190,7 @@ forEachGPD _ _ _ = return ()
 -------------------------------------------------------------------------------
 
 data ParsecResult = ParsecResult !Int !Int !Int
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 instance Semigroup ParsecResult where
     ParsecResult x y z <> ParsecResult u v w = ParsecResult (x + u) (y + v) (z + w)

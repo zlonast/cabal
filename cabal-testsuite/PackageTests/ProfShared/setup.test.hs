@@ -1,9 +1,10 @@
+{-# LANGUAGE DerivingStrategies #-}
 import Test.Cabal.Prelude
 import Data.List
 import Data.Bifunctor
 
 data BuildWay = StaticWay | DynWay | ProfWay | ProfDynWay
-        deriving (Eq, Ord, Show, Read, Enum)
+  deriving stock (Eq, Ord, Show, Read, Enum)
 
 -- Test building with profiling shared support
 main = do

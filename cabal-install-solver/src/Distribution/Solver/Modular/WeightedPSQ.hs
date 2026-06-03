@@ -1,6 +1,8 @@
 {-# LANGUAGE DeriveTraversable #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TupleSections #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 module Distribution.Solver.Modular.WeightedPSQ (
     WeightedPSQ
   , fromList
@@ -28,7 +30,8 @@ import Prelude hiding (filter, lookup)
 -- Each element has a key ('k'), value ('v'), and weight ('w'). All operations
 -- that add elements or modify weights stably sort the elements by weight.
 newtype WeightedPSQ w k v = WeightedPSQ [(w, k, v)]
-  deriving (Eq, Show, Functor, F.Foldable, T.Traversable)
+  deriving newtype (Eq, Show)
+  deriving stock (Functor, F.Foldable, T.Traversable)
 
 -- | /O(N)/.
 filter :: (v -> Bool) -> WeightedPSQ k w v -> WeightedPSQ k w v

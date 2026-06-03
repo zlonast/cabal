@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 -- | Parse CLI arguments and resolve defaults from the environment.
 module Cli
   ( Opts (..)
@@ -96,7 +98,7 @@ data Opts = Opts
   , steps :: [Step]
   -- ^ Steps to run.
   }
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Whether to run tests on Hackage data, and if so how much.
 data HackageTests
@@ -106,7 +108,7 @@ data HackageTests
     PartialHackageTests
   | -- | Do not run tests on Hackage data.
     NoHackageTests
-  deriving (Show)
+  deriving stock (Show)
 
 -- | A compiler executable and version number.
 data Compiler = Compiler
@@ -115,14 +117,14 @@ data Compiler = Compiler
   , compilerVersion :: Version
   -- ^ The compiler's version number.
   }
-  deriving (Show)
+  deriving stock (Show)
 
 -- | A verbosity level, for log output.
 data Verbosity
   = Quiet
   | Info
   | Verbose
-  deriving (Show, Eq, Ord)
+  deriving stock (Show, Eq, Ord)
 
 -- | Run an action only if the `verbosity` is `Verbose` or higher.
 whenVerbose :: Applicative f => Opts -> f () -> f ()
@@ -135,7 +137,7 @@ data VersionParseException = VersionParseException
   , versionExecutable :: FilePath
   -- ^ The compiler which produced the string.
   }
-  deriving (Show)
+  deriving stock (Show)
 
 instance Exception VersionParseException where
   displayException exception =
@@ -309,7 +311,7 @@ data RawOpts = RawOpts
   , rawSolverBenchmarks :: Bool
   , rawHackageTests :: HackageTests
   }
-  deriving (Show)
+  deriving stock (Show)
 
 -- | `Parser` for `RawOpts`.
 --

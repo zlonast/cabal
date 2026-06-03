@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
@@ -25,13 +26,13 @@ import Distribution.Types.Version
 
 -- TODO: index this
 data Plan = Plan {planInstallPlan :: [InstallItem]}
-  deriving (Show)
+  deriving stock (Show)
 
 data InstallItem
   = APreExisting
   | AConfiguredGlobal ConfiguredGlobal
   | AConfiguredInplace ConfiguredInplace
-  deriving (Show)
+  deriving stock (Show)
 
 -- local or inplace package
 data ConfiguredInplace = ConfiguredInplace
@@ -42,7 +43,7 @@ data ConfiguredInplace = ConfiguredInplace
   , configuredInplaceRevision :: Revision
   , configuredInplaceComponentName :: Maybe ComponentName
   }
-  deriving (Show)
+  deriving stock (Show)
 
 data ConfiguredGlobal = ConfiguredGlobal
   { configuredGlobalBinFile :: Maybe FilePath
@@ -51,10 +52,10 @@ data ConfiguredGlobal = ConfiguredGlobal
   , configuredGlobalRevision :: Revision
   , configuredGlobalComponentName :: Maybe ComponentName
   }
-  deriving (Show)
+  deriving stock (Show)
 
 newtype Revision = Revision Int
-  deriving (Show, Eq, FromJSON)
+  deriving newtype (Show, Eq, FromJSON)
 
 instance FromJSON Plan where
   parseJSON (Object v) = fmap Plan (v .: "install-plan")

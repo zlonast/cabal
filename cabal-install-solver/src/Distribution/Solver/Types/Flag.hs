@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Solver.Types.Flag
     ( FlagType(..)
     ) where
@@ -5,4 +7,4 @@ module Distribution.Solver.Types.Flag
 import Prelude (Eq, Show)
 
 data FlagType = Manual | Automatic
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)

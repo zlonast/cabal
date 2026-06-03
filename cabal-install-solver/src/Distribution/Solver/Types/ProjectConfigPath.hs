@@ -1,5 +1,8 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE ViewPatterns #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE DeriveAnyClass #-}
 
 module Distribution.Solver.Types.ProjectConfigPath
     (
@@ -57,10 +60,15 @@ import Distribution.System (OS(Windows), buildOS)
 -- List elements are relative to each other but once canonicalized, elements are
 -- relative to the directory of the project root.
 newtype ProjectConfigPath = ProjectConfigPath (NonEmpty FilePath)
-    deriving (Eq, Generic)
+  deriving newtype Eq
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
-instance Pretty ProjectConfigPath where pretty = docProjectConfigPath
-instance Show ProjectConfigPath where show = prettyShow
+instance Pretty ProjectConfigPath where
+  pretty = docProjectConfigPath
+
+instance Show ProjectConfigPath where
+  show = prettyShow
 
 -- | Sorts URIs after local file paths and longer file paths after shorter ones
 -- as measured by the number of path segments. If still equal, then sorting is
@@ -161,10 +169,6 @@ splitPath = FP.splitPath . normSep
             else
                 Posix.joinPath $ Posix.splitDirectories
                 [if Windows.isPathSeparator c then Posix.pathSeparator else c| c <- p]
-
-instance Binary ProjectConfigPath
-instance NFData ProjectConfigPath
-instance Structured ProjectConfigPath
 
 -- | Renders the path like this;
 --

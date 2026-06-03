@@ -1,6 +1,8 @@
 {-# LANGUAGE DeriveTraversable   #-}
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE DerivingStrategies  #-}
+
 module Distribution.Utils.GrammarRegex (
     -- * Regular expressions
     GrammarRegex (..),
@@ -61,7 +63,7 @@ data GrammarRegex a
     | REOptCommaList (GrammarRegex a)     -- ^ opt comma list
 
     | RETodo                              -- ^ unspecified
-  deriving (Eq, Ord, Show, Functor, Foldable, Traversable)
+  deriving stock (Eq, Ord, Show, Functor, Foldable, Traversable)
 
 -------------------------------------------------------------------------------
 -- Instances

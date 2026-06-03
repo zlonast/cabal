@@ -1,3 +1,6 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module U2F.Types where
 
-data Curve = SEC_p256r1 deriving Show
+data Curve = SEC_p256r1
+  deriving stock Show

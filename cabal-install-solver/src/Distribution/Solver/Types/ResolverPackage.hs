@@ -1,5 +1,8 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
 module Distribution.Solver.Types.ResolverPackage
     ( ResolverPackage(..)
     , resolverPackageLibDeps
@@ -26,10 +29,8 @@ import Data.Foldable (fold)
 --
 data ResolverPackage loc = PreExisting InstSolverPackage
                          | Configured  (SolverPackage loc)
-  deriving (Eq, Show, Generic)
-
-instance Binary loc => Binary (ResolverPackage loc)
-instance Structured loc => Structured (ResolverPackage loc)
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 instance Package (ResolverPackage loc) where
   packageId (PreExisting ipkg)     = packageId ipkg

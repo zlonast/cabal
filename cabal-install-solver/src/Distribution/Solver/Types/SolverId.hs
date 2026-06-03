@@ -1,4 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
 module Distribution.Solver.Types.SolverId
     ( SolverId(..)
     )
@@ -17,10 +20,8 @@ import Distribution.Package (PackageId, Package(..), UnitId)
 --
 data SolverId = PreExistingId { solverSrcId :: PackageId, solverInstId :: UnitId }
               | PlannedId     { solverSrcId :: PackageId }
-  deriving (Eq, Ord, Generic)
-
-instance Binary SolverId
-instance Structured SolverId
+  deriving stock (Eq, Ord, Generic)
+  deriving anyclass (Binary, Structured)
 
 instance Show SolverId where
     show = show . solverSrcId

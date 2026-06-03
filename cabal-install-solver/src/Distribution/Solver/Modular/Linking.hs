@@ -1,5 +1,6 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 -- TODO: remove this
 {-# OPTIONS -Wno-incomplete-uni-patterns #-}
@@ -142,7 +143,7 @@ type Conflict = (ConflictSet, String)
 newtype UpdateState a = UpdateState {
     unUpdateState :: StateT ValidateState (Either Conflict) a
   }
-  deriving (Functor, Applicative, Monad)
+  deriving newtype (Functor, Applicative, Monad)
 
 instance MonadState ValidateState UpdateState where
   get    = UpdateState get
@@ -436,7 +437,7 @@ data LinkGroup = LinkGroup {
       -- of the link group itself)
     , lgBlame :: ConflictSet
     }
-    deriving (Show, Eq)
+    deriving stock (Show, Eq)
 
 -- | Invariant for the set of link groups: every element in the link group
 -- must be pointing to the /same/ link group

@@ -3,6 +3,7 @@
 
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 {-
 
@@ -284,7 +285,7 @@ haddockToBuildFlags f =
 #endif
 {- FOURMOLU_ENABLE -}
 
-data Name = NameLib (Maybe String) | NameExe String deriving (Eq, Show)
+data Name = NameLib (Maybe String) | NameExe String deriving stock (Eq, Show)
 
 nameToString :: Name -> String
 nameToString n = case n of
@@ -301,7 +302,7 @@ nameToString n = case n of
     fixchar c   = c
 
 data Component = Component Name [String] [String] [String]
-  deriving Show
+  deriving stock Show
 
 -- | Generate a build module for the test suite.
 --
@@ -357,8 +358,8 @@ generateBuildModule testSuiteName flags pkg lbi = do
       , ""
       , "import Prelude"
       , ""
-      , "data Name = NameLib (Maybe String) | NameExe String deriving (Eq, Show)"
-      , "data Component = Component Name [String] [String] [String] deriving (Eq, Show)"
+      , "data Name = NameLib (Maybe String) | NameExe String deriving stock (Eq, Show)"
+      , "data Component = Component Name [String] [String] [String] deriving stock (Eq, Show)"
       , ""
       ]
 

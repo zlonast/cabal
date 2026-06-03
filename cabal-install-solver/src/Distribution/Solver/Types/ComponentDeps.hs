@@ -1,7 +1,11 @@
-{-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE DeriveTraversable #-}
 
 -- | Fine-grained package dependencies
 --
@@ -64,10 +68,8 @@ data Component =
   | ComponentTest   UnqualComponentName
   | ComponentBench  UnqualComponentName
   | ComponentSetup
-  deriving (Show, Eq, Ord, Generic)
-
-instance Binary Component
-instance Structured Component
+  deriving stock (Show, Eq, Ord, Generic)
+  deriving anyclass (Binary, Structured)
 
 instance Pretty Component where
     pretty ComponentLib        = PP.text "lib"
@@ -87,24 +89,13 @@ type ComponentDep a = (Component, a)
 -- dependencies for each named component within a package.
 --
 newtype ComponentDeps a = ComponentDeps { unComponentDeps :: Map Component a }
-  deriving (Show, Functor, Eq, Ord, Generic)
-
-instance Semigroup a => Monoid (ComponentDeps a) where
-  mempty = ComponentDeps Map.empty
-  mappend = (<>)
+  deriving newtype (Show, Monoid, Functor, Foldable, Eq, Ord)
+  deriving stock (Generic, Traversable)
+  deriving anyclass (Binary, Structured)
 
 instance Semigroup a => Semigroup (ComponentDeps a) where
   ComponentDeps d <> ComponentDeps d' =
       ComponentDeps (Map.unionWith (<>) d d')
-
-instance Foldable ComponentDeps where
-  foldMap f = foldMap f . unComponentDeps
-
-instance Traversable ComponentDeps where
-  traverse f = fmap ComponentDeps . traverse f . unComponentDeps
-
-instance Binary a => Binary (ComponentDeps a)
-instance Structured a => Structured (ComponentDeps a)
 
 componentNameToComponent :: CN.ComponentName -> Component
 componentNameToComponent (CN.CLibName  LN.LMainLibName)   = ComponentLib

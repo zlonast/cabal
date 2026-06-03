@@ -1,5 +1,8 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
 module Distribution.Solver.Types.Settings
     ( ReorderGoals(..)
     , IndependentGoals(..)
@@ -27,85 +30,73 @@ import qualified Distribution.Compat.CharParsing as P
 import qualified Text.PrettyPrint as PP
 
 newtype ReorderGoals = ReorderGoals Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 newtype CountConflicts = CountConflicts Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 newtype FineGrainedConflicts = FineGrainedConflicts Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 newtype MinimizeConflictSet = MinimizeConflictSet Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 newtype IndependentGoals = IndependentGoals Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 newtype PreferOldest = PreferOldest Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 newtype AvoidReinstalls = AvoidReinstalls Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 newtype ShadowPkgs = ShadowPkgs Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 newtype StrongFlags = StrongFlags Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 newtype AllowBootLibInstalls = AllowBootLibInstalls Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 -- | Should we consider all packages we know about, or only those that
 -- have constraints explicitly placed on them or which are goals?
 data OnlyConstrained
   = OnlyConstrainedNone
   | OnlyConstrainedAll
-  deriving (Eq, Generic, Show)
+  deriving stock (Eq, Generic, Show)
+  deriving anyclass (Binary, NFData, Structured)
 
 newtype EnableBackjumping = EnableBackjumping Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
+
 
 newtype SolveExecutables = SolveExecutables Bool
-  deriving (BooleanFlag, Eq, Generic, Show)
-
-instance Binary ReorderGoals
-instance Binary CountConflicts
-instance Binary FineGrainedConflicts
-instance Binary IndependentGoals
-instance Binary PreferOldest
-instance Binary MinimizeConflictSet
-instance Binary AvoidReinstalls
-instance Binary ShadowPkgs
-instance Binary StrongFlags
-instance Binary AllowBootLibInstalls
-instance Binary OnlyConstrained
-instance Binary SolveExecutables
-
-instance Structured ReorderGoals
-instance Structured CountConflicts
-instance Structured FineGrainedConflicts
-instance Structured IndependentGoals
-instance Structured PreferOldest
-instance Structured MinimizeConflictSet
-instance Structured AvoidReinstalls
-instance Structured ShadowPkgs
-instance Structured StrongFlags
-instance Structured AllowBootLibInstalls
-instance Structured OnlyConstrained
-instance Structured SolveExecutables
-
-instance NFData ReorderGoals
-instance NFData CountConflicts
-instance NFData FineGrainedConflicts
-instance NFData IndependentGoals
-instance NFData PreferOldest
-instance NFData MinimizeConflictSet
-instance NFData AvoidReinstalls
-instance NFData ShadowPkgs
-instance NFData StrongFlags
-instance NFData AllowBootLibInstalls
-instance NFData OnlyConstrained
+  deriving newtype (BooleanFlag, Eq, Show)
+  deriving stock Generic
+  deriving anyclass (Binary, NFData, Structured)
 
 instance Pretty OnlyConstrained where
   pretty OnlyConstrainedAll  = PP.text "all"

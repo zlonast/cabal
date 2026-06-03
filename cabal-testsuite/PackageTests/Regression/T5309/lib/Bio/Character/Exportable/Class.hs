@@ -42,7 +42,7 @@ data ExportableCharacterSequence
    { exportedElementCountSequence :: Int
    , exportedElementWidthSequence :: Int
    , exportedBufferChunks :: [CULong]
-   } deriving (Eq, Show)
+   } deriving stock (Eq, Show)
 
 
 -- |
@@ -53,4 +53,4 @@ data ExportableCharacterElements
    { exportedElementCountElements :: Int
    , exportedElementWidthElements :: Int
    , exportedCharacterElements :: [CUInt]
-   } deriving (Eq, Show)
+   } deriving stock (Eq, Show)

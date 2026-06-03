@@ -1,5 +1,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Solver.Modular.Validate (validateTree) where
 
 -- Validation of the tree.
@@ -114,7 +116,7 @@ data ValidateState = VS {
 }
 
 newtype Validate a = Validate (Reader ValidateState a)
-  deriving (Functor, Applicative, Monad, MonadReader ValidateState)
+  deriving newtype (Functor, Applicative, Monad, MonadReader ValidateState)
 
 runValidate :: Validate a -> ValidateState -> a
 runValidate (Validate r) = runReader r

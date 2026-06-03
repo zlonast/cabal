@@ -1,4 +1,8 @@
 {-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Distribution.Solver.Types.PkgConfigDb
@@ -51,10 +55,9 @@ import Distribution.Verbosity                   (Verbosity)
 -- but we don't know the exact version (because parsing of the version number
 -- failed).
 newtype PkgConfigDb = PkgConfigDb (M.Map PkgconfigName (Maybe PkgconfigVersion))
-     deriving (Show, Generic)
-
-instance Binary PkgConfigDb
-instance Structured PkgConfigDb
+  deriving newtype Show
+  deriving stock Generic
+  deriving anyclass (Binary, Structured)
 
 -- | Query pkg-config for the list of installed packages, together
 -- with their versions. Return a `PkgConfigDb` encapsulating this

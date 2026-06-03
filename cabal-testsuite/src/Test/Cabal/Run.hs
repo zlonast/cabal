@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE NondecreasingIndentation #-}
 
 -- | A module for running commands in a chatty way.
@@ -23,7 +24,7 @@ data Result = Result
   , resultCommand :: String
   , resultOutput :: String
   }
-  deriving (Show)
+  deriving stock (Show)
 
 -- | Run a command, streaming its output to stdout, and return a 'Result'
 -- with this information.

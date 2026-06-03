@@ -108,5 +108,5 @@ data MyPPInput
   , ppAutogenDir     :: SymbolicPath Pkg (Dir Source)
   , ppBaseName       :: String
   }
-  deriving stock    ( Show, Generic )
+  deriving stock    (Show, Generic)
   deriving anyclass Binary

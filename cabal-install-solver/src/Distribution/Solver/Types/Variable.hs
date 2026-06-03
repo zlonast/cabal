@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 module Distribution.Solver.Types.Variable where
 
 import Prelude (Eq, Show)
@@ -12,4 +13,4 @@ data Variable qpn =
     PackageVar qpn
   | FlagVar qpn FlagName
   | StanzaVar qpn OptionalStanza
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)

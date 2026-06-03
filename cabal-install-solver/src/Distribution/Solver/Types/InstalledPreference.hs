@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Solver.Types.InstalledPreference
     ( InstalledPreference(..),
     ) where
@@ -8,4 +10,4 @@ import Prelude (Show)
 -- version.
 --
 data InstalledPreference = PreferInstalled | PreferLatest | PreferOldest
-  deriving Show
+  deriving stock Show

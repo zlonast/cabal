@@ -1,4 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
 module Distribution.Solver.Types.SolverPackage
     ( SolverPackage(..)
     ) where
@@ -27,10 +30,8 @@ data SolverPackage loc = SolverPackage {
         solverPkgLibDeps :: ComponentDeps [SolverId],
         solverPkgExeDeps :: ComponentDeps [SolverId]
     }
-  deriving (Eq, Show, Generic)
-
-instance Binary loc => Binary (SolverPackage loc)
-instance Structured loc => Structured (SolverPackage loc)
+  deriving stock (Eq, Show, Generic)
+  deriving anyclass (Binary, Structured)
 
 instance Package (SolverPackage loc) where
   packageId = packageId . solverPkgSource

@@ -1,4 +1,5 @@
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# OPTIONS_GHC -Wno-deferred-out-of-scope-variables #-}
 
 module Main (main) where
@@ -18,7 +19,7 @@ import qualified Data.Aeson                     as A
 import qualified Data.ByteString.Lazy           as LBS
 import qualified Data.Map.Strict                as Map
 import qualified Distribution.Types.PackageName as C
-import qualified Distribution.Types.Version as C
+import qualified Distribution.Types.Version     as C
 import qualified Topograph                      as TG
 import Control.Exception
 import System.IO.Error (isDoesNotExistError)
@@ -142,13 +143,13 @@ data Result = Result
     { resBuiltin      :: [Builtin]
     , resDependencies :: [Dep]
     }
-  deriving (Show)
+  deriving stock Show
 
 data Builtin = Builtin
     { builtinPackageName :: P.PkgName
     , builtinVersion     :: P.Ver
     }
-  deriving (Show)
+  deriving stock Show
 
 data Dep = Dep
     { depPackageName :: P.PkgName
@@ -160,12 +161,12 @@ data Dep = Dep
     , depFlags       :: [String]
     , depComponent   :: Maybe T.Text
     }
-  deriving (Show)
+  deriving stock Show
 
 data SrcType
     = Hackage
     | Local
-  deriving (Show)
+  deriving stock Show
 
 instance A.ToJSON Result where
     toJSON res = A.object

@@ -33,7 +33,7 @@ import Distribution.Verbosity
 import Control.Monad (forM, foldM_)
 import Data.List (isPrefixOf, tails)
 
-data Linking = Static | Dynamic deriving (Eq, Ord, Show)
+data Linking = Static | Dynamic deriving stock (Eq, Ord, Show)
 
 links :: [Linking]
 links = [Static, Dynamic]

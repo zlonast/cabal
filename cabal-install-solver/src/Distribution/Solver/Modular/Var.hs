@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Solver.Modular.Var (
     Var(..)
   , showVar
@@ -20,7 +22,7 @@ import Distribution.Solver.Types.PackagePath
 -- variables. This fits better with the fact that in most cases,
 -- these have to be treated differently.
 data Var qpn = P qpn | F (FN qpn) | S (SN qpn)
-  deriving (Eq, Ord, Show, Functor)
+  deriving stock (Eq, Ord, Show, Functor)
 
 showVar :: Var QPN -> String
 showVar (P qpn) = showQPN qpn

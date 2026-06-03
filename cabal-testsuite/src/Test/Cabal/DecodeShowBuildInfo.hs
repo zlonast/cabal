@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -53,14 +54,14 @@ data BuildInfo = BuildInfo
   , compiler :: CompilerInfo
   , components :: [ComponentInfo]
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
 
 data CompilerInfo = CompilerInfo
   { flavour :: String
   , compilerId :: String
   , path :: String
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
 
 data ComponentInfo = ComponentInfo
   { componentType :: String
@@ -72,7 +73,7 @@ data ComponentInfo = ComponentInfo
   , componentHsSrcDirs :: [FilePath]
   , componentSrcDir :: FilePath
   }
-  deriving (Generic, Show)
+  deriving stock (Generic, Show)
 
 instance ToJSON BuildInfo where
   toEncoding = genericToEncoding defaultOptions

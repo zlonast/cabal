@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveFunctor         #-}
 {-# LANGUAGE DeriveGeneric         #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE DerivingStrategies    #-}
 module Main (main) where
 
 import Data.Map.Strict (Map)
@@ -119,7 +120,7 @@ data Z = Z
     , zNull                     :: String -> Bool
     , zNotNull                  :: String -> Bool
     }
-  deriving (Generic)
+  deriving stock Generic
 
 data ZField = ZField
     { zfieldName            :: String
@@ -130,14 +131,14 @@ data ZField = ZField
     , zfieldDefault         :: String
     , zfieldSyntax          :: String
     }
-  deriving (Generic)
+  deriving stock Generic
 
 data ZProduction = ZProduction
     { zprodName        :: String
     , zprodSyntax      :: String
     , zprodDescription :: String
     }
-  deriving (Generic)
+  deriving stock Generic
 
 instance Z.Zinza Z where
     toType    = Z.genericToTypeSFP
@@ -187,7 +188,7 @@ fromFieldDesc' (UniqueField s)             = ("Required field",  "",       show 
 -------------------------------------------------------------------------------
 
 newtype Reference a b = Reference (Map FieldName FieldDesc)
-  deriving (Functor)
+  deriving stock Functor
 
 referenceAvailableSince :: CabalSpecVersion -> Reference a b -> Reference a b
 referenceAvailableSince v (Reference m) =
@@ -219,7 +220,7 @@ data FieldDesc = FieldDesc
     , fdDeprecatedSince :: Maybe (CabalSpecVersion, String)
     , fdDescription     :: FieldDesc'
     }
-  deriving Show
+  deriving stock Show
 
 reference :: FieldName -> FieldDesc' -> Reference a b
 reference fn d = Reference $ Map.singleton fn $ FieldDesc Nothing Nothing Nothing d
@@ -231,7 +232,7 @@ data FieldDesc'
     | OptionalFieldAla PP.Doc
     | OptionalFieldDefAla PP.Doc PP.Doc
     | MonoidalFieldAla PP.Doc
-  deriving Show
+  deriving stock Show
 
 instance Applicative (Reference a) where
     pure _                      = Reference Map.empty

@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Solver.Types.Progress
     ( Progress(..)
     , foldProgress
@@ -16,7 +18,7 @@ import Distribution.Solver.Compat.Prelude
 data Progress step fail done = Step step (Progress step fail done)
                              | Fail fail
                              | Done done
-  deriving (Functor)
+  deriving stock Functor
 
 step :: step -> Progress step fail ()
 step s = Step s (Done ())

@@ -3,6 +3,8 @@
 {-# LANGUAGE FunctionalDependencies #-}
 {-# LANGUAGE OverloadedStrings      #-}
 {-# LANGUAGE ScopedTypeVariables    #-}
+{-# LANGUAGE DerivingStrategies     #-}
+
 module GenUtils where
 
 import Control.Lens (each, ix, (%~), (&))
@@ -33,7 +35,7 @@ data SPDXLicenseListVersion
     | SPDXLicenseListVersion_3_23
     | SPDXLicenseListVersion_3_25
     | SPDXLicenseListVersion_3_26
-  deriving (Eq, Ord, Show, Enum, Bounded)
+  deriving stock (Eq, Ord, Show, Enum, Bounded)
 
 allVers :: Set.Set SPDXLicenseListVersion
 allVers =  Set.fromList [minBound .. maxBound]
@@ -65,7 +67,7 @@ suffixVer SPDXLicenseListVersion_3_0  = "_3_0"
 -------------------------------------------------------------------------------
 
 data PerV a = PerV a a a a a a a a a
-  deriving (Show, Functor, Foldable, Traversable)
+  deriving stock (Show, Functor, Foldable, Traversable)
 
 class Functor f => Representable i f | f -> i where
     index    :: i -> f a -> a
@@ -97,7 +99,8 @@ instance Representable SPDXLicenseListVersion PerV where
 -- Sorting
 -------------------------------------------------------------------------------
 
-newtype OrdT = OrdT Text deriving (Eq)
+newtype OrdT = OrdT Text
+  deriving newtype Eq
 
 instance Ord OrdT where
     compare (OrdT a) (OrdT b)
@@ -190,7 +193,7 @@ data Input = Input
     , inputLicenseList_all  :: Text
     , inputLicenseList_perv :: PerV Text
     }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 instance Z.Zinza Input where
     toType    = Z.genericToTypeSFP
@@ -204,7 +207,7 @@ data InputLicense = InputLicense
     , ilIsOsiApproved :: Bool
     , ilIsFsfLibre    :: Bool
     }
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 instance Z.Zinza InputLicense where
     toType    = Z.genericToTypeSFP

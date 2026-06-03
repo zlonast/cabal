@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
 module Distribution.Solver.Modular.Package
   ( I(..)
   , Loc(..)
@@ -50,11 +51,11 @@ type PId = UnitId
 --
 -- TODO: More information is needed about the repo.
 data Loc = Inst PId | InRepo
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 -- | Instance. A version number and a location.
 data I = I Ver Loc
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 -- | String representation of an instance.
 showI :: I -> String
@@ -68,7 +69,7 @@ showI (I v (Inst uid)) = showVer v ++ "/installed" ++ extractPackageAbiHash uid
 
 -- | Package instance. A package name and an instance.
 data PI qpn = PI qpn I
-  deriving (Eq, Ord, Show, Functor)
+  deriving stock (Eq, Ord, Show, Functor)
 
 -- | String representation of a package instance.
 showPI :: PI QPN -> String

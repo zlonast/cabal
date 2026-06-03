@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE RankNTypes #-}
 
@@ -40,7 +41,7 @@ data ScriptEnv = ScriptEnv
   , runnerPackages :: [(OpenUnitId, ModuleRenaming)]
   , runnerWithSharedLib :: Bool
   }
-  deriving (Show)
+  deriving stock (Show)
 
 {-
 

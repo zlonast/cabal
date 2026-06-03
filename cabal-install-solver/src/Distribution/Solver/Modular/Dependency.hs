@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE RecordWildCards #-}
+{-# LANGUAGE DerivingStrategies  #-}
+
 module Distribution.Solver.Modular.Dependency (
     -- * Variables
     Var(..)
@@ -66,7 +68,7 @@ import Distribution.Types.UnqualComponentName
 -- | Constrained instance. It represents the allowed instances for a package,
 -- which can be either a fixed instance or a version range.
 data CI = Fixed I | Constrained VR
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 {-------------------------------------------------------------------------------
   Flagged dependencies
@@ -128,21 +130,21 @@ data Dep qpn = Dep (PkgComponent qpn) CI  -- ^ dependency on a package component
 -- | An exposed component within a package. This type is used to represent
 -- build-depends and build-tool-depends dependencies.
 data PkgComponent qpn = PkgComponent qpn ExposedComponent
-  deriving (Eq, Ord, Functor, Show)
+  deriving stock (Eq, Ord, Functor, Show)
 
 -- | A component that can be depended upon by another package, i.e., a library
 -- or an executable.
 data ExposedComponent =
     ExposedLib LibraryName
   | ExposedExe UnqualComponentName
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 -- | The reason that a dependency is active. It identifies the package and any
 -- flag and stanza choices that introduced the dependency. It contains
 -- everything needed for creating ConflictSets or describing conflicts in solver
 -- log messages.
 data DependencyReason qpn = DependencyReason qpn (Map Flag FlagValue) (S.Set Stanza)
-  deriving (Functor, Eq, Show)
+  deriving stock (Functor, Eq, Show)
 
 -- | Print the reason that a dependency was introduced.
 showDependencyReason :: DependencyReason QPN -> String
@@ -162,7 +164,7 @@ data QualifyOptions = QO {
     -- Should dependencies of the setup script be treated as independent?
   , qoSetupIndependent :: Bool
   }
-  deriving Show
+  deriving stock Show
 
 -- | Apply built-in rules for package qualifiers
 --
@@ -268,13 +270,13 @@ type RevDepMap = Map QPN [(Component, QPN)]
 -- | A goal is just a solver variable paired with a reason.
 -- The reason is only used for tracing.
 data Goal qpn = Goal (Var qpn) (GoalReason qpn)
-  deriving (Eq, Show, Functor)
+  deriving stock (Eq, Show, Functor)
 
 -- | Reason why a goal is being added to a goal set.
 data GoalReason qpn =
     UserGoal                              -- introduced by a build target
   | DependencyGoal (DependencyReason qpn) -- introduced by a package
-  deriving (Eq, Show, Functor)
+  deriving stock (Eq, Show, Functor)
 
 type QGoalReason = GoalReason QPN
 

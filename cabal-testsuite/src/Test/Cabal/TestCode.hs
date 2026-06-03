@@ -28,7 +28,7 @@ data TestCode
   | TestCodeFail
   | TestCodeFlakyFailed IssueID
   | TestCodeFlakyPassed IssueID
-  deriving (Eq, Show, Read)
+  deriving stock (Eq, Show, Read)
 
 instance Exception TestCode where
   displayException = displayTestCode

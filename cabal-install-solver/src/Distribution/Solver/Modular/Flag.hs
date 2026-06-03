@@ -1,4 +1,7 @@
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
 module Distribution.Solver.Modular.Flag
     ( FInfo(..)
     , Flag
@@ -30,7 +33,7 @@ import Distribution.Solver.Types.PackagePath
 
 -- | Flag name. Consists of a package instance and the flag identifier itself.
 data FN qpn = FN qpn Flag
-  deriving (Eq, Ord, Show, Functor)
+  deriving stock (Eq, Ord, Show, Functor)
 
 -- | Flag identifier. Just a string.
 type Flag = P.FlagName
@@ -48,7 +51,7 @@ mkFlag = P.mkFlagName
 -- whether the flag is weak. Manual flags can only be set explicitly.
 -- Weak flags are typically deferred by the solver.
 data FInfo = FInfo { fdefault :: Bool, fmanual :: FlagType, fweak :: WeakOrTrivial }
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | Flag defaults.
 type FlagInfo = Map Flag FInfo
@@ -58,7 +61,7 @@ type QFN = FN QPN
 
 -- | Stanza name. Paired with a package name, much like a flag.
 data SN qpn = SN qpn Stanza
-  deriving (Eq, Ord, Show, Functor)
+  deriving stock (Eq, Ord, Show, Functor)
 
 -- | Qualified stanza name.
 type QSN = SN QPN
@@ -75,12 +78,12 @@ type QSN = SN QPN
 -- special case of triviality we actually consider is if there are no new
 -- dependencies introduced by the choice.
 newtype WeakOrTrivial = WeakOrTrivial { unWeakOrTrivial :: Bool }
-  deriving (Eq, Ord, Show)
+  deriving newtype (Eq, Ord, Show)
 
 -- | Value shown for a flag in a solver log message. The message can refer to
 -- only the true choice, only the false choice, or both choices.
 data FlagValue = FlagTrue | FlagFalse | FlagBoth
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 showQFNBool :: QFN -> Bool -> String
 showQFNBool qfn@(FN qpn _f) b = showQPN qpn ++ ":" ++ showFBool qfn b

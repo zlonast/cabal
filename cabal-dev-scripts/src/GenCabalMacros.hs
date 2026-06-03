@@ -2,6 +2,7 @@
 {-# LANGUAGE GADTs               #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TemplateHaskell     #-}
+{-# LANGUAGE DerivingStrategies  #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
 module Main (main) where
 
@@ -32,7 +33,7 @@ $(capture "decls" [d|
         , zManglePkgName   :: PackageName -> String
         , zMangleStr       :: String -> String
         }
-      deriving (Generic)
+      deriving stock Generic
 
     data ZPackage = ZPackage
         { zpkgName    :: PackageName
@@ -41,7 +42,7 @@ $(capture "decls" [d|
         , zpkgY       :: String
         , zpkgZ       :: String
         }
-      deriving (Generic)
+      deriving stock Generic
 
     data ZTool = ZTool
         { ztoolName    :: String
@@ -50,7 +51,7 @@ $(capture "decls" [d|
         , ztoolY       :: String
         , ztoolZ       :: String
         }
-      deriving (Generic)
+      deriving stock Generic
     |])
 
 -------------------------------------------------------------------------------

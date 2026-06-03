@@ -1,4 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
 module Distribution.Solver.Types.ConstraintSource
     ( ConstraintSource(..)
     , showConstraintSource
@@ -60,11 +63,8 @@ data ConstraintSource =
   -- | An internal constraint due to compatibility issues with the Setup.hs
   -- command line interface requires a maximum upper bound on Cabal
   | ConstraintSetupCabalMaxVersion
-  deriving (Show, Eq, Generic)
-
-instance Binary ConstraintSource
-instance NFData ConstraintSource
-instance Structured ConstraintSource
+  deriving stock (Show, Eq, Generic)
+  deriving anyclass (Binary, NFData, Structured)
 
 -- | Description of a 'ConstraintSource'.
 showConstraintSource :: ConstraintSource -> String
