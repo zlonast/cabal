@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.SPDX.LicenseListVersion
   ( LicenseListVersion (..)
   , cabalSpecVersionToSPDXListVersion
@@ -25,7 +27,7 @@ data LicenseListVersion
     LicenseListVersion_3_25
   | -- | @since 3.16.0.0
     LicenseListVersion_3_26
-  deriving (Eq, Ord, Show, Enum, Bounded)
+  deriving stock (Eq, Ord, Show, Enum, Bounded)
 
 cabalSpecVersionToSPDXListVersion :: CabalSpecVersion -> LicenseListVersion
 cabalSpecVersionToSPDXListVersion CabalSpecV3_16 = LicenseListVersion_3_26

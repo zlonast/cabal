@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.CabalSpecVersion where
 
@@ -38,7 +39,7 @@ data CabalSpecVersion
   | CabalSpecV3_16
   | -- 3.18: remove build-type: Make
     CabalSpecV3_18
-  deriving (Eq, Ord, Show, Read, Enum, Bounded, Data, Generic)
+  deriving stock (Eq, Ord, Show, Read, Enum, Bounded, Data, Generic)
 
 instance Binary CabalSpecVersion
 instance Structured CabalSpecVersion
@@ -165,9 +166,9 @@ specHasElif v =
 
 -- IDEA: make some kind of tagged booleans?
 data HasElif = HasElif | NoElif
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 data HasCommonStanzas = HasCommonStanzas | NoCommonStanzas
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 data HasGlobstar = HasGlobstar | NoGlobstar

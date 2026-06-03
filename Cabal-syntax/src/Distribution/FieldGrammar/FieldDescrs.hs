@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE RankNTypes #-}
@@ -34,7 +35,7 @@ data SP s = SP
 
 -- | A collection of field parsers and pretty-printers.
 newtype FieldDescrs s a = F {runF :: Map P.FieldName (SP s)}
-  deriving (Functor)
+  deriving stock (Functor)
 
 instance Applicative (FieldDescrs s) where
   pure _ = F mempty

@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 -----------------------------------------------------------------------------
 
@@ -111,7 +112,7 @@ data License
     OtherLicense
   | -- | Indicates an erroneous license name.
     UnknownLicense String
-  deriving (Generic, Read, Show, Eq, Ord, Data)
+  deriving stock (Generic, Read, Show, Eq, Ord, Data)
 
 instance Binary License
 instance Structured License

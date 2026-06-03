@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 -- -Wno-deprecations for use of Map.foldWithKey
 {-# OPTIONS_GHC -Wno-deprecations #-}
 
@@ -398,7 +399,7 @@ data PDTagged
   = Lib Library
   | SubComp UnqualComponentName Component
   | PDNull
-  deriving (Show)
+  deriving stock (Show)
 
 instance Monoid PDTagged where
   mempty = PDNull

@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.TestSuiteInterface
   ( TestSuiteInterface (..)
@@ -30,7 +31,7 @@ data TestSuiteInterface
   | -- | A test suite that does not conform to one of the above interfaces for
     -- the given reason (e.g. unknown test type).
     TestSuiteUnsupported TestType
-  deriving (Eq, Ord, Generic, Read, Show, Data)
+  deriving stock (Eq, Ord, Generic, Read, Show, Data)
 
 instance Binary TestSuiteInterface
 instance Structured TestSuiteInterface

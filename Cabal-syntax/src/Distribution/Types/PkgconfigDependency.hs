@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.PkgconfigDependency
   ( PkgconfigDependency (..)
@@ -23,7 +24,7 @@ data PkgconfigDependency
   = PkgconfigDependency
       PkgconfigName
       PkgconfigVersionRange
-  deriving (Generic, Read, Show, Eq, Ord, Data)
+  deriving stock (Generic, Read, Show, Eq, Ord, Data)
 
 instance Binary PkgconfigDependency
 instance Structured PkgconfigDependency

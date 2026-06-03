@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.SetupBuildInfo
   ( SetupBuildInfo (..)
@@ -25,7 +26,7 @@ data SetupBuildInfo = SetupBuildInfo
   -- internally, and doesn't correspond to anything in the .cabal
   -- file. See #3199.
   }
-  deriving (Generic, Show, Eq, Ord, Read, Data)
+  deriving stock (Generic, Show, Eq, Ord, Read, Data)
 
 instance Binary SetupBuildInfo
 instance Structured SetupBuildInfo

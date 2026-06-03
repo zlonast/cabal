@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.ModuleReexport
   ( ModuleReexport (..)
@@ -24,7 +25,7 @@ data ModuleReexport = ModuleReexport
   , moduleReexportOriginalName :: ModuleName
   , moduleReexportName :: ModuleName
   }
-  deriving (Eq, Ord, Generic, Read, Show, Data)
+  deriving stock (Eq, Ord, Generic, Read, Show, Data)
 
 instance Binary ModuleReexport
 instance Structured ModuleReexport

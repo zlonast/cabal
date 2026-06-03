@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 -----------------------------------------------------------------------------
 
@@ -71,13 +72,13 @@ data LexWarningType
     LexInconsistentIndentation
   | -- | Brace syntax used
     LexBraces
-  deriving (Eq, Ord, Show)
+  deriving stock (Eq, Ord, Show)
 
 data LexWarning
   = LexWarning
       !LexWarningType
       {-# UNPACK #-} !Position
-  deriving (Show)
+  deriving stock (Show)
 
 toPWarnings :: [LexWarning] -> [PWarning]
 toPWarnings =

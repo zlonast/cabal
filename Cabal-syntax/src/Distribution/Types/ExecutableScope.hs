@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Distribution.Types.ExecutableScope
@@ -18,7 +19,7 @@ import qualified Text.PrettyPrint as Disp
 data ExecutableScope
   = ExecutablePublic
   | ExecutablePrivate
-  deriving (Generic, Show, Read, Eq, Ord, Data)
+  deriving stock (Generic, Show, Read, Eq, Ord, Data)
 
 instance Pretty ExecutableScope where
   pretty ExecutablePublic = Disp.text "public"

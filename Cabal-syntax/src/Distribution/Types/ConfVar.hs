@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.ConfVar
   ( ConfVar (..)
@@ -19,7 +20,7 @@ data ConfVar
   | Arch Arch
   | PackageFlag FlagName
   | Impl CompilerFlavor VersionRange
-  deriving (Eq, Show, Data, Generic)
+  deriving stock (Eq, Show, Data, Generic)
 
 instance Binary ConfVar
 instance Structured ConfVar

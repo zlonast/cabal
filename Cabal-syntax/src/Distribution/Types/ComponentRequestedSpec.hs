@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.ComponentRequestedSpec
   ( -- $buildable_vs_enabled_components
@@ -66,7 +67,7 @@ data ComponentRequestedSpec
       , benchmarksRequested :: Bool
       }
   | OneComponentRequestedSpec ComponentName
-  deriving (Generic, Read, Show, Eq)
+  deriving stock (Generic, Read, Show, Eq)
 
 instance Binary ComponentRequestedSpec
 instance Structured ComponentRequestedSpec

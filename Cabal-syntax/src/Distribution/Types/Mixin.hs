@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.Mixin
   ( Mixin (..)
@@ -31,7 +32,7 @@ data Mixin = Mixin
   , mixinLibraryName :: LibraryName
   , mixinIncludeRenaming :: IncludeRenaming
   }
-  deriving (Show, Read, Eq, Ord, Data, Generic)
+  deriving stock (Show, Read, Eq, Ord, Data, Generic)
 
 instance Binary Mixin
 instance Structured Mixin

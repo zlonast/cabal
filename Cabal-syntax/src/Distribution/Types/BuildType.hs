@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Distribution.Types.BuildType
@@ -31,7 +32,7 @@ data BuildType
   | -- | uses user-supplied @Setup.hs@ or @Setup.lhs@ (default)
     Custom
   | Hooks
-  deriving (Generic, Show, Read, Eq, Ord, Data)
+  deriving stock (Generic, Show, Read, Eq, Ord, Data)
 
 instance Binary BuildType
 instance Structured BuildType

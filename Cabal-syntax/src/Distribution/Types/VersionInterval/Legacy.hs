@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 -- | This module implements a view of a 'VersionRange' as a finite
 -- list of separated version intervals and provides the Boolean
 -- algebra operations union, intersection, and complement.
@@ -94,7 +96,7 @@ asVersionIntervals = versionIntervals . toVersionIntervals
 -- predicates for translation into foreign packaging systems that do not
 -- support complex version range expressions.
 newtype VersionIntervals = VersionIntervals [VersionInterval]
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | Inspect the list of version intervals.
 versionIntervals :: VersionIntervals -> [VersionInterval]
@@ -113,21 +115,21 @@ type VersionInterval = (LowerBound, UpperBound)
 data LowerBound
   = -- | Either exclusive @(v,..@ or inclusive @[v,..@.
     LowerBound Version !Bound
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 data UpperBound
   = -- | @..,∞)@
     NoUpperBound
   | -- | Either exclusive @..,v)@ or inclusive @..,v]@.
     UpperBound Version !Bound
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 data Bound
   = -- | @(v,..@ if used as lower bound, @..,v)@ if used as upper bound.
     ExclusiveBound
   | -- | @[v,..@ if used as lower bound, @..,v]@ if used as upper bound.
     InclusiveBound
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | @[0,..@.
 minLowerBound :: LowerBound

@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.ExeDependency
   ( ExeDependency (..)
@@ -25,7 +26,7 @@ data ExeDependency
       PackageName
       UnqualComponentName -- name of executable component of package
       VersionRange
-  deriving (Generic, Read, Show, Eq, Ord, Data)
+  deriving stock (Generic, Read, Show, Eq, Ord, Data)
 
 instance Binary ExeDependency
 instance Structured ExeDependency

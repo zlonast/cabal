@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.Dependency
   ( Dependency (..)
@@ -41,7 +42,7 @@ data Dependency
       PackageName
       VersionRange
       (NonEmptySet LibraryName)
-  deriving (Generic, Read, Show, Eq, Ord, Data)
+  deriving stock (Generic, Read, Show, Eq, Ord, Data)
 
 depPkgName :: Dependency -> PackageName
 depPkgName (Dependency pn _ _) = pn

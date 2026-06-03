@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.TestSuite
   ( TestSuite (..)
@@ -28,7 +29,7 @@ data TestSuite = TestSuite
   , testBuildInfo :: BuildInfo
   , testCodeGenerators :: [String]
   }
-  deriving (Generic, Show, Read, Eq, Ord, Data)
+  deriving stock (Generic, Show, Read, Eq, Ord, Data)
 
 instance L.HasBuildInfo TestSuite where
   buildInfo f l = (\x -> l{testBuildInfo = x}) <$> f (testBuildInfo l)

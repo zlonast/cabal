@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Distribution.Types.CondTree
@@ -57,7 +58,7 @@ data CondTree v a = CondNode
   { condTreeData :: a
   , condTreeComponents :: [CondBranch v a]
   }
-  deriving (Show, Eq, Data, Generic, Functor, Foldable, Traversable)
+  deriving stock (Show, Eq, Data, Generic, Functor, Foldable, Traversable)
 
 instance (Binary v, Binary a) => Binary (CondTree v a)
 instance (Structured v, Structured a) => Structured (CondTree v a)
@@ -78,7 +79,7 @@ data CondBranch v a = CondBranch
   , condBranchIfTrue :: CondTree v a
   , condBranchIfFalse :: Maybe (CondTree v a)
   }
-  deriving (Show, Eq, Data, Generic, Functor, Traversable, Foldable)
+  deriving stock (Show, Eq, Data, Generic, Functor, Traversable, Foldable)
 
 instance (Binary v, Binary a) => Binary (CondBranch v a)
 instance (Structured v, Structured a) => Structured (CondBranch v a)

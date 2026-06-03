@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.SPDX.LicenseExpression
   ( LicenseExpression (..)
@@ -43,7 +44,7 @@ data LicenseExpression
   = ELicense !SimpleLicenseExpression !(Maybe LicenseExceptionId)
   | EAnd !LicenseExpression !LicenseExpression
   | EOr !LicenseExpression !LicenseExpression
-  deriving (Show, Read, Eq, Ord, Data, Generic)
+  deriving stock (Show, Read, Eq, Ord, Data, Generic)
 
 -- | Simple License Expressions.
 data SimpleLicenseExpression
@@ -53,7 +54,7 @@ data SimpleLicenseExpression
     ELicenseIdPlus LicenseId
   | -- | A SPDX user defined license reference: For example: @LicenseRef-23@, @LicenseRef-MIT-Style-1@, or @DocumentRef-spdx-tool-1.2:LicenseRef-MIT-Style-2@
     ELicenseRef LicenseRef
-  deriving (Show, Read, Eq, Ord, Data, Generic)
+  deriving stock (Show, Read, Eq, Ord, Data, Generic)
 
 simpleLicenseExpression :: LicenseId -> LicenseExpression
 simpleLicenseExpression i = ELicense (ELicenseId i) Nothing

@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.SPDX.License
   ( License (..)
@@ -41,7 +42,7 @@ data License
     NONE
   | -- | A valid SPDX License Expression as defined in Appendix IV.
     License LicenseExpression
-  deriving (Show, Read, Eq, Ord, Data, Generic)
+  deriving stock (Show, Read, Eq, Ord, Data, Generic)
 
 instance Binary License
 instance Structured License

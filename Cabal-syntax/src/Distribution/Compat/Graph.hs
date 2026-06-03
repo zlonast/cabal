@@ -1,4 +1,5 @@
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -187,7 +188,7 @@ instance (IsNode a, IsNode b, Key a ~ Key b) => IsNode (Either a b) where
 
 -- | A simple, trivial data type which admits an 'IsNode' instance.
 data Node k a = N a k [k]
-  deriving (Show, Eq)
+  deriving stock (Show, Eq)
 
 -- | Get the value from a 'Node'.
 nodeValue :: Node k a -> a

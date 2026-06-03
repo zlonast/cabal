@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -24,7 +25,7 @@ import qualified Text.Parsec as Parsec
 data FieldLineStream
   = FLSLast !ByteString
   | FLSCons {-# UNPACK #-} !ByteString FieldLineStream
-  deriving (Show)
+  deriving stock (Show)
 
 fieldLineStreamEnd :: FieldLineStream
 fieldLineStreamEnd = FLSLast mempty

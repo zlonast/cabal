@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.Component
   ( Component (..)
@@ -29,7 +30,7 @@ data Component
   | CExe Executable
   | CTest TestSuite
   | CBench Benchmark
-  deriving (Generic, Show, Eq, Read)
+  deriving stock (Generic, Show, Eq, Read)
 
 instance Binary Component
 instance Structured Component

@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Parsec.Warning
   ( PWarning (..)
@@ -67,17 +68,17 @@ data PWarnType
     PWTInconsistentIndentation
   | -- | Experimental feature
     PWTExperimental
-  deriving (Eq, Ord, Show, Enum, Bounded, Generic)
+  deriving stock (Eq, Ord, Show, Enum, Bounded, Generic)
 
 instance Binary PWarnType
 instance NFData PWarnType where rnf = genericRnf
 
 -- | Parser warning.
 data PWarning = PWarning {pwarningType :: !PWarnType, pwarningPosition :: !Position, pwarningMessage :: !String}
-  deriving (Eq, Ord, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
 
 data PWarningWithSource src = PWarningWithSource {pwarningSource :: !(PSource src), pwarning :: !PWarning}
-  deriving (Eq, Ord, Show, Generic, Functor)
+  deriving stock (Eq, Ord, Show, Generic, Functor)
 
 instance Binary PWarning
 instance NFData PWarning where rnf = genericRnf

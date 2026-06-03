@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.LibraryName
   ( LibraryName (..)
@@ -29,7 +30,7 @@ import qualified Text.PrettyPrint as Disp
 data LibraryName
   = LMainLibName
   | LSubLibName UnqualComponentName
-  deriving (Eq, Generic, Ord, Read, Show, Data)
+  deriving stock (Eq, Generic, Ord, Read, Show, Data)
 
 instance Binary LibraryName
 instance Structured LibraryName

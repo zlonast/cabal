@@ -1,4 +1,5 @@
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 -- | This module implements a view of a 'VersionRange' as a finite
 -- list of separated version intervals.
@@ -64,7 +65,7 @@ import Distribution.Types.VersionRange.Internal
 -- predicates for translation into foreign packaging systems that do not
 -- support complex version range expressions.
 newtype VersionIntervals = VersionIntervals [VersionInterval]
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- | Inspect the list of version intervals.
 unVersionIntervals :: VersionIntervals -> [VersionInterval]
@@ -76,10 +77,17 @@ mkVersionIntervals intervals
   | invariantVersionIntervals (VersionIntervals intervals) = Just . VersionIntervals $ intervals
   | otherwise = Nothing
 
-data VersionInterval = VersionInterval !LowerBound !UpperBound deriving (Eq, Show)
-data LowerBound = LowerBound !Version !Bound deriving (Eq, Show)
-data UpperBound = NoUpperBound | UpperBound !Version !Bound deriving (Eq, Show)
-data Bound = ExclusiveBound | InclusiveBound deriving (Eq, Show)
+data VersionInterval = VersionInterval !LowerBound !UpperBound
+  deriving stock (Eq, Show)
+
+data LowerBound = LowerBound !Version !Bound
+  deriving stock (Eq, Show)
+
+data UpperBound = NoUpperBound | UpperBound !Version !Bound
+  deriving stock (Eq, Show)
+
+data Bound = ExclusiveBound | InclusiveBound
+  deriving stock (Eq, Show)
 
 zeroLowerBound :: LowerBound
 zeroLowerBound = LowerBound version0 InclusiveBound

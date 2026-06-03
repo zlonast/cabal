@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.Version
   ( -- * Package versions
@@ -47,7 +48,7 @@ data Version
   -- which all fall into the [0..0xfffe] range), then PV0
   -- MUST be used. This is essential for the 'Eq' instance
   -- to work.
-  deriving (Data, Eq, Generic)
+  deriving stock (Data, Eq, Generic)
 
 instance Ord Version where
   compare (PV0 x) (PV0 y) = compare x y

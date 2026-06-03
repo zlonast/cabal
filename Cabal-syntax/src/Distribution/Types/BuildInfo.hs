@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.BuildInfo
   ( BuildInfo (..)
@@ -147,7 +148,7 @@ data BuildInfo = BuildInfo
   -- ^ Dependencies specific to a library or executable target
   , mixins :: [Mixin]
   }
-  deriving (Generic, Show, Read, Eq, Ord, Data)
+  deriving stock (Generic, Show, Read, Eq, Ord, Data)
 
 instance Binary BuildInfo
 instance Structured BuildInfo

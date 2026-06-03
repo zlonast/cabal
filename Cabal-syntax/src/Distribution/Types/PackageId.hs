@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.PackageId
   ( PackageIdentifier (..)
@@ -28,7 +29,7 @@ data PackageIdentifier = PackageIdentifier
   , pkgVersion :: Version
   -- ^ the version of this package, eg 1.2
   }
-  deriving (Generic, Read, Show, Eq, Ord, Data)
+  deriving stock (Generic, Read, Show, Eq, Ord, Data)
 
 instance Binary PackageIdentifier
 instance Structured PackageIdentifier

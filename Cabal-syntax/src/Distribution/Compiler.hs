@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 -----------------------------------------------------------------------------
 
@@ -79,7 +80,7 @@ data CompilerFlavor
     -- MicroHS, see https://github.com/augustss/MicroHs
     MHS
   | OtherCompiler String
-  deriving (Generic, Show, Read, Eq, Ord, Data)
+  deriving stock (Generic, Show, Read, Eq, Ord, Data)
 
 instance Binary CompilerFlavor
 instance Structured CompilerFlavor
@@ -173,7 +174,7 @@ instance Monoid a => Monoid (PerCompilerFlavor a) where
 -- ------------------------------------------------------------
 
 data CompilerId = CompilerId CompilerFlavor Version
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving stock (Eq, Generic, Ord, Read, Show)
 
 instance Binary CompilerId
 instance Structured CompilerId
@@ -222,14 +223,14 @@ data CompilerInfo = CompilerInfo
   -- For instance, when using GHC plugins, one wants to use the exact same
   -- version of the `ghc` package as the one the compiler was linked against.
   }
-  deriving (Generic, Show, Read)
+  deriving stock (Generic, Show, Read)
 
 instance Binary CompilerInfo
 
 data AbiTag
   = NoAbiTag
   | AbiTag String
-  deriving (Eq, Generic, Show, Read)
+  deriving stock (Eq, Generic, Show, Read)
 
 instance Binary AbiTag
 instance NFData AbiTag

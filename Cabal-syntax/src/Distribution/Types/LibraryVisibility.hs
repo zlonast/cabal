@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Distribution.Types.LibraryVisibility
@@ -23,7 +24,7 @@ data LibraryVisibility
     LibraryVisibilityPublic
   | -- | Internal library, default
     LibraryVisibilityPrivate
-  deriving (Generic, Show, Read, Eq, Ord, Data)
+  deriving stock (Generic, Show, Read, Eq, Ord, Data)
 
 instance Pretty LibraryVisibility where
   pretty LibraryVisibilityPublic = Disp.text "public"

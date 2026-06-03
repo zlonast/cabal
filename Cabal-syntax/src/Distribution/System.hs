@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 
 -- |
@@ -107,7 +108,7 @@ data OS
   | Wasi
   | Haiku
   | OtherOS String
-  deriving (Eq, Generic, Ord, Show, Read, Data)
+  deriving stock (Eq, Generic, Ord, Show, Read, Data)
 
 instance Binary OS
 instance Structured OS
@@ -210,7 +211,7 @@ data Arch
   | JavaScript
   | Wasm32
   | OtherArch String
-  deriving (Eq, Generic, Ord, Show, Read, Data)
+  deriving stock (Eq, Generic, Ord, Show, Read, Data)
 
 instance Binary Arch
 instance Structured Arch
@@ -281,7 +282,7 @@ buildArch = classifyArch Permissive System.Info.arch
 -- ------------------------------------------------------------
 
 data Platform = Platform Arch OS
-  deriving (Eq, Generic, Ord, Show, Read, Data)
+  deriving stock (Eq, Generic, Ord, Show, Read, Data)
 
 instance Binary Platform
 instance Structured Platform

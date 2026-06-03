@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
@@ -71,7 +72,7 @@ data GenericPackageDescription = GenericPackageDescription
            )
          ]
   }
-  deriving (Show, Eq, Data, Generic)
+  deriving stock (Show, Eq, Data, Generic)
 
 instance Package GenericPackageDescription where
   packageId = packageId . packageDescription

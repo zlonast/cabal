@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.Benchmark
   ( Benchmark (..)
@@ -27,7 +28,7 @@ data Benchmark = Benchmark
   , benchmarkInterface :: BenchmarkInterface
   , benchmarkBuildInfo :: BuildInfo
   }
-  deriving (Generic, Show, Read, Eq, Ord, Data)
+  deriving stock (Generic, Show, Read, Eq, Ord, Data)
 
 instance Binary Benchmark
 instance Structured Benchmark

@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Distribution.Parsec.Source
   ( PSource (..)
@@ -17,15 +19,16 @@ import Prelude ()
 data PSource src
   = PKnownSource src
   | PUnknownSource
-  deriving (Ord, Show, Generic, Functor)
+  deriving stock (Ord, Show, Generic, Functor)
 
 newtype CabalFileSource
   = PCabalFile (FilePath, BS.ByteString)
-  deriving (Ord, Show, Generic)
+  deriving newtype (Ord, Show)
+  deriving stock (Generic)
 
 data InstalledPackageInfoSource
   = PInstalledPackageInfo
-  deriving (Eq, Ord, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
 
 renderCabalFileSource :: CabalFileSource -> String
 renderCabalFileSource (PCabalFile (path, _)) = path

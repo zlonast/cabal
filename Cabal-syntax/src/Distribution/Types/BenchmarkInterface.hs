@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.BenchmarkInterface
   ( BenchmarkInterface (..)
@@ -27,7 +28,7 @@ data BenchmarkInterface
   | -- | A benchmark that does not conform to one of the above
     -- interfaces for the given reason (e.g. unknown benchmark type).
     BenchmarkUnsupported BenchmarkType
-  deriving (Eq, Ord, Generic, Read, Show, Data)
+  deriving stock (Eq, Ord, Generic, Read, Show, Data)
 
 instance Binary BenchmarkInterface
 instance Structured BenchmarkInterface

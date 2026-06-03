@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 -- @since 3.0
 module Distribution.Types.PkgconfigVersion
@@ -26,7 +28,8 @@ import qualified Text.PrettyPrint as PP
 --
 -- @since 3.0
 newtype PkgconfigVersion = PkgconfigVersion BS.ByteString
-  deriving (Generic, Read, Show, Data)
+  deriving newtype (Read, Show)
+  deriving stock (Generic, Data)
 
 instance Eq PkgconfigVersion where
   PkgconfigVersion a == PkgconfigVersion b = rpmvercmp a b == EQ

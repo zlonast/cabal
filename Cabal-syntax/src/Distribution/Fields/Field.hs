@@ -1,5 +1,6 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE StandaloneDeriving #-}
 
 -- | Cabal-like file AST types: 'Field', 'Section' etc
@@ -48,7 +49,7 @@ import qualified Data.Foldable1 as F1
 data Field ann
   = Field !(Name ann) [FieldLine ann]
   | Section !(Name ann) [SectionArg ann] [Field ann]
-  deriving (Eq, Show, Functor, Foldable, Traversable)
+  deriving stock (Eq, Show, Functor, Foldable, Traversable)
 
 -- | @since 3.12.0.0
 deriving instance Ord ann => Ord (Field ann)
@@ -73,7 +74,7 @@ fieldUniverse f@(Field _ _) = [f]
 --
 -- /Invariant:/ 'ByteString' has no newlines.
 data FieldLine ann = FieldLine !ann !ByteString
-  deriving (Eq, Show, Functor, Foldable, Traversable)
+  deriving stock (Eq, Show, Functor, Foldable, Traversable)
 
 -- | @since 3.12.0.0
 deriving instance Ord ann => Ord (FieldLine ann)
@@ -94,7 +95,7 @@ data SectionArg ann
     SecArgStr !ann !ByteString
   | -- | everything else, mm. operators (e.g. in if-section conditionals)
     SecArgOther !ann !ByteString
-  deriving (Eq, Show, Functor, Foldable, Traversable)
+  deriving stock (Eq, Show, Functor, Foldable, Traversable)
 
 -- | @since 3.12.0.0
 deriving instance Ord ann => Ord (SectionArg ann)
@@ -115,7 +116,7 @@ type FieldName = ByteString
 --
 -- /Invariant/: 'ByteString' is lower-case ASCII.
 data Name ann = Name !ann !FieldName
-  deriving (Eq, Show, Functor, Foldable, Traversable)
+  deriving stock (Eq, Show, Functor, Foldable, Traversable)
 
 -- | @since 3.12.0.0
 deriving instance Ord ann => Ord (Name ann)

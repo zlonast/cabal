@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.ForeignLib
   ( ForeignLib (..)
@@ -61,9 +62,10 @@ data ForeignLib = ForeignLib
   -- This is a list rather than a maybe field so that we can flatten
   -- the condition trees (for instance, when creating an sdist)
   }
-  deriving (Generic, Show, Read, Eq, Ord, Data)
+  deriving stock (Generic, Show, Read, Eq, Ord, Data)
 
-data LibVersionInfo = LibVersionInfo Int Int Int deriving (Data, Eq, Generic)
+data LibVersionInfo = LibVersionInfo Int Int Int
+  deriving stock (Data, Eq, Generic)
 
 instance Ord LibVersionInfo where
   LibVersionInfo c r _ `compare` LibVersionInfo c' r' _ =

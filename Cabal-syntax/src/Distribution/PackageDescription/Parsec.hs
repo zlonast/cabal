@@ -1,3 +1,4 @@
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE Rank2Types #-}
@@ -916,7 +917,7 @@ sectionizeFields fs = case classifyFields fs of
 
 -- | See 'sectionizeFields'.
 data Syntax = OldSyntax | NewSyntax
-  deriving (Eq, Show)
+  deriving stock (Eq, Show)
 
 -- TODO:
 libFieldNames :: [FieldName]

@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.Library
   ( Library (..)
@@ -31,7 +32,7 @@ data Library = Library
   -- ^ Whether this multilib can be used as a dependency for other packages.
   , libBuildInfo :: BuildInfo
   }
-  deriving (Generic, Show, Eq, Ord, Read, Data)
+  deriving stock (Generic, Show, Eq, Ord, Read, Data)
 
 instance L.HasBuildInfo Library where
   buildInfo f l = (\x -> l{libBuildInfo = x}) <$> f (libBuildInfo l)

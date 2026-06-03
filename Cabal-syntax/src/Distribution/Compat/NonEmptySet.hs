@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Distribution.Compat.NonEmptySet
   ( NonEmptySet
@@ -42,7 +44,8 @@ import Distribution.Utils.Structured
 
 -- | @since 3.4.0.0
 newtype NonEmptySet a = NES (Set.Set a)
-  deriving (Eq, Ord, Data, Read)
+  deriving newtype (Eq, Ord, Read)
+  deriving stock (Data)
 
 -------------------------------------------------------------------------------
 -- Instances

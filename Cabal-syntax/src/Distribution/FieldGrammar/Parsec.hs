@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RankNTypes #-}
@@ -99,14 +100,14 @@ type Fields ann = Map FieldName [NamelessField ann]
 
 -- | Single field, without name, but with its annotation.
 data NamelessField ann = MkNamelessField !ann [FieldLine ann]
-  deriving (Eq, Show, Functor)
+  deriving stock (Eq, Show, Functor)
 
 namelessFieldAnn :: NamelessField ann -> ann
 namelessFieldAnn (MkNamelessField ann _) = ann
 
 -- | The 'Section' constructor of 'Field'.
 data Section ann = MkSection !(Name ann) [SectionArg ann] [Field ann]
-  deriving (Eq, Show, Functor)
+  deriving stock (Eq, Show, Functor)
 
 -------------------------------------------------------------------------------
 -- ParsecFieldGrammar
@@ -117,7 +118,7 @@ data ParsecFieldGrammar s a = ParsecFG
   , fieldGrammarKnownPrefixes :: !(Set FieldName)
   , fieldGrammarParser :: forall src. (CabalSpecVersion -> Fields Position -> ParseResult src a)
   }
-  deriving (Functor)
+  deriving stock (Functor)
 
 parseFieldGrammar :: CabalSpecVersion -> Fields Position -> ParsecFieldGrammar s a -> ParseResult src a
 parseFieldGrammar v fields grammar = do

@@ -1,6 +1,8 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE InstanceSigs #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -334,7 +336,7 @@ instance Pretty (RelativePathNT from to) where
 -- for CabalSpecVersion would cause cycle in modules:
 --     Version -> CabalSpecVersion -> Parsec -> ...
 newtype SpecVersion = SpecVersion {getSpecVersion :: CabalSpecVersion}
-  deriving (Eq, Show) -- instances needed for tests
+  deriving stock (Eq, Show) -- instances needed for tests
 
 instance Newtype CabalSpecVersion SpecVersion
 
@@ -419,7 +421,7 @@ instance Pretty SpecVersion where
 
 -- | SPDX License expression or legacy license
 newtype SpecLicense = SpecLicense {getSpecLicense :: Either SPDX.License License}
-  deriving (Show, Eq)
+  deriving newtype (Show, Eq)
 
 instance Newtype (Either SPDX.License License) SpecLicense
 

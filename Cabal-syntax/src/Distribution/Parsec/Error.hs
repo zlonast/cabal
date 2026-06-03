@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Parsec.Error
   ( PError (..)
@@ -17,10 +18,10 @@ import Prelude ()
 
 -- | Parser error.
 data PError = PError {perrorPosition :: Position, perrorMessage :: String}
-  deriving (Show, Generic)
+  deriving stock (Show, Generic)
 
 data PErrorWithSource src = PErrorWithSource {perrorSource :: !(PSource src), perror :: !PError}
-  deriving (Show, Generic, Functor)
+  deriving stock (Show, Generic, Functor)
 
 instance Binary PError
 instance NFData PError where rnf = genericRnf

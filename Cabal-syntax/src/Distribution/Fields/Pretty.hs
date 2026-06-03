@@ -1,5 +1,6 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE LambdaCase #-}
 
 -- | Cabal-like file AST types: 'Field', 'Section' etc,
@@ -43,7 +44,7 @@ data PrettyField ann
   = PrettyField ann FieldName PP.Doc
   | PrettySection ann FieldName [PP.Doc] [PrettyField ann]
   | PrettyEmpty
-  deriving (Functor, Foldable, Traversable)
+  deriving stock (Functor, Foldable, Traversable)
 
 -- | Prettyprint a list of fields.
 --
@@ -108,7 +109,7 @@ data Block = Block
   }
 
 data Margin = Margin | NoMargin
-  deriving (Eq)
+  deriving stock (Eq)
 
 -- | Collapse margins, any margin = margin
 instance Semigroup Margin where

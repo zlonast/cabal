@@ -10,6 +10,7 @@
 -- Lexer for the cabal files.
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DerivingStrategies #-}
 #ifdef CABAL_PARSEC_DEBUG
 {-# LANGUAGE PatternGuards #-}
 #endif
@@ -163,10 +164,10 @@ data Token = TokSym   !ByteString       -- ^ Haskell-like identifier, number or 
            | CloseBrace
            | EOF
            | LexicalError InputStream --TODO: add separate string lexical error
-  deriving Show
+  deriving stock Show
 
 data LToken = L !Position !Token
-  deriving Show
+  deriving stock Show
 
 toki :: (ByteString -> Token) -> Position -> Int -> ByteString -> Lex LToken
 toki t pos  len  input = return $! L pos (t (B.take len input))

@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.LegacyExeDependency
   ( LegacyExeDependency (..)
@@ -26,7 +27,7 @@ data LegacyExeDependency
   = LegacyExeDependency
       String
       VersionRange
-  deriving (Generic, Read, Show, Eq, Ord, Data)
+  deriving stock (Generic, Read, Show, Eq, Ord, Data)
 
 instance Binary LegacyExeDependency
 instance Structured LegacyExeDependency

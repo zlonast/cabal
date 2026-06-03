@@ -1,3 +1,5 @@
+{-# LANGUAGE DerivingStrategies #-}
+
 module Distribution.Types.MissingDependencyReason
   ( MissingDependencyReason (..)
   ) where
@@ -22,4 +24,4 @@ data MissingDependencyReason
     WrongVersion [Version]
   | -- | A component is not installed.
     MissingComponent PackageName
-  deriving (Show)
+  deriving stock (Show)

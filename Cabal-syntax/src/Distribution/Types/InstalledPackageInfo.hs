@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeFamilies #-}
 
@@ -95,7 +96,7 @@ data InstalledPackageInfo = InstalledPackageInfo
   , haddockHTMLs :: [FilePath]
   , pkgRoot :: Maybe FilePath
   }
-  deriving (Eq, Generic, Read, Show)
+  deriving stock (Eq, Generic, Read, Show)
 
 instance Binary InstalledPackageInfo
 instance Structured InstalledPackageInfo

@@ -1,6 +1,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE DefaultSignatures #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -22,7 +23,7 @@
 --   { _recordFields  :: HM.HashMap Text (Integer, ByteString)
 --   , _recordEnabled :: Bool
 --   }
---   deriving (Eq, Show, Generic)
+--   deriving stock (Eq, Show, Generic)
 --
 -- instance 'Binary' Record
 -- instance 'Structured' Record
@@ -134,7 +135,7 @@ data Structure
     Newtype !TypeRep !TypeVersion TypeName Structure
   | -- | sum-of-products structure
     Structure !TypeRep !TypeVersion TypeName SopStructure
-  deriving (Eq, Ord, Show, Generic)
+  deriving stock (Eq, Ord, Show, Generic)
 
 type SopStructure = [(ConstructorName, [Structure])]
 
@@ -221,7 +222,7 @@ structureBuilder s0 = State.evalState (go s0) Map.empty
 -- For regular data types 'Structured' can be derived generically.
 --
 -- @
--- data Record = Record { a :: Int, b :: Bool, c :: [Char] } deriving ('Generic')
+-- data Record = Record { a :: Int, b :: Bool, c :: [Char] } deriving stock ('Generic')
 -- instance 'Structured' Record
 -- @
 --
@@ -424,12 +425,18 @@ instance Structured a => Structured (NonEmpty a) where structure = containerStru
 -- By defining our own instances the STuple2 identifier will be used in the hash and
 -- hence the same on all GHC versions.
 
-data STuple2 a b = STuple2 a b deriving (Generic)
-data STuple3 a b c = STuple3 a b c deriving (Generic)
-data STuple4 a b c d = STuple4 a b c d deriving (Generic)
-data STuple5 a b c d e = STuple5 a b c d e deriving (Generic)
-data STuple6 a b c d e f = STuple6 a b c d e f deriving (Generic)
-data STuple7 a b c d e f g = STuple7 a b c d e f g deriving (Generic)
+data STuple2 a b = STuple2 a b
+  deriving stock (Generic)
+data STuple3 a b c = STuple3 a b c
+  deriving stock (Generic)
+data STuple4 a b c d = STuple4 a b c d
+  deriving stock (Generic)
+data STuple5 a b c d e = STuple5 a b c d e
+  deriving stock (Generic)
+data STuple6 a b c d e f = STuple6 a b c d e f
+  deriving stock (Generic)
+data STuple7 a b c d e f g = STuple7 a b c d e f g
+  deriving stock (Generic)
 
 instance (Structured a1, Structured a2) => Structured (STuple2 a1 a2)
 instance (Structured a1, Structured a2) => Structured (a1, a2) where

@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.SourceRepo
   ( SourceRepo (..)
@@ -77,7 +78,7 @@ data SourceRepo = SourceRepo
   -- relative to the root of the repository. This field is optional. If not
   -- given the default is \".\" ie no subdirectory.
   }
-  deriving (Eq, Ord, Generic, Read, Show, Data)
+  deriving stock (Eq, Ord, Generic, Read, Show, Data)
 
 emptySourceRepo :: RepoKind -> SourceRepo
 emptySourceRepo kind =
@@ -106,7 +107,7 @@ data RepoKind
     -- information to re-create the exact sources.
     RepoThis
   | RepoKindUnknown String
-  deriving (Eq, Generic, Ord, Read, Show, Data)
+  deriving stock (Eq, Generic, Ord, Read, Show, Data)
 
 instance Binary RepoKind
 instance Structured RepoKind
@@ -126,7 +127,7 @@ data KnownRepoType
   | Monotone
   | -- | @since 3.4.0.0
     Pijul
-  deriving (Eq, Generic, Ord, Read, Show, Data, Enum, Bounded)
+  deriving stock (Eq, Generic, Ord, Read, Show, Data, Enum, Bounded)
 
 instance Binary KnownRepoType
 instance Structured KnownRepoType
@@ -146,7 +147,7 @@ instance Pretty KnownRepoType where
 data RepoType
   = KnownRepoType KnownRepoType
   | OtherRepoType String
-  deriving (Eq, Generic, Ord, Read, Show, Data)
+  deriving stock (Eq, Generic, Ord, Read, Show, Data)
 
 instance Binary RepoType
 instance Structured RepoType

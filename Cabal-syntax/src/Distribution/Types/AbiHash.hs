@@ -1,4 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Distribution.Types.AbiHash
   ( AbiHash
@@ -25,7 +27,8 @@ import Text.PrettyPrint (text)
 --
 -- @since 2.0.0.2
 newtype AbiHash = AbiHash ShortText
-  deriving (Eq, Show, Read, Generic)
+  deriving newtype (Eq, Show, Read)
+  deriving stock (Generic)
 
 -- | Convert 'AbiHash' to 'String'
 --

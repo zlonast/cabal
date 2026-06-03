@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 
 module Distribution.FieldGrammar.Pretty
@@ -23,7 +24,7 @@ import Distribution.FieldGrammar.Class
 newtype PrettyFieldGrammar s a = PrettyFG
   { fieldGrammarPretty :: CabalSpecVersion -> s -> [PrettyField ()]
   }
-  deriving (Functor)
+  deriving stock (Functor)
 
 instance Applicative (PrettyFieldGrammar s) where
   pure _ = PrettyFG (\_ _ -> mempty)

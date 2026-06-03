@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.IncludeRenaming
   ( IncludeRenaming (..)
@@ -26,7 +27,7 @@ data IncludeRenaming = IncludeRenaming
   { includeProvidesRn :: ModuleRenaming
   , includeRequiresRn :: ModuleRenaming
   }
-  deriving (Show, Read, Eq, Ord, Data, Generic)
+  deriving stock (Show, Read, Eq, Ord, Data, Generic)
 
 instance Binary IncludeRenaming
 instance Structured IncludeRenaming

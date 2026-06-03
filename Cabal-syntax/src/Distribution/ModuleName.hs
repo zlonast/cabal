@@ -1,6 +1,8 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
 -----------------------------------------------------------------------------
@@ -40,7 +42,8 @@ import qualified Text.PrettyPrint as Disp
 
 -- | A valid Haskell module name.
 newtype ModuleName = ModuleName ShortText
-  deriving (Eq, Generic, Ord, Read, Show, Data)
+  deriving newtype (Eq, Ord, Read, Show)
+  deriving stock (Generic, Data)
 
 unModuleName :: ModuleName -> String
 unModuleName (ModuleName s) = fromShortText s

@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Distribution.Types.PkgconfigName
   ( PkgconfigName
@@ -23,7 +25,8 @@ import qualified Text.PrettyPrint as Disp
 --
 -- @since 2.0.0.2
 newtype PkgconfigName = PkgconfigName ShortText
-  deriving (Generic, Read, Show, Eq, Ord, Data)
+  deriving newtype (Read, Show, Eq, Ord)
+  deriving stock (Generic, Data)
 
 -- | Convert 'PkgconfigName' to 'String'
 --

@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -60,7 +61,7 @@ data VersionRange
   | MajorBoundVersion Version -- @^>= ver@ (same as >= ver && < MAJ(ver)+1)
   | UnionVersionRanges VersionRange VersionRange
   | IntersectVersionRanges VersionRange VersionRange
-  deriving (Data, Eq, Ord, Generic, Read, Show)
+  deriving stock (Data, Eq, Ord, Generic, Read, Show)
 
 instance Binary VersionRange
 instance Structured VersionRange

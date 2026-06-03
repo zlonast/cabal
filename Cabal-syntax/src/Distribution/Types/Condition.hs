@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.Condition
   ( Condition (..)
@@ -19,7 +20,7 @@ data Condition c
   | CNot (Condition c)
   | COr (Condition c) (Condition c)
   | CAnd (Condition c) (Condition c)
-  deriving (Show, Eq, Data, Generic)
+  deriving stock (Show, Eq, Data, Generic)
 
 -- | Boolean negation of a 'Condition' value.
 cNot :: Condition a -> Condition a

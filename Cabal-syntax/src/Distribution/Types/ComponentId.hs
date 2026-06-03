@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Distribution.Types.ComponentId
   ( ComponentId
@@ -31,7 +33,8 @@ import Text.PrettyPrint (text)
 --
 -- @since 2.0.0.2
 newtype ComponentId = ComponentId ShortText
-  deriving (Generic, Read, Show, Eq, Ord, Data)
+  deriving newtype (Read, Show, Eq, Ord)
+  deriving stock (Generic, Data)
 
 -- | Construct a 'ComponentId' from a 'String'
 --

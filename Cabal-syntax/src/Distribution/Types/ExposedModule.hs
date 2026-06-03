@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.ExposedModule where
 
@@ -17,7 +18,7 @@ data ExposedModule = ExposedModule
   { exposedName :: ModuleName
   , exposedReexport :: Maybe OpenModule
   }
-  deriving (Eq, Generic, Read, Show)
+  deriving stock (Eq, Generic, Read, Show)
 
 instance Pretty ExposedModule where
   pretty (ExposedModule m reexport) =

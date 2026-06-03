@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.MungedPackageId
   ( MungedPackageId (..)
@@ -28,7 +29,7 @@ data MungedPackageId = MungedPackageId
   , mungedVersion :: Version
   -- ^ The version of this package / component, eg 1.2
   }
-  deriving (Generic, Read, Show, Eq, Ord, Data)
+  deriving stock (Generic, Read, Show, Eq, Ord, Data)
 
 instance Binary MungedPackageId
 instance Structured MungedPackageId

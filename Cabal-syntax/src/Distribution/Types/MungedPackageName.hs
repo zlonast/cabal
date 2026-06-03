@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 module Distribution.Types.MungedPackageName
   ( MungedPackageName (..)
@@ -31,7 +32,7 @@ import qualified Text.PrettyPrint as Disp
 --
 -- @since 2.0.0.2
 data MungedPackageName = MungedPackageName !PackageName !LibraryName
-  deriving (Generic, Read, Show, Eq, Ord, Data)
+  deriving stock (Generic, Read, Show, Eq, Ord, Data)
 
 instance Binary MungedPackageName
 instance Structured MungedPackageName

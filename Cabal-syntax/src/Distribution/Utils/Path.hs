@@ -1,8 +1,10 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE RoleAnnotations #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -205,7 +207,8 @@ data AllowAbsolute
 -- until we interpret them (using e.g. 'interpretSymbolicPath').
 newtype SymbolicPathX (allowAbsolute :: AllowAbsolute) (from :: Type) (to :: FileOrDir)
   = SymbolicPath FilePath
-  deriving (Generic, Show, Read, Eq, Ord, Data)
+  deriving newtype (Show, Read, Eq, Ord)
+  deriving stock (Generic, Data)
 
 type role SymbolicPathX nominal nominal nominal
 

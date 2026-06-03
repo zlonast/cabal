@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE PatternSynonyms #-}
 
 module Distribution.Types.ComponentName
@@ -24,14 +25,14 @@ import qualified Text.PrettyPrint as Disp
 data ComponentName
   = CLibName LibraryName
   | CNotLibName NotLibComponentName
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving stock (Eq, Generic, Ord, Read, Show)
 
 data NotLibComponentName
   = CNLFLibName {toCompName :: UnqualComponentName}
   | CNLExeName {toCompName :: UnqualComponentName}
   | CNLTestName {toCompName :: UnqualComponentName}
   | CNLBenchName {toCompName :: UnqualComponentName}
-  deriving (Eq, Generic, Ord, Read, Show)
+  deriving stock (Eq, Generic, Ord, Read, Show)
 
 pattern CFLibName :: UnqualComponentName -> ComponentName
 pattern CFLibName n = CNotLibName (CNLFLibName n)
